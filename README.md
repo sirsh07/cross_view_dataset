@@ -10,7 +10,7 @@
 ```
 [ ] Datasets 
 
-python dataset_stats.py --dir /home/zhyw86/WorkSpace/google-earth
+python dataset_stats.py --dir /home/zhyw86/WorkSpace/google-earth --output_csv zen_gearth_d_4_22 --output_plot zen_gearth_d_4_22
 
 [ ] different data and severity
 
