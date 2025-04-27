@@ -79,10 +79,10 @@ def sample_and_combine_folders(base_dir,
     os.makedirs(target_dir, exist_ok=True)
     
     # create 100p folder
-    target_100p = os.path.join(target_dir, "p100")
-    target_50p = os.path.join(target_dir, "p50")
-    target_25p = os.path.join(target_dir, "p25")
-    target_12p = os.path.join(target_dir, "p12")
+    target_100p = os.path.join(target_dir, "p100","images")
+    target_50p = os.path.join(target_dir, "p50","images")
+    target_25p = os.path.join(target_dir, "p25","images")
+    target_12p = os.path.join(target_dir, "p12","images")
     os.makedirs(target_100p, exist_ok=True)
     os.makedirs(target_50p, exist_ok=True)
     os.makedirs(target_25p, exist_ok=True)
@@ -150,7 +150,7 @@ def handle_aerial_data():
     """
     
     base_dir = "/home/zhyw86/WorkSpace/google-earth/data/aerial/middle/"
-    target_dir = "/home/sirsh/cv_dataset/dataset_50sites/data/aerial/"
+    target_dir = "/home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/"
     split_folder = "/home/zhyw86/WorkSpace/google-earth/sampling/aerial/middle/random/"
     
     for site_id in list(set(os.listdir(base_dir)) & set(os.listdir(split_folder))):
@@ -169,6 +169,31 @@ def handle_aerial_data():
         )
         
                 
+
+def handle_street_data():
+    """
+    Handle aerial data by copying files from base_dir to target_dir.
+    """
+    
+    base_dir = "/home/zhyw86/WorkSpace/google-earth/data/aerial/middle/"
+    target_dir = "/home/sirsh/cv_dataset/dataset_50sites/data/aerial/"
+    split_folder = "/home/zhyw86/WorkSpace/google-earth/sampling/aerial/middle/random/"
+    
+    for site_id in list(set(os.listdir(base_dir)) & set(os.listdir(split_folder))):
+        
+        site_base_dir = os.path.join(base_dir, site_id)
+        site_target_dir = os.path.join(target_dir, site_id)
+        site_split_folder = os.path.join(split_folder, site_id)
+        
+        
+        # Sample and combine folders
+        sample_and_combine_folders(
+            base_dir=site_base_dir,
+            split_folder=site_split_folder,
+            target_dir=site_target_dir,
+            site_id=site_id
+        )
+        
         
     
     
