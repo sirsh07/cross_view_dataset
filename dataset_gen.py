@@ -61,13 +61,13 @@ def sample_and_combine_folders(base_dir,
     with open(left_split_file, "r") as f:
         left_files = [line.strip() for line in f.readlines()]
         # sampled_left_files = [left_files[i] for i in range(1, len(left_files), 3)]
-        sampled_middle_files = random.sample(left_files, int(len(left_files) * 1/3))
+        sampled_left_files = random.sample(left_files, int(len(left_files) * 1/3))
         sampled_left_file_path = [os.path.join(left_dir,"footage", file) for file in sampled_left_files]
         
     with open(right_split_file, "r") as f:
         right_files = [line.strip() for line in f.readlines()]
         # sampled_right_files = [right_files[i] for i in range(2, len(right_files), 3)]
-        sampled_right_file_path = random.sample(right_files, int(len(right_files) * 1/3))
+        sampled_right_files = random.sample(right_files, int(len(right_files) * 1/3))
         sampled_right_file_path = [os.path.join(right_dir,"footage", file) for file in sampled_right_files]
         
     # Combine all files
