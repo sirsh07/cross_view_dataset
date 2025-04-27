@@ -48,10 +48,18 @@ def sample_and_combine_folders(base_dir,
     parent_dir = parent_dir.replace("random","")
     
     split_file = os.path.join(split_folder, f'{folder_name}_train.txt')
-    left_split_file = os.path.join(parent_dir.replace("middle", "left"), f"{folder_name}_left" ,f'{folder_name}_left_train.txt')
-    right_split_file = os.path.join(parent_dir.replace("middle", "right"), f"{folder_name}_right" ,f'{folder_name}_right_train.txt')
+    left_split_file = os.path.join(parent_dir.replace("middle", "left"), f"{folder_name}" ,f'{folder_name}_left_train.txt')
+    right_split_file = os.path.join(parent_dir.replace("middle", "right"), f"{folder_name}" ,f'{folder_name}_right_train.txt')
     
-    import pdb; pdb.set_trace()
+    # Read split files
+    with open(split_file, "r") as f:
+        middle_files = [line.strip() for line in f.readlines()]
+    with open(left_split_file, "r") as f:
+        left_files = [line.strip() for line in f.readlines()]
+    with open(right_split_file, "r") as f:
+        right_files = [line.strip() for line in f.readlines()]
+    # Combine all files
+    all_files = middle_files + left_files + right_files
     
     
      
