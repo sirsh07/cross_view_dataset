@@ -154,13 +154,7 @@ def handle_aerial_data():
     target_dir = "/home/sirsh/cv_dataset/dataset_50sites/data/aerial/"
     split_folder = "/home/zhyw86/WorkSpace/google-earth/sampling/aerial/middle/random/"
     
-    import pdb; pdb.set_trace()
-    
-    assert len(os.listdir(base_dir)) == len(os.listdir(split_folder)), "Base and split folders must have the same number of files."
-    
-    import pdb; pdb.set_trace()
-
-    for site_id in os.listdir(base_dir):
+    for site_id in list(set(os.listdir(base_dir)) & set(os.listdir(split_folder))):
         
         site_base_dir = os.path.join(base_dir, site_id)
         site_target_dir = os.path.join(target_dir, site_id)
