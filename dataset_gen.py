@@ -15,6 +15,7 @@ import shutil  # for copying files
 #     logging.info("Logging initialized.")
 
 def sample_and_combine_folders(base_dir, 
+                               split_folder,
                             #    target_dir, 
                             #    split_files, 
                             #    log_file, 
@@ -30,15 +31,26 @@ def sample_and_combine_folders(base_dir,
 
     # setup_logging(log_file)
     
+    
+    # get right and left data folders
     folder_name =  os.path.basename(base_dir.rstrip('/'))
     parent_dir = os.path.dirname(base_dir.rstrip('/'))
-    
     
     left_dir = os.path.join(parent_dir.replace("middle", "left"), f'{folder_name}_left')
     right_dir = os.path.join(parent_dir.replace("middle", "right"), f'{folder_name}_right')
     
     
+    # get right and left split files
+    split_folder="/home/zhyw86/WorkSpace/google-earth/sampling/aerial/middle/random/ID0001/",
+    folder_name = os.path.basename(split_folder.rstrip('/'))
+    parent_dir = os.path.dirname(split_folder.rstrip('/'))
+    
+    split_file = os.path.join(split_folder, f'{folder_name}_train.txt')
+    
     import pdb; pdb.set_trace()
+    
+     
+    
     
     
     
@@ -82,7 +94,9 @@ def sample_and_combine_folders(base_dir,
 # Example usage:
 if __name__ == "__main__":
     sample_and_combine_folders(
-        base_dir="/home/zhyw86/WorkSpace/google-earth/data/aerial/middle/ID0001/"
+        base_dir="/home/zhyw86/WorkSpace/google-earth/data/aerial/middle/ID0001/",
+        split_folder="/home/zhyw86/WorkSpace/google-earth/sampling/aerial/middle/random/ID0001/",
+        # ID0001_train.txt",
         # base_dir="/home/zhyw86/WorkSpace/google-earth/split_folders",
         # target_dir="/home/zhyw86/WorkSpace/google-earth/combined_sampled_output",
         # split_file="sampled_files.txt",
