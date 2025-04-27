@@ -51,21 +51,26 @@ def sample_and_combine_folders(base_dir,
     left_split_file = os.path.join(parent_dir.replace("middle", "left"), f"{folder_name}" ,f'{folder_name}_left_train.txt')
     right_split_file = os.path.join(parent_dir.replace("middle", "right"), f"{folder_name}" ,f'{folder_name}_right_train.txt')
     
-    
-    import pdb; pdb.set_trace()
-    
     # Read split files
     with open(split_file, "r") as f:
         middle_files = [line.strip() for line in f.readlines()]
+        sampled_middle_files = [middle_files[i] for i in range(0, len(middle_files), 3)]
+        sampled_middle_file_path = [os.path.join(base_dir,"footage", file) for file in sampled_middle_files]
+        
     with open(left_split_file, "r") as f:
         left_files = [line.strip() for line in f.readlines()]
+        sampled_left_files = [left_files[i] for i in range(1, len(left_files), 3)]
+        sampled_left_file_path = [os.path.join(left_dir,"footage", file) for file in sampled_left_files]
+        
     with open(right_split_file, "r") as f:
         right_files = [line.strip() for line in f.readlines()]
+        sampled_right_files = [right_files[i] for i in range(2, len(right_files), 3)]
+        sampled_right_file_path = [os.path.join(right_dir,"footage", file) for file in sampled_right_files]
+        
     # Combine all files
-    all_files = middle_files + left_files + right_files
+    all_sampled_file_path = sampled_middle_file_path + sampled_left_file_path + sampled_right_file_path
     
-    pdb.set_trace()
-     
+    import pdb; pdb.set_trace() 
     
     
     
