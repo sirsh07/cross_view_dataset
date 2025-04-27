@@ -73,7 +73,7 @@ def sample_and_combine_folders(base_dir,
     # Combine all files
     all_sampled_file_path = sampled_middle_file_path + sampled_left_file_path + sampled_right_file_path
     import pdb; pdb.set_trace()
-    split_100p = random.shuffle(all_sampled_file_path, inplace=False)
+    split_100p = random.shuffle(all_sampled_file_path)
     
     # split_100p = random.permute all_sampled_file_path
     # split_50p = [split_100p[i] for i in range(0, len(split_100p), 2)]
