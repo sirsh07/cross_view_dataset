@@ -63,7 +63,7 @@ def plot_stats(stats, output_plot):
     # Save the plot
     plt.savefig(output_plot)
     print(f"Plot saved to {output_plot}")
-    plt.show()
+    # plt.show()
 
 def main():
     parser = argparse.ArgumentParser(description="Generate directory tree, save stats to CSV, and plot file counts.")
