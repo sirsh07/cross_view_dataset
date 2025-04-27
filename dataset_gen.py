@@ -183,14 +183,5 @@ def handle_aerial_data():
 
 # Example usage:
 if __name__ == "__main__":
-    sample_and_combine_folders(
-        # base_dir="/home/zhyw86/WorkSpace/google-earth/data/aerial/middle/ID0001/",
-        # split_folder="/home/zhyw86/WorkSpace/google-earth/sampling/aerial/middle/random/ID0001/",
-        # ID0001_train.txt",
-        # base_dir="/home/zhyw86/WorkSpace/google-earth/split_folders",
-        # target_dir="/home/zhyw86/WorkSpace/google-earth/combined_sampled_output",
-        # split_file="sampled_files.txt",
-        # log_file="sample_combine.log",
-        # csv_output="sampled_files.csv",
-        # sample_ratio=1/3  # Default 1/3 sampling
-    )
+    
+    handle_aerial_data()
