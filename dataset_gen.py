@@ -30,9 +30,13 @@ def sample_and_combine_folders(base_dir,
 
     # setup_logging(log_file)
     
-    middle_dir = base_dir
-    left_dir = base_dir.replace("middle", "left")
-    right_dir = base_dir.replace("middle", "right")
+    folder_name =  os.path.basename(base_dir.rstrip('/'))
+    parent_dir = os.path.dirname(base_dir.rstrip('/'))
+    
+    
+    left_dir = os.path.join(parent_dir.replace("middle", "left"), f'{folder_name}_left')
+    right_dir = os.path.join(parent_dir.replace("middle", "right"), f'{folder_name}_right')
+    
     
     import pdb; pdb.set_trace()
     
