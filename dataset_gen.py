@@ -4,6 +4,7 @@ import random
 from tqdm import tqdm
 import logging
 import shutil  # for copying files
+import pandas as pd
 
 # def setup_logging(log_file):
 #     logging.basicConfig(
@@ -16,11 +17,8 @@ import shutil  # for copying files
 
 def sample_and_combine_folders(base_dir, 
                                split_folder,
-                            #    target_dir, 
-                            #    split_files, 
-                            #    log_file, 
-                            #    csv_output, 
-                            #    sample_ratio=1/3
+                               target_dir,
+                               site_id
                                ):
     """
     Sample 1/3 from middle, left, right folders and combine into target_dir.
@@ -72,63 +70,122 @@ def sample_and_combine_folders(base_dir,
         
     # Combine all files
     all_sampled_file_path = sampled_middle_file_path + sampled_left_file_path + sampled_right_file_path
+    random.shuffle(all_sampled_file_path)
+    split_50p = [all_sampled_file_path[i] for i in range(0, len(all_sampled_file_path), 2)]
+    split_25p = [all_sampled_file_path[i] for i in range(0, len(all_sampled_file_path), 4)]
+    split_12p = [all_sampled_file_path[i] for i in range(0, len(all_sampled_file_path), 8)]
+    
     import pdb; pdb.set_trace()
-    split_100p = random.shuffle(all_sampled_file_path)
     
-    # split_100p = random.permute all_sampled_file_path
-    # split_50p = [split_100p[i] for i in range(0, len(split_100p), 2)]
-    # split_25p = [split_100p[i] for i in range(0, len(split_100p), 4)]
-    # split_12p = [split_100p[i] for i in range(0, len(split_100p), 8)]
+    os.makedirs(target_dir, exist_ok=True)
     
+    # create 100p folder
+    target_100p = os.path.join(target_dir, "100p")
+    target_50p = os.path.join(target_dir, "50p")
+    target_25p = os.path.join(target_dir, "25p")
+    target_12p = os.path.join(target_dir, "12p")
+    os.makedirs(target_100p, exist_ok=True)
+    os.makedirs(target_50p, exist_ok=True)
+    os.makedirs(target_25p, exist_ok=True)
+    os.makedirs(target_12p, exist_ok=True)
     
+    original_file_paths = []
+    new_file_paths = []
+    file_names = []
+    splits = []
     
-    import pdb; pdb.set_trace() 
+    for file_path in tqdm(all_sampled_file_path, desc="Symlinking files to 100p folder"):
+        file_name = os.path.basename(file_path)
+        target_file_path = os.path.join(target_100p, file_name)
+        if not os.path.exists(target_file_path):
+            os.symlink(file_path, target_file_path)
+        original_file_paths.append(file_path)
+        new_file_paths.append(target_file_path)
+        file_names.append(file_name)
+        splits.append("100")
     
+    for file_path in tqdm(split_50p, desc="Symlinking files to 50p folder"):
+        file_name = os.path.basename(file_path)
+        target_file_path = os.path.join(target_50p, file_name)
+        if not os.path.exists(target_file_path):
+            os.symlink(file_path, target_file_path)
+        original_file_paths.append(file_path)
+        new_file_paths.append(target_file_path)
+        file_names.append(file_name)
+        splits.append("50")
     
+    for file_path in tqdm(split_25p, desc="Symlinking files to 25p folder"):
+        file_name = os.path.basename(file_path)
+        target_file_path = os.path.join(target_25p, file_name)
+        if not os.path.exists(target_file_path):
+            os.symlink(file_path, target_file_path)
+        original_file_paths.append(file_path)
+        new_file_paths.append(target_file_path)
+        file_names.append(file_name)
+        splits.append("25")
     
-    
-    
-    
-
-    # for folder in tqdm(folders, desc="Sampling Folders"):
-    #     folder_path = os.path.join(base_dir, folder)
-    #     if not os.path.exists(folder_path):
-    #         logging.warning(f"Folder not found: {folder_path}")
-    #         continue
+    for file_path in tqdm(split_12p, desc="Symlinking files to 12p folder"):
+        file_name = os.path.basename(file_path)
+        target_file_path = os.path.join(target_12p, file_name)
+        if not os.path.exists(target_file_path):
+            os.symlink(file_path, target_file_path) 
+        original_file_paths.append(file_path)
+        new_file_paths.append(target_file_path)
+        file_names.append(file_name)
+        splits.append("12")
         
-    #     files = [f for f in os.listdir(folder_path) if f.endswith(".jpeg")]
-    #     sample_size = int(len(files) * sample_ratio)
-    #     sampled_files = random.sample(files, sample_size)
+    csv_data = pd.DataFrame({
+        "OriginalFilePath": original_file_paths,
+        "FileName": file_names,
+        "NewFilePath": new_file_paths,
+        "Split": splits
+    })
+    
+    csv_data.to_csv(os.path.join(target_dir, f"sampled_files_{site_id}.csv"), index=False)    
+    
+    
 
-    #     target_subdir = os.path.join(target_dir, folder)
-    #     if not os.path.exists(target_subdir):
-    #         os.makedirs(target_subdir)
+def handle_aerial_data():
+    """
+    Handle aerial data by copying files from base_dir to target_dir.
+    """
+    
+    base_dir = "/home/zhyw86/WorkSpace/google-earth/data/aerial/middle/"
+    target_dir = "/home/sirsh/cv_dataset/dataset_50sites/data/aerial/"
+    split_folder = "/home/zhyw86/WorkSpace/google-earth/sampling/aerial/middle/random/"
+    
+    assert len(os.listdir(base_dir)) == len(os.listdir(split_folder)), "Base and split folders must have the same number of files."
+    
+    import pdb; pdb.set_trace()
 
-    #     for file_name in tqdm(sampled_files, desc=f"Processing {folder}", leave=False):
-    #         src_file = os.path.join(folder_path, file_name)
-    #         dest_file = os.path.join(target_subdir, file_name)
-
-    #         try:
-    #             if not os.path.exists(dest_file):
-    #                 shutil.copy(src_file, dest_file)  # or use os.symlink(src_file, dest_file)
-    #             logging.info(f"Copied {src_file} -> {dest_file}")
-    #             csv_data.append([folder, file_name, dest_file])
-    #         except Exception as e:
-    #             logging.error(f"Failed to copy {src_file} -> {dest_file}: {e}")
-
-    # Save CSV with sampled info
-    # with open(csv_output, "w", newline="") as f:
-    #     writer = csv.writer(f)
-    #     writer.writerow(["OriginalFolder", "FileName", "NewLocation"])
-    #     writer.writerows(csv_data)
-
-    # print(f"Sampling and combining completed. Log: {log_file}, CSV: {csv_output}")
+    for site_id in os.listdir(base_dir):
+        
+        site_base_dir = os.path.join(base_dir, site_id)
+        site_target_dir = os.path.join(target_dir, site_id)
+        site_split_folder = os.path.join(split_folder, site_id)
+        
+        
+        # Sample and combine folders
+        sample_and_combine_folders(
+            base_dir=site_base_dir,
+            split_folder=site_split_folder,
+            target_dir=site_target_dir,
+            site_id=site_id
+        )
+        
+                
+        
+    
+    
+    
+    
+    
 
 # Example usage:
 if __name__ == "__main__":
     sample_and_combine_folders(
-        base_dir="/home/zhyw86/WorkSpace/google-earth/data/aerial/middle/ID0001/",
-        split_folder="/home/zhyw86/WorkSpace/google-earth/sampling/aerial/middle/random/ID0001/",
+        # base_dir="/home/zhyw86/WorkSpace/google-earth/data/aerial/middle/ID0001/",
+        # split_folder="/home/zhyw86/WorkSpace/google-earth/sampling/aerial/middle/random/ID0001/",
         # ID0001_train.txt",
         # base_dir="/home/zhyw86/WorkSpace/google-earth/split_folders",
         # target_dir="/home/zhyw86/WorkSpace/google-earth/combined_sampled_output",
