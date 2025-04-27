@@ -75,7 +75,6 @@ def sample_and_combine_folders(base_dir,
     split_25p = [all_sampled_file_path[i] for i in range(0, len(all_sampled_file_path), 4)]
     split_12p = [all_sampled_file_path[i] for i in range(0, len(all_sampled_file_path), 8)]
     
-    import pdb; pdb.set_trace()
     
     os.makedirs(target_dir, exist_ok=True)
     
