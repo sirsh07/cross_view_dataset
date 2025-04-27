@@ -41,7 +41,7 @@ def sample_and_combine_folders(base_dir,
     
     
     # get right and left split files
-    split_folder="/home/zhyw86/WorkSpace/google-earth/sampling/aerial/middle/random/ID0001/",
+    # split_folder="/home/zhyw86/WorkSpace/google-earth/sampling/aerial/middle/random/ID0001/",
     folder_name = os.path.basename(split_folder.rstrip('/'))
     parent_dir = os.path.dirname(split_folder.rstrip('/'))
     
