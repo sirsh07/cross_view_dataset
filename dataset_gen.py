@@ -79,10 +79,10 @@ def sample_and_combine_folders(base_dir,
     os.makedirs(target_dir, exist_ok=True)
     
     # create 100p folder
-    target_100p = os.path.join(target_dir, "100p")
-    target_50p = os.path.join(target_dir, "50p")
-    target_25p = os.path.join(target_dir, "25p")
-    target_12p = os.path.join(target_dir, "12p")
+    target_100p = os.path.join(target_dir, "p100")
+    target_50p = os.path.join(target_dir, "p50")
+    target_25p = os.path.join(target_dir, "p25")
+    target_12p = os.path.join(target_dir, "p12")
     os.makedirs(target_100p, exist_ok=True)
     os.makedirs(target_50p, exist_ok=True)
     os.makedirs(target_25p, exist_ok=True)
