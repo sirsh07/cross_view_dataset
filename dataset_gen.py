@@ -46,8 +46,11 @@ def sample_and_combine_folders(base_dir,
     parent_dir = os.path.dirname(split_folder.rstrip('/'))
     
     split_file = os.path.join(split_folder, f'{folder_name}_train.txt')
+    left_split_file = os.path.join(parent_dir.replace("middle", "left"), f"{folder_name}_left" ,f'{folder_name}_left_train.txt')
+    right_split_file = os.path.join(parent_dir.replace("middle", "right"), f"{folder_name}_right" ,f'{folder_name}_right_train.txt')
     
     import pdb; pdb.set_trace()
+    
     
      
     
