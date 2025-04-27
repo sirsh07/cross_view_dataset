@@ -54,21 +54,33 @@ def sample_and_combine_folders(base_dir,
     # Read split files
     with open(split_file, "r") as f:
         middle_files = [line.strip() for line in f.readlines()]
-        sampled_middle_files = [middle_files[i] for i in range(0, len(middle_files), 3)]
+        # sampled_middle_files = [middle_files[i] for i in range(0, len(middle_files), 3)]
+        sampled_middle_files = random.sample(middle_files, int(len(middle_files) * 1/3))
         sampled_middle_file_path = [os.path.join(base_dir,"footage", file) for file in sampled_middle_files]
         
     with open(left_split_file, "r") as f:
         left_files = [line.strip() for line in f.readlines()]
-        sampled_left_files = [left_files[i] for i in range(1, len(left_files), 3)]
+        # sampled_left_files = [left_files[i] for i in range(1, len(left_files), 3)]
+        sampled_middle_files = random.sample(left_files, int(len(left_files) * 1/3))
         sampled_left_file_path = [os.path.join(left_dir,"footage", file) for file in sampled_left_files]
         
     with open(right_split_file, "r") as f:
         right_files = [line.strip() for line in f.readlines()]
-        sampled_right_files = [right_files[i] for i in range(2, len(right_files), 3)]
+        # sampled_right_files = [right_files[i] for i in range(2, len(right_files), 3)]
+        sampled_right_file_path = random.sample(right_files, int(len(right_files) * 1/3))
         sampled_right_file_path = [os.path.join(right_dir,"footage", file) for file in sampled_right_files]
         
     # Combine all files
     all_sampled_file_path = sampled_middle_file_path + sampled_left_file_path + sampled_right_file_path
+    import pdb; pdb.set_trace()
+    # permute all sampled files
+    random.shuffle(all_sampled_file_path)
+    # split_100p = random.permute all_sampled_file_path
+    # split_50p = [split_100p[i] for i in range(0, len(split_100p), 2)]
+    # split_25p = [split_100p[i] for i in range(0, len(split_100p), 4)]
+    # split_12p = [split_100p[i] for i in range(0, len(split_100p), 8)]
+    
+    
     
     import pdb; pdb.set_trace() 
     
