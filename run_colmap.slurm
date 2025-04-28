@@ -26,9 +26,13 @@ relative_path=${input_folder#"$base_input_dir"}  # Get the relative path of the 
 metadata_folder="$base_metadata_dir/$relative_path"
 results_folder="$base_results_dir/${relative_path%/images}"
 
+
 # Define workspace and output folders
 workspace_folder="${results_folder}/workspace"
 output_folder="${results_folder}/output"
+
+mkdir -p "$workspace_folder"
+mkdir -p "$output_folder"
 
 # Activate the environment and run the job
 echo CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES
