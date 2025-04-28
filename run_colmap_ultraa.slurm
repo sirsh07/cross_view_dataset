@@ -3,31 +3,31 @@
 #SBATCH --gpus=1 -C 'volta|turing|ampere'
 #SBATCH --cpus-per-gpu=10
 #SBATCH -C 'gmem32|gmem80|gmem48|gmem24'
-##SBATCH -C gmem48
-#SBATCH --job-name=ultrra25_cmap_%A_%a  # Job name includes job array ID and task ID
-#SBATCH --output=slurm_outputs/ultrra25_cmap/ultrra25_cmap_%A_%a.out  # Output file for each job in the array
+#SBATCH --job-name=dataset_50sites_cmap_%A_%a  # Job name includes job array ID and task ID
+#SBATCH --output=slurm_outputs/dataset_50sites_cmap/dataset_50sites_cmap_%A_%a.out  # Output file for each job in the array
 #SBATCH --gres-flags=enforce-binding
 #SBATCH --qos day
-#SBATCH --array=0-7  # Create an array with 4 jobs (task IDs 0 to 3)
+#SBATCH --array=0-$(($(find /home/sirsh/cv_dataset/dataset_50sites/data/ -type d -name "images" | wc -l) - 1))%2  # Dynamically set array size
 
-# Define input image folders
-declare -a input_folders=(
-    "/home/sirsh/cv_gen_eccv25/ultrra25/ultraa_data/ultrra25-dev-inputs-v01/inputs/view_synthesis/t01_v09_s00_r01_ImageDensity_WACV_dev_A01/train"
-    "/home/sirsh/cv_gen_eccv25/ultrra25/ultraa_data/ultrra25-dev-inputs-v01/inputs/view_synthesis/t02_v06_s00_r01_CameraModels_WACV_dev_A01/train"
-    "/home/sirsh/cv_gen_eccv25/ultrra25/ultraa_data/ultrra25-dev-inputs-v01/inputs/view_synthesis/t03_v06_s00_r01_ReconstructedArea_WACV_dev_A01/train"
-    "/home/sirsh/cv_gen_eccv25/ultrra25/ultraa_data/ultrra25-dev-inputs-v01/inputs/view_synthesis/t04_v11_s00_r01_VaryingAltitudes_WACV_dev_A01/train"
-    "/home/sirsh/cv_gen_eccv25/ultrra25/ultraa_data/ultrra25-test-inputs-v01/inputs/view_synthesis/t01_v10_s00_r01_ImageDensity_WACV_test_A09/train"
-    "/home/sirsh/cv_gen_eccv25/ultrra25/ultraa_data/ultrra25-test-inputs-v01/inputs/view_synthesis/t02_v07_s00_r01_CameraModels_WACV_test_A09/train"
-    "/home/sirsh/cv_gen_eccv25/ultrra25/ultraa_data/ultrra25-test-inputs-v01/inputs/view_synthesis/t03_v07_s00_r01_ReconstructedArea_WACV_test_A09/train"
-    "/home/sirsh/cv_gen_eccv25/ultrra25/ultraa_data/ultrra25-test-inputs-v01/inputs/view_synthesis/t04_v12_s00_r01_VaryingAltitudes_WACV_test_A09/train"
-)
+# Define base directories
+base_input_dir="/home/sirsh/cv_dataset/dataset_50sites/data/"
+base_metadata_dir="/home/sirsh/cv_dataset/dataset_50sites/colmap/metadata/"
+base_results_dir="/home/sirsh/cv_dataset/dataset_50sites/colmap/results/"
+
+# Generate a list of all input image folders
+input_folders=($(find "$base_input_dir" -type d -name "images"))
 
 # Select the corresponding input folder based on SLURM_ARRAY_TASK_ID
 input_folder=${input_folders[$SLURM_ARRAY_TASK_ID]}
 
+# Generate the corresponding metadata folder
+relative_path=${input_folder#"$base_input_dir"}  # Get the relative path of the input folder
+metadata_folder="$base_metadata_dir/$relative_path"
+results_folder="$base_results_dir/${relative_path%/images}"
+
 # Define workspace and output folders
-output_folder="${input_folder/ultraa_data/ultraa_colmap}/output"
-workspace_folder="${input_folder/ultraa_data/ultraa_colmap}/workspace"
+workspace_folder="${results_folder}/workspace"
+output_folder="${results_folder}/output"
 
 # Activate the environment and run the job
 echo CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES
@@ -41,8 +41,12 @@ squeue --me
 echo "Job array ID: $SLURM_ARRAY_JOB_ID"
 echo "Task ID: $SLURM_ARRAY_TASK_ID"
 echo "Input folder: $input_folder"
+echo "Metadata folder: $metadata_folder"
 echo "Workspace folder: $workspace_folder"
 echo "Output folder: $output_folder"
+
+
+cd /home/sirsh/wriva_2024/accenture-colmap_plus
 
 # Run the Python script with the corresponding parameters
 python3 run_wriva_reconstruction.py \
@@ -52,9 +56,5 @@ python3 run_wriva_reconstruction.py \
     --enable_doppelganger_threshold 200 \
     --max_images 500 \
     --num_threads 6 \
-    --input_metadata_folder "$input_folder" \
+    --input_metadata_folder "$metadata_folder" \
     --ground_truth_mode
-
-
-# python3 run_wriva_reconstruction.py --input_images_folder "/home/sirsh/cv_gen_eccv25/ultrra25/ultraa_data/ultrra25-dev-inputs-v01/inputs/view_synthesis/t01_v09_s00_r01_ImageDensity_WACV_dev_A01/train" --workspace_folder "/home/sirsh/cv_gen_eccv25/ultrra25/ultraa_colmap/ultrra25-dev-inputs-v01/inputs/view_synthesis/t01_v09_s00_r01_ImageDensity_WACV_dev_A01/train/workspace" --output_folder "/home/sirsh/cv_gen_eccv25/ultrra25/ultraa_colmap/ultrra25-dev-inputs-v01/inputs/view_synthesis/t01_v09_s00_r01_ImageDensity_WACV_dev_A01/train/output"  --enable_doppelganger_threshold 200 --max_images 500 --num_threads 6 --input_metadata_folder "/home/sirsh/cv_gen_eccv25/ultrra25/ultraa_data/ultrra25-dev-inputs-v01/inputs/view_synthesis/t01_v09_s00_r01_ImageDensity_WACV_dev_A01/train" --ground_truth_mode
-
