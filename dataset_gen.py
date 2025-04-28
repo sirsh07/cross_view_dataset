@@ -227,10 +227,11 @@ def sample_and_combine_folders_street(base_dir,
     new_file_paths = []
     file_names = []
     splits = []
-    import pdb; pdb.set_trace()
+    # import pdb; pdb.set_trace()
     for file_path in tqdm(all_sampled_file_path, desc="Symlinking files to 100p folder"):
         file_name = os.path.basename(file_path)
         target_file_path = os.path.join(target_100p, file_name.replace("street", ""))
+        assert os.path.exists(file_path), f"File not found: {file_path}"
         if not os.path.exists(target_file_path):
             os.symlink(file_path, target_file_path)
         original_file_paths.append(file_path)
@@ -241,6 +242,7 @@ def sample_and_combine_folders_street(base_dir,
     for file_path in tqdm(split_50p, desc="Symlinking files to 50p folder"):
         file_name = os.path.basename(file_path)
         target_file_path = os.path.join(target_50p, file_name.replace("street", ""))
+        assert os.path.exists(file_path), f"File not found: {file_path}"
         if not os.path.exists(target_file_path):
             os.symlink(file_path, target_file_path)
         original_file_paths.append(file_path)
@@ -251,6 +253,7 @@ def sample_and_combine_folders_street(base_dir,
     for file_path in tqdm(split_25p, desc="Symlinking files to 25p folder"):
         file_name = os.path.basename(file_path)
         target_file_path = os.path.join(target_25p, file_name.replace("street", ""))
+        assert os.path.exists(file_path), f"File not found: {file_path}"
         if not os.path.exists(target_file_path):
             os.symlink(file_path, target_file_path)
         original_file_paths.append(file_path)
@@ -261,6 +264,7 @@ def sample_and_combine_folders_street(base_dir,
     for file_path in tqdm(split_12p, desc="Symlinking files to 12p folder"):
         file_name = os.path.basename(file_path)
         target_file_path = os.path.join(target_12p, file_name.replace("street", ""))
+        assert os.path.exists(file_path), f"File not found: {file_path}"
         if not os.path.exists(target_file_path):
             os.symlink(file_path, target_file_path) 
         original_file_paths.append(file_path)
