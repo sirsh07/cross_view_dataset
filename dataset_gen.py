@@ -311,21 +311,22 @@ def handle_combined_data():
     
     os.makedirs(target_dir, exist_ok=True)
     
-    # for site_id in list((set(os.listdir(base_dir)) & set(os.listdir(split_folder)))-set(os.listdir(target_dir))):
-    # for site_id in list((set(os.listdir(aerial_dir)) & set(os.listdir(street_dir)))-set(os.listdir(target_dir))):
+    for site_id in list((set(os.listdir(aerial_dir)) & set(os.listdir(street_dir)))-set(os.listdir(target_dir))):
         
-    #     # site_base_dir = os.path.join(base_dir, site_id)
-    #     # site_target_dir = os.path.join(target_dir, site_id)
-    #     # site_split_folder = os.path.join(split_folder, site_id)
+        site_aerial_dir = os.path.join(aerial_dir, site_id)
+        site_street_dir = os.path.join(street_dir, site_id)
         
+        site_target_dir = os.path.join(target_dir, site_id)
         
-    #     # Sample and combine folders
-    #     sample_and_combine_folders_street(
-    #         base_dir=site_base_dir,
-    #         split_folder=site_split_folder,
-    #         target_dir=site_target_dir,
-    #         site_id=site_id
-    #     )
+        import pdb; pdb.set_trace()
+        
+        # Sample and combine folders
+        # sample_and_combine_folders_street(
+        #     base_dir=site_base_dir,
+        #     split_folder=site_split_folder,
+        #     target_dir=site_target_dir,
+        #     site_id=site_id
+        # )
     
 
     
@@ -334,4 +335,5 @@ def handle_combined_data():
 if __name__ == "__main__":
     
     # handle_aerial_data()
-    handle_street_data()
+    # handle_street_data()
+    handle_combined_data()
