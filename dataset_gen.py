@@ -167,8 +167,6 @@ def handle_aerial_data():
             site_id=site_id
         )
     
-    
-    
 
 def sample_and_combine_folders_street(base_dir, 
                                split_folder,
@@ -183,8 +181,6 @@ def sample_and_combine_folders_street(base_dir,
     #     os.makedirs(target_dir)
 
     # setup_logging(log_file)
-    
-    import pdb; pdb.set_trace()
     
     
     # get right and left split files
@@ -210,8 +206,6 @@ def sample_and_combine_folders_street(base_dir,
     split_50p = [all_sampled_file_path[i] for i in range(0, len(all_sampled_file_path), 2)]
     split_25p = [all_sampled_file_path[i] for i in range(0, len(all_sampled_file_path), 4)]
     split_12p = [all_sampled_file_path[i] for i in range(0, len(all_sampled_file_path), 8)]
-    
-    import pdb; pdb.set_trace()
     
     os.makedirs(target_dir, exist_ok=True)
     
@@ -278,9 +272,6 @@ def sample_and_combine_folders_street(base_dir,
     })
     
     csv_data.to_csv(os.path.join(target_dir, f"sampled_files_{site_id}.csv"), index=False)    
-    
-    
-        
                 
 
 def handle_street_data():
