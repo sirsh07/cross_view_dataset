@@ -304,10 +304,10 @@ def handle_combined_data():
     Handle aerial data by copying files from base_dir to target_dir.
     """
     
-    target_dir = "/home/sirsh/cv_dataset/dataset_50sites/data/aerial_street/"
+    target_dir = "/home/sirsh/cv_dataset/dataset_50sites/data/aerial_street/train/"
     
-    aerial_dir = "/home/sirsh/cv_dataset/dataset_50sites/data/aerial/"
-    street_dir = "/home/sirsh/cv_dataset/dataset_50sites/data/street/"
+    aerial_dir = "/home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/"
+    street_dir = "/home/sirsh/cv_dataset/dataset_50sites/data/street/train/"
     
     os.makedirs(target_dir, exist_ok=True)
     
