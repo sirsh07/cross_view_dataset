@@ -311,8 +311,6 @@ def handle_combined_data():
     
     os.makedirs(target_dir, exist_ok=True)
     
-    import pdb; pdb.set_trace()
-    
     for site_id in list((set(os.listdir(aerial_dir)) & set(os.listdir(street_dir)))-set(os.listdir(target_dir))):
         
         site_aerial_dir = os.path.join(aerial_dir, site_id)
@@ -320,7 +318,11 @@ def handle_combined_data():
         
         site_target_dir = os.path.join(target_dir, site_id)
         
-        import pdb; pdb.set_trace()
+        aerial_sampled_files = pd.read_csv(os.path.join(site_aerial_dir, f"sampled_files_{site_id}.csv"))
+        street_sampled_files = pd.read_csv(os.path.join(site_street_dir, f"sampled_files_{site_id}.csv"))
+        
+        
+        
         
         # Sample and combine folders
         # sample_and_combine_folders_street(
