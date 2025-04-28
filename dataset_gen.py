@@ -152,7 +152,8 @@ def handle_aerial_data():
     split_folder = "/home/zhyw86/WorkSpace/google-earth/sampling/aerial/middle/random/"
     
     
-    for site_id in list(set(os.listdir(base_dir)) & set(os.listdir(split_folder))):
+    # for site_id in list(set(os.listdir(base_dir)) & set(os.listdir(split_folder))):
+    for site_id in list((set(os.listdir(base_dir)) & set(os.listdir(split_folder)))-set(os.listdir(target_dir))):
         
         site_base_dir = os.path.join(base_dir, site_id)
         site_target_dir = os.path.join(target_dir, site_id)
