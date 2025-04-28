@@ -311,6 +311,8 @@ def handle_combined_data():
     
     os.makedirs(target_dir, exist_ok=True)
     
+    import pdb; pdb.set_trace()
+    
     for site_id in list((set(os.listdir(aerial_dir)) & set(os.listdir(street_dir)))-set(os.listdir(target_dir))):
         
         site_aerial_dir = os.path.join(aerial_dir, site_id)
