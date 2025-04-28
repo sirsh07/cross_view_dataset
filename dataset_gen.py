@@ -278,7 +278,7 @@ def handle_street_data():
     """
     
     base_dir = "/home/zhyw86/WorkSpace/google-earth/data/street/"
-    target_dir = "/home/sirsh/cv_dataset/dataset_50sites/data/street/"
+    target_dir = "/home/sirsh/cv_dataset/dataset_50sites/data/street/train/"
     split_folder = "/home/zhyw86/WorkSpace/google-earth/sampling/street/random/"
     
     os.makedirs(target_dir, exist_ok=True)
@@ -337,5 +337,5 @@ def handle_combined_data():
 if __name__ == "__main__":
     
     # handle_aerial_data()
-    # handle_street_data()
-    handle_combined_data()
+    handle_street_data()
+    # handle_combined_data()
