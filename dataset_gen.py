@@ -226,6 +226,7 @@ def sample_and_combine_folders_street(base_dir,
     for file_path in tqdm(all_sampled_file_path, desc="Symlinking files to 100p folder"):
         file_name = os.path.basename(file_path)
         target_file_path = os.path.join(target_100p, file_name)
+        import pdb; pdb.set_trace()
         if not os.path.exists(target_file_path):
             os.symlink(file_path, target_file_path)
         original_file_paths.append(file_path)
@@ -360,5 +361,5 @@ def handle_combined_data():
 if __name__ == "__main__":
     
     # handle_aerial_data()
-    # handle_street_data()
-    handle_combined_data()
+    handle_street_data()
+    # handle_combined_data()
