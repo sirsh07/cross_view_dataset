@@ -297,8 +297,7 @@ def handle_street_data():
             target_dir=site_target_dir,
             site_id=site_id.replace("_street", "")
         )
-        
-        
+                
 def handle_combined_data():
     """
     Handle aerial data by copying files from base_dir to target_dir.
