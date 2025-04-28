@@ -35,7 +35,7 @@ if __name__ == "__main__":
 
     if unopenable_images:
         print("\nThe following images cannot be opened:")
-        for image in unopenable_images:
-            print(image)
+        # for image in unopenable_images:
+        #     print(image)
     else:
         print("\nAll images can be opened successfully.")
