@@ -61,6 +61,7 @@ def inference(pairs, model, device, batch_size=8, verbose=True):
     # first, check if all images have the same size
     multiple_shapes = not (check_if_same_size(pairs))
     if multiple_shapes:  # force bs=1
+        print(">> Warning: images have different sizes, using batch_size=1")
         batch_size = 1
 
     for i in tqdm.trange(0, len(pairs), batch_size, disable=not verbose):
