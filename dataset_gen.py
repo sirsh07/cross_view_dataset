@@ -196,8 +196,14 @@ def sample_and_combine_folders_street(base_dir,
         middle_files = [line.strip() for line in f.readlines()]
         # sampled_middle_files = [middle_files[i] for i in range(0, len(middle_files), 3)]
         # sampled_middle_files = random.sample(middle_files, int(len(middle_files) * 1/3))
-        sampled_middle_file_path = [os.path.join(base_dir,"footage", file) for file in middle_files]
+        import pdb; pdb.set_trace()
+        middle_files = [
+            "_".join([os.path.basename(file).split("_")[0], "street"] + os.path.basename(file).split("_")[1:]) 
+            if "street" not in file else file 
+            for file in middle_files
+            ]
         
+        sampled_middle_file_path = [os.path.join(base_dir,"footage", file) for file in middle_files]
         
     # Combine all files
     all_sampled_file_path = sampled_middle_file_path
@@ -226,7 +232,6 @@ def sample_and_combine_folders_street(base_dir,
     for file_path in tqdm(all_sampled_file_path, desc="Symlinking files to 100p folder"):
         file_name = os.path.basename(file_path)
         target_file_path = os.path.join(target_100p, file_name)
-        import pdb; pdb.set_trace()
         if not os.path.exists(target_file_path):
             os.symlink(file_path, target_file_path)
         original_file_paths.append(file_path)
