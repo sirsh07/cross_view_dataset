@@ -200,8 +200,8 @@ def sample_and_combine_folders_street(base_dir,
     with open(split_file, "r") as f:
         middle_files = [line.strip() for line in f.readlines()]
         # sampled_middle_files = [middle_files[i] for i in range(0, len(middle_files), 3)]
-        sampled_middle_files = random.sample(middle_files, int(len(middle_files) * 1/3))
-        sampled_middle_file_path = [os.path.join(base_dir,"footage", file) for file in sampled_middle_files]
+        # sampled_middle_files = random.sample(middle_files, int(len(middle_files) * 1/3))
+        sampled_middle_file_path = [os.path.join(base_dir,"footage", file) for file in middle_files]
         
         
     # Combine all files
