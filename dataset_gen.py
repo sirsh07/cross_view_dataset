@@ -167,7 +167,6 @@ def handle_aerial_data():
             site_id=site_id
         )
     
-
 def sample_and_combine_folders_street(base_dir, 
                                split_folder,
                                target_dir,
@@ -273,7 +272,6 @@ def sample_and_combine_folders_street(base_dir,
     
     csv_data.to_csv(os.path.join(target_dir, f"sampled_files_{site_id}.csv"), index=False)    
                 
-
 def handle_street_data():
     """
     Handle aerial data by copying files from base_dir to target_dir.
@@ -288,7 +286,7 @@ def handle_street_data():
     for site_id in list((set(os.listdir(base_dir)) & set(os.listdir(split_folder)))-set(os.listdir(target_dir))):
         
         site_base_dir = os.path.join(base_dir, site_id)
-        site_target_dir = os.path.join(target_dir, site_id)
+        site_target_dir = os.path.join(target_dir, site_id.replace("_street", "")) 
         site_split_folder = os.path.join(split_folder, site_id)
         
         
@@ -301,10 +299,35 @@ def handle_street_data():
         )
         
         
+def handle_combined_data():
+    """
+    Handle aerial data by copying files from base_dir to target_dir.
+    """
     
+    target_dir = "/home/sirsh/cv_dataset/dataset_50sites/data/aerial_street/"
     
+    aerial_dir = "/home/sirsh/cv_dataset/dataset_50sites/data/aerial/"
+    street_dir = "/home/sirsh/cv_dataset/dataset_50sites/data/street/"
     
+    os.makedirs(target_dir, exist_ok=True)
     
+    # for site_id in list((set(os.listdir(base_dir)) & set(os.listdir(split_folder)))-set(os.listdir(target_dir))):
+    # for site_id in list((set(os.listdir(aerial_dir)) & set(os.listdir(street_dir)))-set(os.listdir(target_dir))):
+        
+    #     # site_base_dir = os.path.join(base_dir, site_id)
+    #     # site_target_dir = os.path.join(target_dir, site_id)
+    #     # site_split_folder = os.path.join(split_folder, site_id)
+        
+        
+    #     # Sample and combine folders
+    #     sample_and_combine_folders_street(
+    #         base_dir=site_base_dir,
+    #         split_folder=site_split_folder,
+    #         target_dir=site_target_dir,
+    #         site_id=site_id
+    #     )
+    
+
     
 
 # Example usage:
