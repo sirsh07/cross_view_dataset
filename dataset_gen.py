@@ -339,5 +339,5 @@ def handle_combined_data():
 if __name__ == "__main__":
     
     # handle_aerial_data()
-    # handle_street_data()
-    handle_combined_data()
+    handle_street_data()
+    # handle_combined_data()
