@@ -321,6 +321,8 @@ def handle_combined_data():
         aerial_sampled_files = pd.read_csv(os.path.join(site_aerial_dir, f"sampled_files_{site_id}.csv"))
         street_sampled_files = pd.read_csv(os.path.join(site_street_dir, f"sampled_files_{site_id}.csv"))
         
+        import pdb; pdb.set_trace()
+        
         
         
         
