@@ -1,6 +1,7 @@
 import os
 import json
 import argparse
+from tqdm import tqdm
 
 def crawl_directories(base_input_dir, base_output_dir):
     """
@@ -35,11 +36,11 @@ def generate_metadata_for_all(base_input_dir, base_output_dir):
     """
     # Crawl directories and get input-output folder pairs
     input_output_pairs = crawl_directories(base_input_dir, base_output_dir)
-    
-    import pdb; pdb.set_trace()
 
-    for input_folder, output_folder in input_output_pairs:
-        print(f"Processing: {input_folder} -> {output_folder}")
+    # for input_folder, output_folder in input_output_pairs:
+    #     print(f"Processing: {input_folder} -> {output_folder}")
+    #     generate_metadata(input_folder, output_folder)
+    for input_folder, output_folder in tqdm(input_output_pairs, desc="Processing Folders"):
         generate_metadata(input_folder, output_folder)
 
 def generate_metadata(input_folder, output_folder):
@@ -93,13 +94,13 @@ def generate_metadata(input_folder, output_folder):
         # Update metadata template with filename and type
         metadata = metadata_template.copy()
         metadata["fname"] = image_name
-        metadata["type"] = "airborne" if "image-" in image_name else "ground"
+        metadata["type"] = "airborne" if "street" not in image_name else "ground"
         
         # Write JSON file
         with open(metadata_path, "w") as f:
             json.dump(metadata, f, indent=4)
 
-    print(f"Metadata files saved in '{output_folder}' folder.")
+    # print(f"Metadata files saved in '{output_folder}' folder.")
 
 # Example usage
 if __name__ == "__main__":
