@@ -7,7 +7,8 @@
 #SBATCH --output=slurm_outputs/dataset_50sites_cmap/dataset_50sites_cmap_%A_%a.out  # Output file for each job in the array
 #SBATCH --gres-flags=enforce-binding
 #SBATCH --qos day
-#SBATCH --array=0-$(($(find /home/sirsh/cv_dataset/dataset_50sites/data/ -type d -name "images" | wc -l) - 1))%2  # Dynamically set array size
+##SBATCH --array=0-$(($(find /home/sirsh/cv_dataset/dataset_50sites/data/ -type d -name "images" | wc -l) - 1))%2  # Dynamically set array size
+#SBATCH --array=0-120%2  # Dynamically set array size
 
 # Define base directories
 base_input_dir="/home/sirsh/cv_dataset/dataset_50sites/data/"
