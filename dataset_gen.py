@@ -341,8 +341,6 @@ def handle_combined_data():
         # Combine aerial and street sampled files
         combined_files = pd.concat([aerial_sampled_files, street_sampled_files])
         
-        import pdb; pdb.set_trace()
-
         # Create symlinks for all files
         for original, new in zip(combined_files["OriginalFilePath"], combined_files["NewFilePath"]):
             os.makedirs(os.path.dirname(new), exist_ok=True)  # Ensure the target directory exists
@@ -355,16 +353,7 @@ def handle_combined_data():
         # Save the combined DataFrame to a new CSV file
         combined_csv_path = os.path.join(site_target_dir, f"sampled_files_{site_id}.csv")
         combined_files.to_csv(combined_csv_path, index=False)
-        print(f"Combined CSV saved to: {combined_csv_path}")
         
-        # Sample and combine folders
-        # sample_and_combine_folders_street(
-        #     base_dir=site_base_dir,
-        #     split_folder=site_split_folder,
-        #     target_dir=site_target_dir,
-        #     site_id=site_id
-        # )
-    
 
     
 
