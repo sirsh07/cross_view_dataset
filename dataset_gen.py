@@ -292,9 +292,9 @@ def handle_street_data():
     target_dir = "/home/sirsh/cv_dataset/dataset_50sites/data/street/"
     split_folder = "/home/zhyw86/WorkSpace/google-earth/sampling/street/random/"
     
-    import pdb; pdb.set_trace()
+    os.makedirs(target_dir, exist_ok=True)
     
-    for site_id in list(set(os.listdir(base_dir)) & set(os.listdir(split_folder))):
+    for site_id in list((set(os.listdir(base_dir)) & set(os.listdir(split_folder)))-set(os.listdir(target_dir))):
         
         site_base_dir = os.path.join(base_dir, site_id)
         site_target_dir = os.path.join(target_dir, site_id)
