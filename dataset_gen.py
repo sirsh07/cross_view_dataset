@@ -227,7 +227,7 @@ def sample_and_combine_folders_street(base_dir,
     new_file_paths = []
     file_names = []
     splits = []
-    
+    import pdb; pdb.set_trace()
     for file_path in tqdm(all_sampled_file_path, desc="Symlinking files to 100p folder"):
         file_name = os.path.basename(file_path)
         target_file_path = os.path.join(target_100p, file_name.replace("street", ""))
