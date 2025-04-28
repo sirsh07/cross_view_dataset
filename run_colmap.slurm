@@ -45,7 +45,6 @@ echo "Metadata folder: $metadata_folder"
 echo "Workspace folder: $workspace_folder"
 echo "Output folder: $output_folder"
 
-
 cd /home/sirsh/wriva_2024/accenture-colmap_plus
 
 # Run the Python script with the corresponding parameters
