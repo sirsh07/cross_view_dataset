@@ -321,10 +321,41 @@ def handle_combined_data():
         aerial_sampled_files = pd.read_csv(os.path.join(site_aerial_dir, f"sampled_files_{site_id}.csv"))
         street_sampled_files = pd.read_csv(os.path.join(site_street_dir, f"sampled_files_{site_id}.csv"))
         
+        aerial_sampled_files["NewFilePath"] = aerial_sampled_files["NewFilePath"].str.replace(
+            "/aerial/", "/aerial_street/"
+        )
+        
+        # Replace "street" with "aerial_street" in the "NewFilePath" column for street files
+        street_sampled_files["NewFilePath"] = street_sampled_files["NewFilePath"].str.replace(
+            "/street/", "/aerial_street/"
+        )
+
+        # Modify filenames in street_sampled_files to include "_street"
+        street_sampled_files["NewFilePath"] = street_sampled_files["NewFilePath"].apply(
+            lambda x: os.path.join(
+                os.path.dirname(x),
+                "_".join([os.path.basename(x).split("_")[0], "street"] + os.path.basename(x).split("_")[1:])
+            )
+        )
+        
+        # Combine aerial and street sampled files
+        combined_files = pd.concat([aerial_sampled_files, street_sampled_files])
+        
         import pdb; pdb.set_trace()
+
+        # Create symlinks for all files
+        for original, new in zip(combined_files["OriginalFilePath"], combined_files["NewFilePath"]):
+            os.makedirs(os.path.dirname(new), exist_ok=True)  # Ensure the target directory exists
+            if not os.path.exists(new):  # Avoid overwriting existing symlinks
+                os.symlink(original, new)
+                print(f"Symlink created: {new} -> {original}")
+            else:
+                print(f"Symlink already exists: {new}")
         
-        
-        
+        # Save the combined DataFrame to a new CSV file
+        combined_csv_path = os.path.join(site_target_dir, f"sampled_files_{site_id}.csv")
+        combined_files.to_csv(combined_csv_path, index=False)
+        print(f"Combined CSV saved to: {combined_csv_path}")
         
         # Sample and combine folders
         # sample_and_combine_folders_street(
