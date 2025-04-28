@@ -295,7 +295,7 @@ def handle_street_data():
             base_dir=site_base_dir,
             split_folder=site_split_folder,
             target_dir=site_target_dir,
-            site_id=site_id
+            site_id=site_id.replace("_street", "")
         )
         
         
