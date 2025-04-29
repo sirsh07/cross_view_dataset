@@ -68,9 +68,10 @@ def get_data(csv_file: str) -> Tuple[pd.DataFrame, Dict[str, Any]]:
     def get_metadata_file_path(original_path: str) -> str:
         # Extract the directory and file prefix
         dir_path = os.path.dirname(original_path)  # Get the directory path
+        parent_dir = os.path.dirname(dir_path)  # Get the parent directory path
         file_prefix = os.path.basename(original_path).split("_")[0] + "_" + os.path.basename(original_path).split("_")[1]
         # Construct the metadata file path
-        return os.path.join(dir_path, f"{file_prefix}.json")
+        return os.path.join(parent_dir, f"{file_prefix}.json")
     
     # Apply the function to the 'OriginalFilePath' column
     df["MetaDataPath"] = df["OriginalFilePath"].apply(get_metadata_file_path)
