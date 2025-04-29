@@ -38,6 +38,8 @@ from gsplat.optimizers import SelectiveAdam
 from gsplat.rendering import rasterization
 from gsplat.strategy import DefaultStrategy, MCMCStrategy
 
+from dreamsim import dreamsim
+from torchvision import transforms
 
 @dataclass
 class Config:
@@ -423,6 +425,14 @@ class Runner:
         # Losses & Metrics.
         self.ssim = StructuralSimilarityIndexMeasure(data_range=1.0).to(self.device)
         self.psnr = PeakSignalNoiseRatio(data_range=1.0).to(self.device)
+        
+        self.ds_model, self.ds_preprocess_orig = dreamsim(pretrained=True, device=self.device)
+
+        self.ds_preprocess = transforms.Compose([
+                        transforms.Resize((224, 224),
+                        interpolation=transforms.InterpolationMode.BICUBIC),
+                        # transforms.ToTensor()
+                    ])
 
         if cfg.lpips_net == "alex":
             self.lpips = LearnedPerceptualImagePatchSimilarity(
@@ -914,6 +924,7 @@ class Runner:
                 metrics["psnr"].append(self.psnr(colors_p, pixels_p))
                 metrics["ssim"].append(self.ssim(colors_p, pixels_p))
                 metrics["lpips"].append(self.lpips(colors_p, pixels_p))
+                metrics["dreamsim"].append(self.ds_model(self.ds_preprocess(colors_p),self.ds_preprocess(pixels_p)))
                 if cfg.use_bilateral_grid:
                     cc_colors = color_correct(colors, pixels)
                     cc_colors_p = cc_colors.permute(0, 3, 1, 2)  # [1, 3, H, W]
@@ -930,7 +941,8 @@ class Runner:
                 }
             )
             print(
-                f"PSNR: {stats['psnr']:.3f}, SSIM: {stats['ssim']:.4f}, LPIPS: {stats['lpips']:.3f} "
+                # f"PSNR: {stats['psnr']:.3f}, SSIM: {stats['ssim']:.4f}, LPIPS: {stats['lpips']:.3f} "
+                f"PSNR: {stats['psnr']:.3f}, SSIM: {stats['ssim']:.4f}, LPIPS: {stats['lpips']:.3f}, DREAMSIM: {stats['dreamsim']:.3f} "
                 f"Time: {stats['ellipse_time']:.3f}s/image "
                 f"Number of GS: {stats['num_GS']}"
             )
