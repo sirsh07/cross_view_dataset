@@ -9,6 +9,7 @@
 #SBATCH --qos day
 ##SBATCH --array=0-$(($(find /home/sirsh/cv_dataset/dataset_50sites/data/ -type d -name "images" | wc -l) - 1))%2  # Dynamically set array size
 #SBATCH --array=0-120  # Dynamically set array size
+#SBATCH --exclude=c4-4,c4-6
 
 
 
