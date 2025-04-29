@@ -89,3 +89,29 @@ CUDA_VISIBLE_DEVICES=0 python simple_trainer.py default --data_dir /home/sirsh/c
 [ ] save stats
 
 ```
+
+error with mast3r
+
+```
+/home/sirsh/cv_dataset/dataset_50sites/mast3r/results/aerial_street/train/ID0007/p12/output/reconstruction
+/home/sirsh/cv_dataset/dataset_50sites/mast3r/results/street/train/ID0004/p12/output/reconstruction
+/home/sirsh/cv_dataset/dataset_50sites/mast3r/results/street/train/ID0003/p25/output/reconstruction
+/home/sirsh/cv_dataset/dataset_50sites/mast3r/results/street/train/ID0003/p12/output/reconstruction
+/home/sirsh/cv_dataset/dataset_50sites/mast3r/results/street/train/ID0003/p50/output/reconstruction
+/home/sirsh/cv_dataset/dataset_50sites/mast3r/results/street/train/ID0007/p25/output/reconstruction
+/home/sirsh/cv_dataset/dataset_50sites/mast3r/results/street/train/ID0007/p12/output/reconstruction
+/home/sirsh/cv_dataset/dataset_50sites/mast3r/results/street/train/ID0013/p12/output/reconstruction
+/home/sirsh/cv_dataset/dataset_50sites/mast3r/results/street/train/ID0013/p25/output/reconstruction
+/home/sirsh/cv_dataset/dataset_50sites/mast3r/results/street/train/ID0008/p12/output/reconstruction
+/home/sirsh/cv_dataset/dataset_50sites/mast3r/results/street/train/ID0016/p12/output/reconstruction
+/home/sirsh/cv_dataset/dataset_50sites/mast3r/results/street/train/ID0005/p25/output/reconstruction
+/home/sirsh/cv_dataset/dataset_50sites/mast3r/results/street/train/ID0005/p12/output/reconstruction
+/home/sirsh/cv_dataset/dataset_50sites/mast3r/results/street/train/ID0005/p50/output/reconstruction
+/home/sirsh/cv_dataset/dataset_50sites/mast3r/results/street/train/ID0001/p12/output/reconstruction
+/home/sirsh/cv_dataset/dataset_50sites/mast3r/results/street/train/ID0012/p12/output/reconstruction
+/home/sirsh/cv_dataset/dataset_50sites/mast3r/results/street/train/ID0015/p12/output/reconstruction
+/home/sirsh/cv_dataset/dataset_50sites/mast3r/results/aerial/train/ID0007/p25/output/reconstruction
+```
+
+
+
