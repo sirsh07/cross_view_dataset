@@ -4,7 +4,7 @@
 #SBATCH --cpus-per-gpu=10
 #SBATCH -C 'gmem80|gmem48'
 #SBATCH --job-name=dataset_50sites_gsplat_mast3r_%A_%a  # Job name includes job array ID and task ID
-#SBATCH --output=slurm_outputs/dataset_50sites_gsplat_mast3r/dataset_50sites_gsplat_mast3r_%A_%a.out  # Output file for each job in the array
+#SBATCH --output=slurm_outputs/dataset_50sites_gsplat_mast3r_v2/dataset_50sites_gsplat_mast3r_%A_%a.out  # Output file for each job in the array
 #SBATCH --gres-flags=enforce-binding
 #SBATCH --qos day
 ##SBATCH --array=0-$(($(find /home/sirsh/cv_dataset/dataset_50sites/data/ -type d -name "images" | wc -l) - 1))%2  # Dynamically set array size
@@ -37,6 +37,7 @@ mkdir -p "$output_folder"
 # Activate the environment and run the job
 # module load cuda/cuda-12.1.0
 # module load python/python-3.11.4-gcc-12.2.0
+module load cuda/12.6
 echo CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES
 source ~/smenv_master/bin/activate
 nvidia-smi
