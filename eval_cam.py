@@ -48,6 +48,10 @@ def summarize_errors(errors):
 def main():
     
     cams1, imgs1 = load_colmap_model("/home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0001/ge_metadata/ID0001/")
+    cams2, imgs2 = load_colmap_model("/home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0001/ge_metadata/ID0001_right/")
+    cams3, imgs3 = load_colmap_model("/home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0001/ge_metadata/ID0001_left/")
+    
+    
     
     import pdb; pdb.set_trace()
     
