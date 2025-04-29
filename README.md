@@ -83,6 +83,9 @@ CUDA_VISIBLE_DEVICES=0 python simple_trainer.py default --data_dir /home/smitra/
 
 CUDA_VISIBLE_DEVICES=0 python simple_trainer.py default --data_dir /home/smitra/cv_dataset/dataset_50sites/colmap/results/aerial/train/ID0001/p100/output --result_dir /home/smitra/cv_dataset/gsplat_temp/aerial/train/ID0001/p100/output --no_normalize_world_space
 
+
+CUDA_VISIBLE_DEVICES=0 python simple_trainer.py default --data_dir /home/sirsh/cv_dataset/dataset_50sites/colmap/results/aerial/train/ID0001/p100/output --result_dir /home/sirsh/cv_dataset/gsplat_temp/aerial/train/ID0001/p100/output --no_normalize_world_space
+
 [ ] save stats
 
 ```
