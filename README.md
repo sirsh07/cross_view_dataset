@@ -51,6 +51,28 @@ CUDA_VISIBLE_DEVICES=0 python init_geo.py -s /home/sirsh/cv_dataset/dataset_50si
 
 [ ] run mast3r
 
+
+python make_pairs.py --dir /home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0001/p100/images --output /home/sirsh/cv_dataset/mastrf_temp/instant_splat/ID0001/pairs.txt --weights ./checkpoints/MASt3R_ViTLarge_BaseDecoder_512_catmlpdpt_metric.pth --scene_graph complete
+--retrieval_model ./checkpoints/MASt3R_ViTLarge_BaseDecoder_512_catmlpdpt_metric_retrieval_trainingfree.pth --scene_graph complete
+
+
+python make_pairs.py --dir /home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0001/p100/images --output /home/sirsh/cv_dataset/mastrf_temp/instant_splat/ID0001/pairs.txt --scene_graph complete --weights /home/sirsh/aerial_gen/aerial_scene_gen/master_sfm/mast3r/checkpoints/MASt3R_ViTLarge_BaseDecoder_512_catmlpdpt_metric.pth
+
+python kapture_mast3r_mapping.py --weights /home/sirsh/aerial_gen/aerial_scene_gen/master_sfm/mast3r/checkpoints/MASt3R_ViTLarge_BaseDecoder_512_catmlpdpt_metric.pth --dir_same_camera /home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0001/p100/images --output /home/sirsh/cv_dataset/mastrf_temp/instant_splat/ID0001/output/ --pairsfile_path /home/sirsh/cv_dataset/mastrf_temp/instant_splat/ID0001/pairs.txt
+
+
+python kapture_mast3r_mapping.py --weights ./checkpoints/MASt3R_ViTLarge_BaseDecoder_512_catmlpdpt_metric.pth --dir_same_camera /home/sirsh/cv_gen_eccv25/ucfwr_data/colmap_data_v2025v2/t4v7s1r2/av/output/undistorted_images_folder/ --output ./results/recon/t4v7s1r2/output/ --pairsfile_path ./wriva_pairs_t4v7s1r2.txt
+
+
+
+
+python make_pairs.py --dir /home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0003/p12/images --output /home/sirsh/cv_dataset/mastrf_temp/instant_splat/ID0003/pairs.txt --scene_graph complete --weights /home/sirsh/aerial_gen/aerial_scene_gen/master_sfm/mast3r/checkpoints/MASt3R_ViTLarge_BaseDecoder_512_catmlpdpt_metric.pth
+
+python kapture_mast3r_mapping.py --weights /home/sirsh/aerial_gen/aerial_scene_gen/master_sfm/mast3r/checkpoints/MASt3R_ViTLarge_BaseDecoder_512_catmlpdpt_metric.pth --dir_same_camera /home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0003/p12/images --output /home/sirsh/cv_dataset/mastrf_temp/instant_splat/ID0003/output/ --pairsfile_path /home/sirsh/cv_dataset/mastrf_temp/instant_splat/ID0003/pairs.txt
+
+
+
+
 [ ] run the query pose ransac --- only incase of wriva
 
 [ ] run gsplat
