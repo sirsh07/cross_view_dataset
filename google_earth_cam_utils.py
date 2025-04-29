@@ -2,6 +2,7 @@ import os
 import json
 from typing import List, Tuple, Dict, Any
 import pandas as pd
+from tqdm import tqdm
 
 # ----------------------------------------------------------------------
 # 1.  Gather all *.json paths under the google-earth directory
@@ -99,7 +100,7 @@ if __name__ == "__main__":
     all_csv_paths = load_dataset_files()
     print(f"Found {len(all_csv_paths)} CSV files.")
     
-    for csv_path in all_csv_paths:
+    for csv_path in tqdm(all_csv_paths):
         
         get_data(csv_path)    
     
