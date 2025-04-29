@@ -50,7 +50,7 @@ class Config:
     # Name of compression strategy to use
     compression: Optional[Literal["png"]] = None
     # Render trajectory path
-    render_traj_path: str = "interp"
+    render_traj_path: str = "ellipse"
 
     # Path to the Mip-NeRF 360 dataset
     data_dir: str = "data/360_v2/garden"
