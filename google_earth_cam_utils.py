@@ -76,7 +76,16 @@ def get_data(csv_file: str) -> Tuple[pd.DataFrame, Dict[str, Any]]:
     # Apply the function to the 'OriginalFilePath' column
     df["MetaDataPath"] = df["OriginalFilePath"].apply(get_metadata_file_path)
     
-    import pdb; pdb.set_trace()
+    sanity_check = df["MetaDataPath"].apply(os.path.exists)
+    
+    sanity_check = df["MetaDataPath"].apply(os.path.exists)
+    if not sanity_check.all():
+        missing_files = df.loc[~sanity_check, "MetaDataPath"]
+        raise AssertionError(f"The following metadata files are missing:\n{missing_files.tolist()}")
+    
+    print("All metadata files exist.")
+    
+    # import pdb; pdb.set_trace()
 
 
 # ----------------------------------------------------------------------
