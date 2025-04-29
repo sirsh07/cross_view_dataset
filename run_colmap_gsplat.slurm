@@ -30,7 +30,7 @@ results_folder="$base_results_dir/${relative_path%/output}"
 
 
 # Define workspace and output folders
-output_folder="${results_folder}/3dgs_recon"
+output_folder="${results_folder}/mcmcgs_recon"
 
 mkdir -p "$output_folder"
 
