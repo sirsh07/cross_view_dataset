@@ -184,8 +184,6 @@ def json_to_empty_colmap_model(json_file, ref_sfm_empty, max_num_images=200):
     print(">>> IMAGES: ", len(images))
     print(">>> POINTS3D: ", len(points3D))
     
-    import pdb; pdb.set_trace()
-    
     # os.makedirs(ref_sfm_empty, exist_ok=True)
     # write_model(cameras, images, points3D, ref_sfm_empty, ".txt")
-    # write_model(cameras, images, points3D, ref_sfm_empty, ".bin")
+    write_model(cameras, images, points3D, ref_sfm_empty, ".bin")
