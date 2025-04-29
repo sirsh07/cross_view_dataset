@@ -4,7 +4,7 @@ from typing import List, Tuple, Dict, Any
 import pandas as pd
 from tqdm import tqdm
 import numpy as np
-from ges_utils import json_to_empty_colmap_model
+from utils.ges_utils import json_to_empty_colmap_model
 
 
 def rot_ecef2enu(lat, lon):
