@@ -77,6 +77,10 @@ python kapture_mast3r_mapping.py --weights /home/sirsh/aerial_gen/aerial_scene_g
 
 [ ] run gsplat
 
+
+CUDA_VISIBLE_DEVICES=0 python simple_trainer.py mcmc --data_dir /home/sirsh/cv_gen_eccv25/eccv25_paper_data/wriva/t4v9s1r4/master_output/output/reconstruction --result_dir ./results/t4v9s1r4/v3/ --antialiased --no_normalize_world_space --dataset_type wriva --app_opt --query_path="/home/sirsh/cv_gen_eccv25/eccv25_paper_data/wriva/t4v9s1r4/master_output/query_poses/wriva_form_reference_data.json" --query_img_path="/home/sirsh/cv_gen_eccv25/eccv25_paper_data/wriva/t4v9s1r4/master_output/output/reconstruction/undistorted_images_folder/" --enable_diffusion --diff_v "v2" --data_factor 4
+
+
 [ ] save stats
 
 ```
