@@ -86,6 +86,10 @@ def get_data(csv_file: str) -> Tuple[pd.DataFrame, Dict[str, Any]]:
     
     print("All metadata files exist.")
     
+    unique_metadata = df["MetaDataPath"].unique()
+    
+    import pdb; pdb.set_trace()
+    
     # import pdb; pdb.set_trace()
 
 
