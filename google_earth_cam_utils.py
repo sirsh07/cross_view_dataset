@@ -40,6 +40,23 @@ def load_json_files(paths: List[str]) -> List[Tuple[str, Dict[str, Any]]]:
     return records
 
 
+
+def load_dataset_files(root_dir: str = "/home/sirsh/cv_dataset/dataset_50sites/data") -> List[Tuple[str, Dict[str, Any]]]:
+    """
+    Recursively walk `root_dir` and return every absolute path that ends in '.csv'.
+    Adjust the `if` block inside the loop if you need stricter pattern filtering.
+    """
+    csv_paths: List[str] = []
+
+    for cur_dir, _, files in os.walk(root_dir):
+        for fname in files:
+            if fname.endswith(".csv"):               # <-- tweak this if needed
+                csv_paths.append(os.path.join(cur_dir, fname))
+
+    return csv_paths
+
+
+
 # ----------------------------------------------------------------------
 # example usage
 # ----------------------------------------------------------------------
@@ -47,6 +64,9 @@ if __name__ == "__main__":
     # step 1 – collect paths (one-time, cheap)
     all_json_paths = collect_site_json_paths()
     print(f"Found {len(all_json_paths)} JSON files.")
+    
+    all_csv_paths = load_dataset_files()
+    print(f"Found {len(all_csv_paths)} CSV files.")
     
     import pdb; pdb.set_trace()
 
