@@ -5,7 +5,7 @@ from typing import List, Tuple, Dict, Any
 # ----------------------------------------------------------------------
 # 1.  Gather all *.json paths under the google-earth directory
 # ----------------------------------------------------------------------
-def collect_site_json_paths(root_dir: str = " /home/zhyw86/WorkSpace/google-earth/data/") -> List[str]:
+def collect_site_json_paths(root_dir: str = "/home/zhyw86/WorkSpace/google-earth/data/") -> List[str]:
     """
     Recursively walk `root_dir` and return every absolute path that ends in '.json'.
     Adjust the `if` block inside the loop if you need stricter pattern filtering.
