@@ -3,7 +3,8 @@ import json
 from typing import List, Tuple, Dict, Any
 import pandas as pd
 from tqdm import tqdm
-
+import numpy as np
+from ges_utils import json_to_empty_colmap_model
 
 
 def rot_ecef2enu(lat, lon):
@@ -70,21 +71,6 @@ def load_dataset_files(root_dir: str = "/home/sirsh/cv_dataset/dataset_50sites/d
                 csv_paths.append(os.path.join(cur_dir, fname))
 
     return csv_paths
-
-
-def enu_to_colmap(json_file):
-    
-    with open(json_file, "rb") as f:
-        raw_tracking_data = json.load(f)
-        
-    scene_name = raw_tracking_data["name"]
-    w     = raw_tracking_data["width"]
-    h     = raw_tracking_data["height"]
-    
-    # Take the latitude, longitude, and altitude from the first frame
-    lat0, lon0, alt0 = raw_tracking_data['cameraFrames'][0]['coordinate']['latitude'], raw_tracking_data['cameraFrames'][0]['coordinate']['longitude'], raw_tracking_data['cameraFrames'][0]['coordinate']['altitude']
-    
-    rot = rot_ecef2enu(lat0, lon0)
     
 
 def get_data(csv_file: str) -> Tuple[pd.DataFrame, Dict[str, Any]]:
@@ -117,10 +103,7 @@ def get_data(csv_file: str) -> Tuple[pd.DataFrame, Dict[str, Any]]:
     
     unique_metadata = df["MetaDataPath"].unique()
     
-    import pdb; pdb.set_trace()
-    
-    # import pdb; pdb.set_trace()
-
+    json_to_empty_colmap_model(unique_metadata[0], None, max_num_images=400)
 
 # ----------------------------------------------------------------------
 # example usage
