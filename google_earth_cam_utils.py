@@ -57,13 +57,23 @@ def load_dataset_files(root_dir: str = "/home/sirsh/cv_dataset/dataset_50sites/d
     return csv_paths
 
 
-def get_data(csv_file: str, json_files: List[str]) -> Tuple[pd.DataFrame, Dict[str, Any]]:
+def get_data(csv_file: str) -> Tuple[pd.DataFrame, Dict[str, Any]]:
     """
     Given a CSV file and a list of JSON files, load the CSV into a DataFrame
     and return it along with the parsed JSON data.
     """
     
     df = pd.read_csv(csv_file)
+    
+    def get_metadata_file_path(original_path: str) -> str:
+        # Extract the directory and file prefix
+        dir_path = os.path.dirname(original_path)  # Get the directory path
+        file_prefix = os.path.basename(original_path).split("_")[0] + "_" + os.path.basename(original_path).split("_")[1]
+        # Construct the metadata file path
+        return os.path.join(dir_path, f"{file_prefix}.json")
+    
+    # Apply the function to the 'OriginalFilePath' column
+    df["MetaDataPath"] = df["OriginalFilePath"].apply(get_metadata_file_path)
     
     import pdb; pdb.set_trace()
 
@@ -73,15 +83,15 @@ def get_data(csv_file: str, json_files: List[str]) -> Tuple[pd.DataFrame, Dict[s
 # ----------------------------------------------------------------------
 if __name__ == "__main__":
     # step 1 – collect paths (one-time, cheap)
-    all_json_paths = collect_site_json_paths()
-    print(f"Found {len(all_json_paths)} JSON files.")
+    # all_json_paths = collect_site_json_paths()
+    # print(f"Found {len(all_json_paths)} JSON files.")
     
     all_csv_paths = load_dataset_files()
     print(f"Found {len(all_csv_paths)} CSV files.")
     
     for csv_path in all_csv_paths:
         
-        get_data(csv_path, all_json_paths)    
+        get_data(csv_path)    
     
 
 
