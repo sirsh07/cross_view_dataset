@@ -113,7 +113,18 @@ if __name__ == "__main__":
     # all_json_paths = collect_site_json_paths()
     # print(f"Found {len(all_json_paths)} JSON files.")
     
-    all_csv_paths = load_dataset_files()
+    if os.path.exists("./cache_files/all_csv_paths.txt"):
+        with open("./cache_files/all_csv_paths.txt", "r") as f:
+            all_csv_paths = f.readlines()
+            all_csv_paths = [path.strip() for path in all_csv_paths]
+    
+    else:
+        all_csv_paths = load_dataset_files()
+        os.makedirs("./cache_files", exist_ok=True)
+        with open("./cache_files/all_csv_paths.txt", "w") as f:
+            for path in all_csv_paths:
+                f.write(path + "\n")
+    
     print(f"Found {len(all_csv_paths)} CSV files.")
     
     for csv_path in tqdm(all_csv_paths):
