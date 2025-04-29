@@ -2,7 +2,8 @@
 #SBATCH -p gpu
 #SBATCH --gpus=1 -C 'volta|turing|ampere'
 #SBATCH --cpus-per-gpu=10
-#SBATCH -C 'gmem80|gmem48'
+## SBATCH -C 'gmem80|gmem48'
+#SBATCH -C 'gmem48'
 #SBATCH --job-name=dataset_50sites_gsplat_mast3r_%A_%a  # Job name includes job array ID and task ID
 #SBATCH --output=slurm_outputs/dataset_50sites_gsplat_mast3r_v2/dataset_50sites_gsplat_mast3r_%A_%a.out  # Output file for each job in the array
 #SBATCH --gres-flags=enforce-binding
