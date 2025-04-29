@@ -51,4 +51,4 @@ echo "Output folder: $output_folder"
 cd /home/smitra/cv_dataset/cross_view_dataset/gsplat/examples
 
 
-CUDA_VISIBLE_DEVICES=0 python simple_trainer.py default --data_dir "$input_folder" --result_dir "$output_folder" --no_normalize_world_space
+CUDA_VISIBLE_DEVICES=0 python simple_trainer.py mcmc --data_dir "$input_folder" --result_dir "$output_folder" --no_normalize_world_space
