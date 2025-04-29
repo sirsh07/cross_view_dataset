@@ -1,6 +1,7 @@
 import os
 import json
 from typing import List, Tuple, Dict, Any
+import pandas as pd
 
 # ----------------------------------------------------------------------
 # 1.  Gather all *.json paths under the google-earth directory
@@ -56,6 +57,16 @@ def load_dataset_files(root_dir: str = "/home/sirsh/cv_dataset/dataset_50sites/d
     return csv_paths
 
 
+def get_data(csv_file: str, json_files: List[str]) -> Tuple[pd.DataFrame, Dict[str, Any]]:
+    """
+    Given a CSV file and a list of JSON files, load the CSV into a DataFrame
+    and return it along with the parsed JSON data.
+    """
+    
+    df = pd.read_csv(csv_file)
+    
+    import pdb; pdb.set_trace()
+
 
 # ----------------------------------------------------------------------
 # example usage
@@ -68,7 +79,11 @@ if __name__ == "__main__":
     all_csv_paths = load_dataset_files()
     print(f"Found {len(all_csv_paths)} CSV files.")
     
-    import pdb; pdb.set_trace()
+    for csv_path in all_csv_paths:
+        
+        get_data(csv_path, all_json_paths)    
+    
+
 
     # step 2 – load them (can be re-run, or chunked/batched if huge)
     # metadata = load_json_files(all_json_paths)
