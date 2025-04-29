@@ -1,0 +1,59 @@
+import os
+import json
+from typing import List, Tuple, Dict, Any
+
+# ----------------------------------------------------------------------
+# 1.  Gather all *.json paths under the google-earth directory
+# ----------------------------------------------------------------------
+def collect_site_json_paths(root_dir: str = " /home/zhyw86/WorkSpace/google-earth/data/") -> List[str]:
+    """
+    Recursively walk `root_dir` and return every absolute path that ends in '.json'.
+    Adjust the `if` block inside the loop if you need stricter pattern filtering.
+    """
+    json_paths: List[str] = []
+
+    for cur_dir, _, files in os.walk(root_dir):
+        for fname in files:
+            if fname.endswith(".json"):               # <-- tweak this if needed
+                json_paths.append(os.path.join(cur_dir, fname))
+
+    return json_paths
+
+
+# ----------------------------------------------------------------------
+# 2.  Read / parse the collected files
+# ----------------------------------------------------------------------
+def load_json_files(paths: List[str]) -> List[Tuple[str, Dict[str, Any]]]:
+    """
+    Given a list of file paths, open and parse each JSON.
+    Returns a list of (path, parsed_dict) tuples.
+    """
+    records: List[Tuple[str, Dict[str, Any]]] = []
+
+    for fpath in paths:
+        try:
+            with open(fpath, "r") as f:
+                records.append((fpath, json.load(f)))
+        except (OSError, json.JSONDecodeError) as err:
+            print(f"[WARN] skipped {fpath}: {err}")
+
+    return records
+
+
+# ----------------------------------------------------------------------
+# example usage
+# ----------------------------------------------------------------------
+if __name__ == "__main__":
+    # step 1 – collect paths (one-time, cheap)
+    all_json_paths = collect_site_json_paths()
+    print(f"Found {len(all_json_paths)} JSON files.")
+    
+    import pdb; pdb.set_trace()
+
+    # step 2 – load them (can be re-run, or chunked/batched if huge)
+    # metadata = load_json_files(all_json_paths)
+    # print(f"Successfully loaded {len(metadata)} files.")
+    # if metadata:
+    #     p, sample = metadata[0]
+    #     print("First file:", p)
+    #     print("Top-level keys:", list(sample.keys()))
