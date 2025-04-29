@@ -103,6 +103,8 @@ def get_data(csv_file: str) -> Tuple[pd.DataFrame, Dict[str, Any]]:
     
     unique_metadata = df["MetaDataPath"].unique()
     
+    import pdb; pdb.set_trace()
+    
     json_to_empty_colmap_model(unique_metadata[0], None, max_num_images=400)
 
 # ----------------------------------------------------------------------
