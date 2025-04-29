@@ -103,9 +103,15 @@ def get_data(csv_file: str) -> Tuple[pd.DataFrame, Dict[str, Any]]:
     
     unique_metadata = df["MetaDataPath"].unique()
     
-    import pdb; pdb.set_trace()
+    save_dir = os.path.dirname(csv_file)
     
-    json_to_empty_colmap_model(unique_metadata[0], None, max_num_images=400)
+    for metadata_path in unique_metadata:
+        
+        import pdb; pdb.set_trace()
+        
+        json_to_empty_colmap_model(unique_metadata[0], None, max_num_images=400)
+    
+    
 
 # ----------------------------------------------------------------------
 # example usage
