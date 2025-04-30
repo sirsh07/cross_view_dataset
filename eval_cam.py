@@ -86,6 +86,8 @@ def main():
     poses2 = load_colmap_data("/home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0003/ge_metadata/ID0003_right/")
     poses3 = load_colmap_data("/home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0003/ge_metadata/ID0003_left/")
     
+    import pdb; pdb.set_trace()
+    
     
     
     # cams1, imgs1 = load_colmap_model(model_path_1, ext)
