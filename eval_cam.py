@@ -5,6 +5,8 @@ from hloc.utils.read_write_model import Camera, Image, Point3D, read_model, writ
 from utils.colmap_utils import get_camera_matrix
 import torch
 from utils.metric import camera_to_rel_deg
+import glob
+
 
 def load_colmap_data(colmap_data_folder):
     # print('Loading COLMAP data...')
@@ -34,8 +36,6 @@ def load_colmap_data(colmap_data_folder):
         colmap_pose_dict[img_name] = (K, G_R_C, G_t_C)
 
     return colmap_pose_dict, _
-
-
 
 def compute_pose_errors(gt_poses_dict, pred_poses_dict):
     """Computes translation and rotation errors between two sets of poses."""
@@ -105,6 +105,35 @@ def compute_pose_errors(gt_poses_dict, pred_poses_dict):
     
     import pdb; pdb.set_trace()
 
+def get_all_colmap_folders(base_path):
+    """
+    Recursively finds all 'sparse' directories under the given base COLMAP directory.
+
+    Args:
+        base_path (str): Path like /home/.../colmap
+
+    Returns:
+        List[str]: Sorted list of full paths to 'sparse' folders
+    """
+    pattern = os.path.join(base_path, "results/*/train/ID*/p*/output/sparse")
+    sparse_dirs = glob.glob(pattern)
+    return sorted(sparse_dirs)
+
+
+def get_all_mast3r_folders(base_path):
+    """
+    Recursively finds all 'sparse' directories under the given base COLMAP directory.
+
+    Args:
+        base_path (str): Path like /home/.../colmap
+
+    Returns:
+        List[str]: Sorted list of full paths to 'sparse' folders
+    """
+    pattern = os.path.join(base_path, "results/*/train/ID*/p*/output/reconstruction/0")
+    sparse_dirs = glob.glob(pattern)
+    return sorted(sparse_dirs)
+
 def summarize_errors(errors):
     """Prints mean and std of translation and rotation errors."""
     trans_errors = [e['translation_error'] for e in errors.values()]
@@ -114,20 +143,48 @@ def summarize_errors(errors):
 
 def main():
     
-    poses1 = load_colmap_data("/home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0001/ge_metadata/ID0001/")
-    poses2 = load_colmap_data("/home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0001/ge_metadata/ID0001_right/")
-    poses3 = load_colmap_data("/home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0001/ge_metadata/ID0001_left/")
+    # poses1 = load_colmap_data("/home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0001/ge_metadata/ID0001/")
+    # poses2 = load_colmap_data("/home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0001/ge_metadata/ID0001_right/")
+    # poses3 = load_colmap_data("/home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0001/ge_metadata/ID0001_left/")
     
-    poses = {
-        **poses1[0],
-        **poses2[0],
-        **poses3[0]
-    }
+    # poses = {
+    #     **poses1[0],
+    #     **poses2[0],
+    #     **poses3[0]
+    # }
     
-    pred_poses = load_colmap_data("/home/sirsh/cv_dataset/dataset_50sites/colmap/results/aerial/train/ID0001/p100/output/sparse")
+    # pred_poses = load_colmap_data("/home/sirsh/cv_dataset/dataset_50sites/colmap/results/aerial/train/ID0001/p100/output/sparse")
     
-    compute_pose_errors(poses, pred_poses[0])
     
+    # compute_pose_errors(poses, pred_poses[0])
+    
+    if os.path.exists("./cache_files/colmap_folders.txt"):
+        with open("./cache_files/colmap_folders.txt", "r") as f:
+            colmap_folders = f.read().splitlines()
+    else:
+        colmap_folders = get_all_colmap_folders("/home/sirsh/cv_dataset/dataset_50sites/colmap")
+        with open("./cache_files/colmap_folders.txt", "w") as f:
+            f.write("\n".join(colmap_folders))
+        
+    # if os.path.exists("./cache_files/master_folders.txt"):
+    #     with open("./cache_files/master_folders.txt", "r") as f:
+    #         master_folders = f.read().splitlines()
+    # else:
+    #     get_all_mast3r_folders("/home/sirsh/cv_dataset/dataset_50sites/master")
+    #     with open("./cache_files/master_folders.txt", "w") as f:
+    #         f.write("\n".join(master_folders))
+    
+    for colmap_folder in colmap_folders:
+        print(f"Processing COLMAP folder: {colmap_folder}")
+        pred_poses = load_colmap_data(colmap_folder)
+        
+        import pdb; pdb.set_trace()
+        
+    # for master_folder in master_folders:
+    #     print(f"Processing Master folder: {master_folder}")
+    #     pred_poses = load_colmap_data(master_folder)
+        
+        # compute_pose_errors(colmap_poses[0], mast3r_poses[0])
     
     # cams1, imgs1 = load_colmap_model(model_path_1, ext)
     # cams2, imgs2 = load_colmap_model(model_path_2, ext)
