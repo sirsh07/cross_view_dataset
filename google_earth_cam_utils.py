@@ -112,7 +112,7 @@ def get_data(csv_file: str) -> Tuple[pd.DataFrame, Dict[str, Any]]:
         if "ID0001" in f_name:
             import pdb; pdb.set_trace()
         os.makedirs(f_dir, exist_ok=True)
-        json_to_empty_colmap_model(unique_metadata[0], f_dir, max_num_images=400)
+        json_to_empty_colmap_model(metadata_path, f_dir, max_num_images=400)
     
     
 
