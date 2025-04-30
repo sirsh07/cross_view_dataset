@@ -4,11 +4,6 @@ import numpy as np
 from hloc.utils.read_write_model import Camera, Image, Point3D, read_model, write_model, rotmat2qvec, qvec2rotmat
 from utils.colmap_utils import get_camera_matrix
 
-# def load_colmap_model(model_path, ext=".bin"):
-#     """Loads COLMAP cameras and images from the given path."""
-#     cameras, images, _ = read_model(model_path, ext=ext)
-#     return cameras, images
-
 
 def load_colmap_data(colmap_data_folder):
     # print('Loading COLMAP data...')
@@ -41,20 +36,6 @@ def load_colmap_data(colmap_data_folder):
 
 
 
-
-
-def get_camera_poses(images):
-    """Returns a dictionary of image name to 4x4 camera-to-world pose matrices."""
-    poses = {}
-    for image in images.values():
-        R = image.qvec2rotmat()
-        t = image.tvec.reshape(3, 1)
-        cam_to_world = np.eye(4)
-        cam_to_world[:3, :3] = R.T
-        cam_to_world[:3, 3] = -R.T @ t
-        poses[image.name] = cam_to_world
-    return poses
-
 def compute_pose_errors(poses1, poses2):
     """Computes translation and rotation errors between two sets of poses."""
     errors = {}
@@ -85,6 +66,14 @@ def main():
     poses1 = load_colmap_data("/home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0001/ge_metadata/ID0001/")
     poses2 = load_colmap_data("/home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0001/ge_metadata/ID0001_right/")
     poses3 = load_colmap_data("/home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0001/ge_metadata/ID0001_left/")
+    
+    poses = {
+        **poses1[0],
+        **poses2[0],
+        **poses3[0]
+    }
+    
+    pred_poses = load_colmap_data("/home/sirsh/cv_dataset/dataset_50sites/colmap/results/aerial/train/ID0001/p100/output/sparse")
     
     import pdb; pdb.set_trace()
     
