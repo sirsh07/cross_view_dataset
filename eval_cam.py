@@ -273,7 +273,7 @@ def main():
             print(f"Error loading MAST3R data from {master_folder}. Skipping...")
             continue
         
-        _, setup, _, site_id, annot, _, _ = master_folder.rsplit("/",6)
+        _, setup, _, site_id, annot, _, _, _ = master_folder.rsplit("/",7)
         
         import pdb; pdb.set_trace()
         
