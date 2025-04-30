@@ -267,7 +267,7 @@ def main():
     }
     
     # Save the results to a CSV file
-    pd.DataFrame(results_dict).to_csv("colmap_results.csv", index=False)
+    pd.DataFrame(results_dict).to_csv("./cache_files/colmap_results.csv", index=False)
     
         
     # for master_folder in master_folders:
