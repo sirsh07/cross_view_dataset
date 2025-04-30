@@ -72,7 +72,7 @@ python kapture_mast3r_mapping.py --weights /home/sirsh/aerial_gen/aerial_scene_g
 
 
 from hloc.utils.read_write_model import Camera, Image, Point3D, read_model, write_model, rotmat2qvec, qvec2rotmat
-cameras, images, _ = read_model("./ID0001_right", ext=".bin")
+cameras, images, _ = read_model("./ID0003_right", ext=".bin")
 
 
 
