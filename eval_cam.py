@@ -17,6 +17,8 @@ def load_colmap_data(colmap_data_folder):
     # print(f'num_cameras: {len(cameras)}')
     # print(f'num_images: {len(images)}')
     # print(f'num_points3D: {len(points3D)}')
+    
+    import pdb; pdb.set_trace()
 
     colmap_pose_dict = {}
 
