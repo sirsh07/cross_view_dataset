@@ -109,8 +109,8 @@ def get_data(csv_file: str) -> Tuple[pd.DataFrame, Dict[str, Any]]:
         
         f_name = os.path.basename(metadata_path).split(".")[0]
         f_dir = os.path.join(save_dir, "ge_metadata",f_name)
-        if "ID0001" in f_name:
-            import pdb; pdb.set_trace()
+        # if "ID0001" in f_name:
+        #     import pdb; pdb.set_trace()
         os.makedirs(f_dir, exist_ok=True)
         json_to_empty_colmap_model(metadata_path, f_dir, max_num_images=400)
     
