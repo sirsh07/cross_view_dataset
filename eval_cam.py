@@ -189,13 +189,13 @@ def main():
         with open("./cache_files/colmap_folders.txt", "w") as f:
             f.write("\n".join(colmap_folders))
         
-    if os.path.exists("./cache_files/master_folders.txt"):
-        with open("./cache_files/master_folders.txt", "r") as f:
-            master_folders = f.read().splitlines()
-    else:
-        get_all_mast3r_folders("/home/sirsh/cv_dataset/dataset_50sites/master")
-        with open("./cache_files/master_folders.txt", "w") as f:
-            f.write("\n".join(master_folders))
+    # if os.path.exists("./cache_files/master_folders.txt"):
+    #     with open("./cache_files/master_folders.txt", "r") as f:
+    #         master_folders = f.read().splitlines()
+    # else:
+    #     get_all_mast3r_folders("/home/sirsh/cv_dataset/dataset_50sites/master")
+    #     with open("./cache_files/master_folders.txt", "w") as f:
+    #         f.write("\n".join(master_folders))
         
     
     model_names = []
@@ -260,48 +260,48 @@ def main():
         Tacc_30.append(errors['Tacc_30'])
         
     
-    for master_folder in tqdm.tqdm(master_folders, desc="Processing Master folders"):
-        # print(f"Processing Master folder: {master_folder}")
-        try:
-            mast3r_poses = load_colmap_data(master_folder)
-        except:
-            print(f"Error loading COLMAP data from {master_folder}. Skipping...")
-            continue
+    # for master_folder in tqdm.tqdm(master_folders, desc="Processing Master folders"):
+    #     # print(f"Processing Master folder: {master_folder}")
+    #     try:
+    #         mast3r_poses = load_colmap_data(master_folder)
+    #     except:
+    #         print(f"Error loading COLMAP data from {master_folder}. Skipping...")
+    #         continue
         
-        _, setup, _, site_id, annot, _, _ = master_folder.rsplit("/",6)
+    #     _, setup, _, site_id, annot, _, _ = master_folder.rsplit("/",6)
         
-        metadata_folder = os.path.join("/home/sirsh/cv_dataset/dataset_50sites/data", setup, "train", site_id, "ge_metadata")
-        meta_folders = os.listdir(metadata_folder)
+    #     metadata_folder = os.path.join("/home/sirsh/cv_dataset/dataset_50sites/data", setup, "train", site_id, "ge_metadata")
+    #     meta_folders = os.listdir(metadata_folder)
         
-        data_folder = os.path.join("/home/sirsh/cv_dataset/dataset_50sites/data", setup, "train", site_id, annot, "images")
-        num_images = len(os.listdir(data_folder))
-        num_registered_images = len(list(mast3r_poses[0].keys()))
+    #     data_folder = os.path.join("/home/sirsh/cv_dataset/dataset_50sites/data", setup, "train", site_id, annot, "images")
+    #     num_images = len(os.listdir(data_folder))
+    #     num_registered_images = len(list(mast3r_poses[0].keys()))
         
-        gt_poses = {}
+    #     gt_poses = {}
         
-        for meta_folder in meta_folders:
-            pose_folder = os.path.join(metadata_folder, meta_folder)
-            pose_data = load_colmap_data(pose_folder)
-            gt_poses.update(pose_data[0])  
+    #     for meta_folder in meta_folders:
+    #         pose_folder = os.path.join(metadata_folder, meta_folder)
+    #         pose_data = load_colmap_data(pose_folder)
+    #         gt_poses.update(pose_data[0])  
             
-        errors = compute_pose_errors(gt_poses, mast3r_poses[0],f"{setup}_{site_id}_{annot}")
+    #     errors = compute_pose_errors(gt_poses, mast3r_poses[0],f"{setup}_{site_id}_{annot}")
         
-        model_names.append("mast3r")
-        model_paths.append(master_folder)
-        setup_names.append(setup)
-        site_ids.append(site_id)
-        annots.append(annot)
-        registration_stats.append(f"{str(num_registered_images).zfill(3)}/{str(num_images).zfill(3)}")
-        rotation_error_deg.append(errors['rotation_error_deg'])
-        translation_error.append(errors['translation_error'])
-        Racc_5.append(errors['Racc_5'])
-        Racc_10.append(errors['Racc_10'])
-        Racc_15.append(errors['Racc_15'])
-        Racc_30.append(errors['Racc_30'])
-        Tacc_5.append(errors['Tacc_5'])
-        Tacc_10.append(errors['Tacc_10'])
-        Tacc_15.append(errors['Tacc_15'])
-        Tacc_30.append(errors['Tacc_30'])
+    #     model_names.append("mast3r")
+    #     model_paths.append(master_folder)
+    #     setup_names.append(setup)
+    #     site_ids.append(site_id)
+    #     annots.append(annot)
+    #     registration_stats.append(f"{str(num_registered_images).zfill(3)}/{str(num_images).zfill(3)}")
+    #     rotation_error_deg.append(errors['rotation_error_deg'])
+    #     translation_error.append(errors['translation_error'])
+    #     Racc_5.append(errors['Racc_5'])
+    #     Racc_10.append(errors['Racc_10'])
+    #     Racc_15.append(errors['Racc_15'])
+    #     Racc_30.append(errors['Racc_30'])
+    #     Tacc_5.append(errors['Tacc_5'])
+    #     Tacc_10.append(errors['Tacc_10'])
+    #     Tacc_15.append(errors['Tacc_15'])
+    #     Tacc_30.append(errors['Tacc_30'])
     
         
     results_dict = {
