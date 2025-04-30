@@ -178,6 +178,18 @@ def main():
         print(f"Processing COLMAP folder: {colmap_folder}")
         pred_poses = load_colmap_data(colmap_folder)
         
+        _, setup, _, site_id, _, _, _ = colmap_folder.rsplit("/",6)
+        
+        metadata_folder = os.path.join("/home/sirsh/cv_dataset/dataset_50sites/data", setup, "train", site_id, "ge_metadata")
+        meta_folders = os.listdir(metadata_folder)
+        
+        gt_poses = {}
+        
+        for meta_folder in meta_folders:
+            pose_folder = os.path.join(metadata_folder, meta_folder)
+            pose_data = load_colmap_data(pose_folder)
+            gt_poses.update(pose_data[0])  
+        
         import pdb; pdb.set_trace()
         
     # for master_folder in master_folders:
