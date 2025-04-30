@@ -78,7 +78,7 @@ def compute_pose_errors(gt_poses_dict, pred_poses_dict):
     rel_rangle_deg = rel_rangle_deg.cpu().numpy()
     # assert rel_rangle_deg.shape[0] == 1
     # rel_tangle_deg = rel_tangle_deg.cpu().numpy()[0]
-    rel_tangle_deg = rel_tangle_deg.cpu().numpy().squeeze(0)
+    rel_tangle_deg = rel_tangle_deg.cpu().numpy().squeeze(-1)
 
     rError = float(rel_rangle_deg)
     tError = float(rel_tangle_deg)
