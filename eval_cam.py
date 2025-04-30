@@ -209,7 +209,11 @@ def main():
     # for colmap_folder in colmap_folders:
     for colmap_folder in tqdm.tqdm(colmap_folders, desc="Processing COLMAP folders"):
         # print(f"Processing COLMAP folder: {colmap_folder}")
-        pred_poses = load_colmap_data(colmap_folder)
+        try:
+            pred_poses = load_colmap_data(colmap_folder)
+        except:
+            print(f"Error loading COLMAP data from {colmap_folder}. Skipping...")
+            continue
         
         _, setup, _, site_id, annot, _, _ = colmap_folder.rsplit("/",6)
         
