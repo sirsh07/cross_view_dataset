@@ -86,16 +86,14 @@ def get_data(csv_file: str) -> Tuple[pd.DataFrame, Dict[str, Any]]:
         dir_path = os.path.dirname(original_path)  # Get the directory path
         parent_dir = os.path.dirname(dir_path)  # Get the parent directory path
         file_prefix = os.path.basename(parent_dir)
-        if "ID0001" in original_path:
-            import pdb; pdb.set_trace()
+        # if "ID0001" in original_path:
+        #     import pdb; pdb.set_trace()
         # Construct the metadata file path
         return os.path.join(parent_dir, f"{file_prefix}.json")
     
     # Apply the function to the 'OriginalFilePath' column
     df["MetaDataPath"] = df["OriginalFilePath"].apply(get_metadata_file_path)
-    
-    sanity_check = df["MetaDataPath"].apply(os.path.exists)
-    
+        
     sanity_check = df["MetaDataPath"].apply(os.path.exists)
     if not sanity_check.all():
         missing_files = df.loc[~sanity_check, "MetaDataPath"]
