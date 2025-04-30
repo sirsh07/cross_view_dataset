@@ -103,7 +103,19 @@ def compute_pose_errors(gt_poses_dict, pred_poses_dict):
     print(f"RTA @ 15 deg: {Tacc_15:10.2f}")
     print(f"RTA @ 30 deg: {Tacc_30:10.2f}")
     
-    import pdb; pdb.set_trace()
+    return {
+        'rotation_error_deg': rel_rangle_deg.mean(),
+        'translation_error': rel_tangle_deg.mean(),
+        'Racc_5': Racc_5,
+        'Racc_10': Racc_10,
+        'Racc_15': Racc_15,
+        'Racc_30': Racc_30,
+        'Tacc_5': Tacc_5,
+        'Tacc_10': Tacc_10,
+        'Tacc_15': Tacc_15,
+        'Tacc_30': Tacc_30
+    }
+    
 
 def get_all_colmap_folders(base_path):
     """
@@ -189,6 +201,10 @@ def main():
             pose_folder = os.path.join(metadata_folder, meta_folder)
             pose_data = load_colmap_data(pose_folder)
             gt_poses.update(pose_data[0])  
+            
+        errors = compute_pose_errors(gt_poses, pred_poses[0])
+        
+        
         
         import pdb; pdb.set_trace()
         
