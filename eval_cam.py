@@ -199,7 +199,7 @@ def main():
         with open("./cache_files/master_folders.txt", "r") as f:
             master_folders = f.read().splitlines()
     else:
-        master_folders = get_all_mast3r_folders("/home/sirsh/cv_dataset/dataset_50sites/master")
+        master_folders = get_all_mast3r_folders("/home/sirsh/cv_dataset/dataset_50sites/mast3r")
         with open("./cache_files/master_folders.txt", "w") as f:
             f.write("\n".join(master_folders))
         
