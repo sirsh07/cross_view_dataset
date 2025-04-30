@@ -158,7 +158,6 @@ def get_all_mast3r_folders(base_path):
     Returns:
         List[str]: Sorted list of full paths to 'sparse' folders
     """
-    import pdb; pdb.set_trace()
     pattern = os.path.join(base_path, "results/*/train/ID*/p*/output/reconstruction/0")
     sparse_dirs = glob.glob(pattern)
     return sorted(sparse_dirs)
