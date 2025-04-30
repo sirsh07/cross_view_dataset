@@ -120,8 +120,8 @@ def compute_pose_errors(gt_poses_dict, pred_poses_dict, log_name):
     print(f"RTA @ 30 deg: {Tacc_30:10.2f}")
     
     return {
-        'rotation_error_deg': rel_rangle_deg.mean(),
-        'translation_error': rel_tangle_deg.mean(),
+        'rotation_error_deg': rel_rangle_deg.mean().cpu().numpy(),
+        'translation_error': rel_tangle_deg.mean().cpu().numpy(),
         'Racc_5': Racc_5,
         'Racc_10': Racc_10,
         'Racc_15': Racc_15,
@@ -308,7 +308,6 @@ def main():
     #     Tacc_15.append(errors['Tacc_15'])
     #     Tacc_30.append(errors['Tacc_30'])
     
-    import pdb; pdb.set_trace()
         
     results_dict = {
         'model_name': model_names,
