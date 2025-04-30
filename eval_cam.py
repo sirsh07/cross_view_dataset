@@ -37,10 +37,10 @@ def load_colmap_data(colmap_data_folder):
 
 
 
-def compute_pose_errors(gt_poses, pred_poses):
+def compute_pose_errors(gt_poses_dict, pred_poses_dict):
     """Computes translation and rotation errors between two sets of poses."""
     
-    test_imgs = list(pred_poses.keys())
+    test_imgs = list(pred_poses_dict.keys())
     
     gt_poses = []
     pred_poses = []
@@ -49,8 +49,8 @@ def compute_pose_errors(gt_poses, pred_poses):
     
     for img in test_imgs:
         
-        gt_pose = gt_poses[img]
-        pred_pose = pred_poses[img]
+        gt_pose = gt_poses_dict[img]
+        pred_pose = pred_poses_dict[img]
         
         gt_R, gt_T = gt_pose[1], gt_pose[2]
         pred_R, pred_T = pred_pose[1], pred_pose[2]
