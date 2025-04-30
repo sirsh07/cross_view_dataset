@@ -72,6 +72,36 @@ def compute_pose_errors(gt_poses_dict, pred_poses_dict):
     
     rel_rangle_deg, rel_tangle_deg = camera_to_rel_deg(pred_poses, gt_poses, device, batch_size=1)
     
+    print(f"    --  Mean Rot   Error (Deg) for this scene: {rel_rangle_deg.mean():10.2f}")
+    print(f"    --  Mean Trans Error (Deg) for this scene: {rel_tangle_deg.mean():10.2f}")
+
+    rel_rangle_deg = rel_rangle_deg.cpu().numpy()
+    assert rel_rangle_deg.shape[0] == 1
+    rel_tangle_deg = rel_tangle_deg.cpu().numpy()[0]
+
+    rError = float(rel_rangle_deg)
+    tError = float(rel_tangle_deg)
+    
+    Racc_5 = np.mean(rError < 5) * 100
+    Racc_10 = np.mean(rError < 10) * 100
+    Racc_15 = np.mean(rError < 15) * 100
+    Racc_30 = np.mean(rError < 30) * 100
+
+    Tacc_5 = np.mean(tError < 5) * 100
+    Tacc_10 = np.mean(tError < 10) * 100
+    Tacc_15 = np.mean(tError < 15) * 100
+    Tacc_30 = np.mean(tError < 30) * 100
+
+    print(f"RRA @ 5 deg: {Racc_5:10.2f}")
+    print(f"RRA @ 10 deg: {Racc_10:10.2f}")
+    print(f"RRA @ 15 deg: {Racc_15:10.2f}")
+    print(f"RRA @ 30 deg: {Racc_30:10.2f}")
+    print('---------------------------------')
+    print(f"RTA @ 5 deg: {Tacc_5:10.2f}")
+    print(f"RTA @ 10 deg: {Tacc_10:10.2f}")
+    print(f"RTA @ 15 deg: {Tacc_15:10.2f}")
+    print(f"RTA @ 30 deg: {Tacc_30:10.2f}")
+    
     import pdb; pdb.set_trace()
 
 def summarize_errors(errors):
