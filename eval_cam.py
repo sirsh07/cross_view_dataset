@@ -3,7 +3,8 @@ import numpy as np
 # from colmap_loader import read_model  # Replace with your actual COLMAP model reader
 from hloc.utils.read_write_model import Camera, Image, Point3D, read_model, write_model, rotmat2qvec, qvec2rotmat
 from utils.colmap_utils import get_camera_matrix
-
+import torch
+from utils.metric import camera_to_rel_deg
 
 def load_colmap_data(colmap_data_folder):
     # print('Loading COLMAP data...')
@@ -36,23 +37,42 @@ def load_colmap_data(colmap_data_folder):
 
 
 
-def compute_pose_errors(poses1, poses2):
+def compute_pose_errors(gt_poses, pred_poses):
     """Computes translation and rotation errors between two sets of poses."""
-    errors = {}
-    for name in poses1:
-        if name not in poses2:
-            continue
-        T1 = poses1[name]
-        T2 = poses2[name]
-        translation_error = np.linalg.norm(T1[:3, 3] - T2[:3, 3])
-        rotation_diff = T1[:3, :3].T @ T2[:3, :3]
-        cos_theta = np.clip((np.trace(rotation_diff) - 1) / 2, -1.0, 1.0)
-        rotation_error = np.degrees(np.arccos(cos_theta))
-        errors[name] = {
-            'translation_error': translation_error,
-            'rotation_error_deg': rotation_error
-        }
-    return errors
+    
+    test_imgs = list(pred_poses.keys())
+    
+    gt_poses = []
+    pred_poses = []
+    
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    
+    for img in test_imgs:
+        
+        gt_pose = gt_poses[img]
+        pred_pose = pred_poses[img]
+        
+        gt_R, gt_T = gt_pose[1], gt_pose[2]
+        pred_R, pred_T = pred_pose[1], pred_pose[2]
+        
+        gt_m = np.eye(4)
+        gt_m[:3, :4] = np.hstack((gt_R, gt_T.reshape(3, 1)))
+        
+        pred_m = np.eye(4)
+        pred_m[:3, :4] = np.hstack((pred_R, pred_T.reshape(3, 1)))
+        
+        gt_poses.append(gt_m)
+        pred_poses.append(pred_m)
+        
+    gt_poses = np.array(gt_poses, dtype=np.float32)
+    pred_poses = np.array(pred_poses, dtype=np.float32)
+    
+    gt_poses = torch.from_numpy(gt_poses).to(device)
+    pred_poses = torch.from_numpy(pred_poses).to(device)
+    
+    rel_rangle_deg, rel_tangle_deg = camera_to_rel_deg(pred_poses, gt_poses, device, batch_size=1)
+    
+    import pdb; pdb.set_trace()
 
 def summarize_errors(errors):
     """Prints mean and std of translation and rotation errors."""
@@ -75,8 +95,7 @@ def main():
     
     pred_poses = load_colmap_data("/home/sirsh/cv_dataset/dataset_50sites/colmap/results/aerial/train/ID0001/p100/output/sparse")
     
-    import pdb; pdb.set_trace()
-    
+    compute_pose_errors(poses, pred_poses[0])
     
     
     # cams1, imgs1 = load_colmap_model(model_path_1, ext)
