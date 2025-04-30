@@ -198,7 +198,7 @@ def main():
     #     with open("./cache_files/master_folders.txt", "r") as f:
     #         master_folders = f.read().splitlines()
     # else:
-    #     get_all_mast3r_folders("/home/sirsh/cv_dataset/dataset_50sites/master")
+    #     master_folders = get_all_mast3r_folders("/home/sirsh/cv_dataset/dataset_50sites/master")
     #     with open("./cache_files/master_folders.txt", "w") as f:
     #         f.write("\n".join(master_folders))
         
@@ -270,7 +270,7 @@ def main():
     #     try:
     #         mast3r_poses = load_colmap_data(master_folder)
     #     except:
-    #         print(f"Error loading COLMAP data from {master_folder}. Skipping...")
+    #         print(f"Error loading MAST3R data from {master_folder}. Skipping...")
     #         continue
         
     #     _, setup, _, site_id, annot, _, _ = master_folder.rsplit("/",6)
@@ -308,6 +308,7 @@ def main():
     #     Tacc_15.append(errors['Tacc_15'])
     #     Tacc_30.append(errors['Tacc_30'])
     
+    import pdb; pdb.set_trace()
         
     results_dict = {
         'model_name': model_names,
