@@ -18,7 +18,6 @@ def load_colmap_data(colmap_data_folder):
     # print(f'num_images: {len(images)}')
     # print(f'num_points3D: {len(points3D)}')
     
-    import pdb; pdb.set_trace()
 
     colmap_pose_dict = {}
 
@@ -88,8 +87,6 @@ def main():
     poses3 = load_colmap_data("/home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0003/ge_metadata/ID0003_left/")
     
     
-    
-    import pdb; pdb.set_trace()
     
     # cams1, imgs1 = load_colmap_model(model_path_1, ext)
     # cams2, imgs2 = load_colmap_model(model_path_2, ext)

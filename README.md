@@ -71,6 +71,10 @@ python make_pairs.py --dir /home/sirsh/cv_dataset/dataset_50sites/data/aerial/tr
 python kapture_mast3r_mapping.py --weights /home/sirsh/aerial_gen/aerial_scene_gen/master_sfm/mast3r/checkpoints/MASt3R_ViTLarge_BaseDecoder_512_catmlpdpt_metric.pth --dir_same_camera /home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0003/p12/images --output /home/sirsh/cv_dataset/mastrf_temp/instant_splat/ID0003/output/ --pairsfile_path /home/sirsh/cv_dataset/mastrf_temp/instant_splat/ID0003/pairs.txt
 
 
+from hloc.utils.read_write_model import Camera, Image, Point3D, read_model, write_model, rotmat2qvec, qvec2rotmat
+cameras, images, _ = read_model("./ID0001_right", ext=".bin")
+
+
 
 
 [ ] run the query pose ransac --- only incase of wriva
