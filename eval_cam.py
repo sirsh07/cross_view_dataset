@@ -171,28 +171,14 @@ def summarize_errors(errors):
 
 def main():
     
-    # poses1 = load_colmap_data("/home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0001/ge_metadata/ID0001/")
-    # poses2 = load_colmap_data("/home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0001/ge_metadata/ID0001_right/")
-    # poses3 = load_colmap_data("/home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0001/ge_metadata/ID0001_left/")
     
-    # poses = {
-    #     **poses1[0],
-    #     **poses2[0],
-    #     **poses3[0]
-    # }
-    
-    # pred_poses = load_colmap_data("/home/sirsh/cv_dataset/dataset_50sites/colmap/results/aerial/train/ID0001/p100/output/sparse")
-    
-    
-    # compute_pose_errors(poses, pred_poses[0])
-    
-    # if os.path.exists("./cache_files/colmap_folders.txt"):
-    #     with open("./cache_files/colmap_folders.txt", "r") as f:
-    #         colmap_folders = f.read().splitlines()
-    # else:
-    #     colmap_folders = get_all_colmap_folders("/home/sirsh/cv_dataset/dataset_50sites/colmap")
-    #     with open("./cache_files/colmap_folders.txt", "w") as f:
-    #         f.write("\n".join(colmap_folders))
+    if os.path.exists("./cache_files/colmap_folders.txt"):
+        with open("./cache_files/colmap_folders.txt", "r") as f:
+            colmap_folders = f.read().splitlines()
+    else:
+        colmap_folders = get_all_colmap_folders("/home/sirsh/cv_dataset/dataset_50sites/colmap")
+        with open("./cache_files/colmap_folders.txt", "w") as f:
+            f.write("\n".join(colmap_folders))
         
     if os.path.exists("./cache_files/master_folders.txt"):
         with open("./cache_files/master_folders.txt", "r") as f:
@@ -221,48 +207,48 @@ def main():
     Tacc_30 = []
     
     # for colmap_folder in colmap_folders:
-    # for colmap_folder in tqdm.tqdm(colmap_folders, desc="Processing COLMAP folders"):
-    #     # print(f"Processing COLMAP folder: {colmap_folder}")
-    #     try:
-    #         pred_poses = load_colmap_data(colmap_folder)
-    #     except:
-    #         print(f"Error loading COLMAP data from {colmap_folder}. Skipping...")
-    #         continue
+    for colmap_folder in tqdm.tqdm(colmap_folders, desc="Processing COLMAP folders"):
+        # print(f"Processing COLMAP folder: {colmap_folder}")
+        try:
+            pred_poses = load_colmap_data(colmap_folder)
+        except:
+            print(f"Error loading COLMAP data from {colmap_folder}. Skipping...")
+            continue
         
-    #     _, setup, _, site_id, annot, _, _ = colmap_folder.rsplit("/",6)
+        _, setup, _, site_id, annot, _, _ = colmap_folder.rsplit("/",6)
         
-    #     metadata_folder = os.path.join("/home/sirsh/cv_dataset/dataset_50sites/data", setup, "train", site_id, "ge_metadata")
-    #     meta_folders = os.listdir(metadata_folder)
+        metadata_folder = os.path.join("/home/sirsh/cv_dataset/dataset_50sites/data", setup, "train", site_id, "ge_metadata")
+        meta_folders = os.listdir(metadata_folder)
         
-    #     data_folder = os.path.join("/home/sirsh/cv_dataset/dataset_50sites/data", setup, "train", site_id, annot, "images")
-    #     num_images = len(os.listdir(data_folder))
-    #     num_registered_images = len(list(pred_poses[0].keys()))
+        data_folder = os.path.join("/home/sirsh/cv_dataset/dataset_50sites/data", setup, "train", site_id, annot, "images")
+        num_images = len(os.listdir(data_folder))
+        num_registered_images = len(list(pred_poses[0].keys()))
         
-    #     gt_poses = {}
+        gt_poses = {}
         
-    #     for meta_folder in meta_folders:
-    #         pose_folder = os.path.join(metadata_folder, meta_folder)
-    #         pose_data = load_colmap_data(pose_folder)
-    #         gt_poses.update(pose_data[0])  
+        for meta_folder in meta_folders:
+            pose_folder = os.path.join(metadata_folder, meta_folder)
+            pose_data = load_colmap_data(pose_folder)
+            gt_poses.update(pose_data[0])  
             
-    #     errors = compute_pose_errors(gt_poses, pred_poses[0],f"{setup}_{site_id}_{annot}")
+        errors = compute_pose_errors(gt_poses, pred_poses[0],f"{setup}_{site_id}_{annot}")
         
-    #     model_names.append("colmap")
-    #     model_paths.append(colmap_folder)
-    #     setup_names.append(setup)
-    #     site_ids.append(site_id)
-    #     annots.append(annot)
-    #     registration_stats.append(f"{str(num_registered_images).zfill(3)}/{str(num_images).zfill(3)}")
-    #     rotation_error_deg.append(errors['rotation_error_deg'])
-    #     translation_error.append(errors['translation_error'])
-    #     Racc_5.append(errors['Racc_5'])
-    #     Racc_10.append(errors['Racc_10'])
-    #     Racc_15.append(errors['Racc_15'])
-    #     Racc_30.append(errors['Racc_30'])
-    #     Tacc_5.append(errors['Tacc_5'])
-    #     Tacc_10.append(errors['Tacc_10'])
-    #     Tacc_15.append(errors['Tacc_15'])
-    #     Tacc_30.append(errors['Tacc_30'])
+        model_names.append("colmap")
+        model_paths.append(colmap_folder)
+        setup_names.append(setup)
+        site_ids.append(site_id)
+        annots.append(annot)
+        registration_stats.append(f"{str(num_registered_images).zfill(3)}/{str(num_images).zfill(3)}")
+        rotation_error_deg.append(errors['rotation_error_deg'])
+        translation_error.append(errors['translation_error'])
+        Racc_5.append(errors['Racc_5'])
+        Racc_10.append(errors['Racc_10'])
+        Racc_15.append(errors['Racc_15'])
+        Racc_30.append(errors['Racc_30'])
+        Tacc_5.append(errors['Tacc_5'])
+        Tacc_10.append(errors['Tacc_10'])
+        Tacc_15.append(errors['Tacc_15'])
+        Tacc_30.append(errors['Tacc_30'])
         
     
     for master_folder in tqdm.tqdm(master_folders, desc="Processing Master folders"):
@@ -330,7 +316,8 @@ def main():
     
     # Save the results to a CSV file
     # pd.DataFrame(results_dict).to_csv("./cache_files/colmap_results.csv", index=False)
-    pd.DataFrame(results_dict).to_csv("./cache_files/master_results.csv", index=False)
+    # pd.DataFrame(results_dict).to_csv("./cache_files/master_results.csv", index=False)
+    pd.DataFrame(results_dict).to_csv("./cache_files/eval_results.csv", index=False)
     
         
     # for master_folder in master_folders:
