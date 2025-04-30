@@ -6,6 +6,8 @@ from utils.colmap_utils import get_camera_matrix
 import torch
 from utils.metric import camera_to_rel_deg
 import glob
+import pandas as pd
+import tqdm
 
 
 def load_colmap_data(colmap_data_folder):
@@ -185,15 +187,38 @@ def main():
     #     get_all_mast3r_folders("/home/sirsh/cv_dataset/dataset_50sites/master")
     #     with open("./cache_files/master_folders.txt", "w") as f:
     #         f.write("\n".join(master_folders))
+        
     
-    for colmap_folder in colmap_folders:
-        print(f"Processing COLMAP folder: {colmap_folder}")
+    model_names = []
+    model_paths = []
+    setup_names = []
+    site_ids = []
+    annots = []
+    registration_stats = []
+    rotation_error_deg = []
+    translation_error = []
+    Racc_5 = []
+    Racc_10 = []
+    Racc_15 = []
+    Racc_30 = []
+    Tacc_5 = []
+    Tacc_10 = []
+    Tacc_15 = []
+    Tacc_30 = []
+    
+    # for colmap_folder in colmap_folders:
+    for colmap_folder in tqdm.tqdm(colmap_folders, desc="Processing COLMAP folders"):
+        # print(f"Processing COLMAP folder: {colmap_folder}")
         pred_poses = load_colmap_data(colmap_folder)
         
-        _, setup, _, site_id, _, _, _ = colmap_folder.rsplit("/",6)
+        _, setup, _, site_id, annot, _, _ = colmap_folder.rsplit("/",6)
         
         metadata_folder = os.path.join("/home/sirsh/cv_dataset/dataset_50sites/data", setup, "train", site_id, "ge_metadata")
         meta_folders = os.listdir(metadata_folder)
+        
+        data_folder = os.path.join("/home/sirsh/cv_dataset/dataset_50sites/data", setup, "train", site_id, annot, "images")
+        num_images = len(os.listdir(data_folder))
+        num_registered_images = len(list(pred_poses[0].keys()))
         
         gt_poses = {}
         
@@ -204,9 +229,46 @@ def main():
             
         errors = compute_pose_errors(gt_poses, pred_poses[0])
         
+        model_names.append("colmap")
+        model_paths.append(colmap_folder)
+        setup_names.append(setup)
+        site_ids.append(site_id)
+        annots.append(annot)
+        registration_stats.append(f"{str(num_registered_images).zfill(3)}/{str(num_images).zfill(3)}")
+        rotation_error_deg.append(errors['rotation_error_deg'])
+        translation_error.append(errors['translation_error'])
+        Racc_5.append(errors['Racc_5'])
+        Racc_10.append(errors['Racc_10'])
+        Racc_15.append(errors['Racc_15'])
+        Racc_30.append(errors['Racc_30'])
+        Tacc_5.append(errors['Tacc_5'])
+        Tacc_10.append(errors['Tacc_10'])
+        Tacc_15.append(errors['Tacc_15'])
+        Tacc_30.append(errors['Tacc_30'])
         
         
-        import pdb; pdb.set_trace()
+    results_dict = {
+        'model_name': model_names,
+        'model_path': model_paths,
+        'setup_names': setup_names,
+        'site_ids': site_ids,
+        'annots': annots,
+        'registration_stats': registration_stats,
+        'rotation_error_deg': rotation_error_deg,
+        'translation_error': translation_error,
+        'Racc_5': Racc_5,
+        'Racc_10': Racc_10,
+        'Racc_15': Racc_15,
+        'Racc_30': Racc_30,
+        'Tacc_5': Tacc_5,
+        'Tacc_10': Tacc_10,
+        'Tacc_15': Tacc_15,
+        'Tacc_30': Tacc_30
+    }
+    
+    # Save the results to a CSV file
+    pd.DataFrame(results_dict).to_csv("colmap_results.csv", index=False)
+    
         
     # for master_folder in master_folders:
     #     print(f"Processing Master folder: {master_folder}")
