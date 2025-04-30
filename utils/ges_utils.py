@@ -97,7 +97,7 @@ def draw_camera(K, R, t, w, h,
 def json_to_empty_colmap_model(json_file, ref_sfm_empty, max_num_images=200):
     with open(json_file, "rb") as f:
         raw_tracking_data = json.load(f)
-
+    import pdb; pdb.set_trace()
     scene_name = raw_tracking_data["name"]
     w     = raw_tracking_data["width"]
     h     = raw_tracking_data["height"]
