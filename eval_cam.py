@@ -83,9 +83,9 @@ def summarize_errors(errors):
 
 def main():
     
-    poses1 = load_colmap_data("/home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0001/ge_metadata/ID0001/")
-    poses2 = load_colmap_data("/home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0001/ge_metadata/ID0001_right/")
-    poses3 = load_colmap_data("/home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0001/ge_metadata/ID0001_left/")
+    poses1 = load_colmap_data("/home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0001/ge_metadata/ID0003/")
+    poses2 = load_colmap_data("/home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0001/ge_metadata/ID0003_right/")
+    poses3 = load_colmap_data("/home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0001/ge_metadata/ID0003_left/")
     
     
     
