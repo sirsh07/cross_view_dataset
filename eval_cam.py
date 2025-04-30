@@ -52,7 +52,12 @@ def compute_pose_errors(gt_poses_dict, pred_poses_dict, log_name):
     for img in test_imgs:
         
         try:
-            gt_pose = gt_poses_dict[img]
+            if log_name.split("_",1)[0] == "street":
+                img_name = img.split("_")
+                img2 = "_".join([img_name[0], "street", img_name[1]])
+                gt_pose = gt_poses_dict[img2]
+            else:
+                gt_pose = gt_poses_dict[img]
         except KeyError:
             print(f"Image {img} not found in ground truth poses for {log_name}.")
             import pdb; pdb.set_trace()
@@ -324,7 +329,7 @@ def main():
     }
     
     # Save the results to a CSV file
-    pd.DataFrame(results_dict).to_csv("./cache_files/eval_results.csv", index=False)
+    pd.DataFrame(results_dict).to_csv("./cache_files/colmap_results.csv", index=False)
     
         
     # for master_folder in master_folders:
