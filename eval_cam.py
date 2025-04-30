@@ -39,7 +39,7 @@ def load_colmap_data(colmap_data_folder):
 
     return colmap_pose_dict, _
 
-def compute_pose_errors(gt_poses_dict, pred_poses_dict):
+def compute_pose_errors(gt_poses_dict, pred_poses_dict, log_name):
     """Computes translation and rotation errors between two sets of poses."""
     
     test_imgs = list(pred_poses_dict.keys())
@@ -51,8 +51,17 @@ def compute_pose_errors(gt_poses_dict, pred_poses_dict):
     
     for img in test_imgs:
         
-        gt_pose = gt_poses_dict[img]
-        pred_pose = pred_poses_dict[img]
+        try:
+            gt_pose = gt_poses_dict[img]
+        except KeyError:
+            print(f"Image {img} not found in ground truth poses for {log_name}.")
+            continue
+        
+        try:
+            pred_pose = pred_poses_dict[img]
+        except KeyError:
+            print(f"Image {img} not found in predicted poses for {log_name}.")
+            continue
         
         gt_R, gt_T = gt_pose[1], gt_pose[2]
         pred_R, pred_T = pred_pose[1], pred_pose[2]
@@ -231,7 +240,7 @@ def main():
             pose_data = load_colmap_data(pose_folder)
             gt_poses.update(pose_data[0])  
             
-        errors = compute_pose_errors(gt_poses, pred_poses[0])
+        errors = compute_pose_errors(gt_poses, pred_poses[0],f"{setup}_{site_id}_{annot}")
         
         model_names.append("colmap")
         model_paths.append(colmap_folder)
@@ -250,6 +259,8 @@ def main():
         Tacc_15.append(errors['Tacc_15'])
         Tacc_30.append(errors['Tacc_30'])
         
+    
+    
         
     results_dict = {
         'model_name': model_names,
