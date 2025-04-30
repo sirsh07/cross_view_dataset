@@ -2,11 +2,45 @@ import os
 import numpy as np
 # from colmap_loader import read_model  # Replace with your actual COLMAP model reader
 from hloc.utils.read_write_model import Camera, Image, Point3D, read_model, write_model, rotmat2qvec, qvec2rotmat
+from utils.colmap_utils import get_camera_matrix
 
-def load_colmap_model(model_path, ext=".bin"):
-    """Loads COLMAP cameras and images from the given path."""
-    cameras, images, _ = read_model(model_path, ext=ext)
-    return cameras, images
+# def load_colmap_model(model_path, ext=".bin"):
+#     """Loads COLMAP cameras and images from the given path."""
+#     cameras, images, _ = read_model(model_path, ext=ext)
+#     return cameras, images
+
+
+def load_colmap_data(colmap_data_folder):
+    # print('Loading COLMAP data...')
+    input_format = '.bin'
+    cameras, images, _ = read_model(colmap_data_folder, ext=input_format)
+    # print(f'num_cameras: {len(cameras)}')
+    # print(f'num_images: {len(images)}')
+    # print(f'num_points3D: {len(points3D)}')
+
+    colmap_pose_dict = {}
+
+    # Loop through COLMAP images
+    for img_id, img_info in images.items():
+        img_name = img_info.name
+
+        C_R_G, C_t_G = qvec2rotmat(img_info.qvec), img_info.tvec
+
+        # invert
+        G_t_C = -C_R_G.T @ C_t_G
+        G_R_C = C_R_G.T
+
+        cam_info = cameras[img_info.camera_id]
+        cam_params = cam_info.params
+        K, _ = get_camera_matrix(camera_params=cam_params, camera_model=cam_info.model)
+
+        colmap_pose_dict[img_name] = (K, G_R_C, G_t_C)
+
+    return colmap_pose_dict, _
+
+
+
+
 
 def get_camera_poses(images):
     """Returns a dictionary of image name to 4x4 camera-to-world pose matrices."""
@@ -47,9 +81,9 @@ def summarize_errors(errors):
 
 def main():
     
-    cams1, imgs1 = load_colmap_model("/home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0001/ge_metadata/ID0001/")
-    cams2, imgs2 = load_colmap_model("/home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0001/ge_metadata/ID0001_right/")
-    cams3, imgs3 = load_colmap_model("/home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0001/ge_metadata/ID0001_left/")
+    poses1 = load_colmap_data("/home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0001/ge_metadata/ID0001/")
+    poses2 = load_colmap_data("/home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0001/ge_metadata/ID0001_right/")
+    poses3 = load_colmap_data("/home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0001/ge_metadata/ID0001_left/")
     
     
     
