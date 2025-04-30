@@ -275,8 +275,6 @@ def main():
         
         _, setup, _, site_id, annot, _, _, _ = master_folder.rsplit("/",7)
         
-        import pdb; pdb.set_trace()
-        
         metadata_folder = os.path.join("/home/sirsh/cv_dataset/dataset_50sites/data", setup, "train", site_id, "ge_metadata")
         meta_folders = os.listdir(metadata_folder)
         
