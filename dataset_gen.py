@@ -151,6 +151,8 @@ def handle_aerial_data():
     target_dir = "/home/sirsh/cv_dataset/dataset_30sites/data/aerial/train/"
     split_folder = "/home/zhyw86/WorkSpace/google-earth/sampling/aerial/middle/random/"
     
+    os.makedirs(target_dir, exist_ok=True)
+    
     
     # for site_id in list(set(os.listdir(base_dir)) & set(os.listdir(split_folder))):
     for site_id in list((set(os.listdir(base_dir)) & set(os.listdir(split_folder)))-set(os.listdir(target_dir))):
