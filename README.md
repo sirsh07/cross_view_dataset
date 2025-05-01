@@ -24,6 +24,10 @@
 python dataset_stats.py --dir /home/zhyw86/WorkSpace/google-earth --output_csv csv_stats/zen_gearth_d_4_22.csv --output_plot mat_plots/zen_gearth_d_4_22.png
 
 
+
+1. python dataset_gen.py
+
+
 python gen_colmap_metadata.py --base_input_dir /home/sirsh/cv_dataset/dataset_50sites/data/ --base_output_dir /home/sirsh/cv_dataset/dataset_50sites/colmap/metadata/
 
 [X] Create symlink of data
