@@ -148,7 +148,7 @@ def handle_aerial_data():
     """
     
     base_dir = "/home/zhyw86/WorkSpace/google-earth/data/aerial/middle/"
-    target_dir = "/home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/"
+    target_dir = "/home/sirsh/cv_dataset/dataset_30sites/data/aerial/train/"
     split_folder = "/home/zhyw86/WorkSpace/google-earth/sampling/aerial/middle/random/"
     
     
@@ -288,7 +288,7 @@ def handle_street_data():
     """
     
     base_dir = "/home/zhyw86/WorkSpace/google-earth/data/street/"
-    target_dir = "/home/sirsh/cv_dataset/dataset_50sites/data/street/train/"
+    target_dir = "/home/sirsh/cv_dataset/dataset_30sites/data/street/train/"
     split_folder = "/home/zhyw86/WorkSpace/google-earth/sampling/street/random/"
     
     os.makedirs(target_dir, exist_ok=True)
@@ -313,10 +313,10 @@ def handle_combined_data():
     Handle aerial data by copying files from base_dir to target_dir.
     """
     
-    target_dir = "/home/sirsh/cv_dataset/dataset_50sites/data/aerial_street/train/"
+    target_dir = "/home/sirsh/cv_dataset/dataset_30sites/data/aerial_street/train/"
     
-    aerial_dir = "/home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/"
-    street_dir = "/home/sirsh/cv_dataset/dataset_50sites/data/street/train/"
+    aerial_dir = "/home/sirsh/cv_dataset/dataset_30sites/data/aerial/train/"
+    street_dir = "/home/sirsh/cv_dataset/dataset_30sites/data/street/train/"
     
     os.makedirs(target_dir, exist_ok=True)
     
@@ -369,6 +369,6 @@ def handle_combined_data():
 # Example usage:
 if __name__ == "__main__":
     
-    # handle_aerial_data()
+    handle_aerial_data()
     # handle_street_data()
-    handle_combined_data()
+    # handle_combined_data()
