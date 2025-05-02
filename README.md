@@ -128,3 +128,9 @@ error with mast3r
 
 
 
+
+python3 run_wriva_reconstruction.py --input_images_folder "/home/sirsh/cv_dataset/dataset_30sites/data/street/train/ID0067/p25/images" --workspace_folder "/home/sirsh/cv_dataset/dataset_30sites/colmap/results/street/train/ID0067/p25/workspace/" --output_folder "/home/sirsh/cv_dataset/dataset_30sites/colmap/results//street/train/ID0067/p25/output" --enable_doppelganger_threshold 200 --max_images 500 --num_threads 6 --input_metadata_folder "/home/sirsh/cv_dataset/dataset_30sites/colmap/metadata//street/train/ID0067/p25/images" --ground_truth_mode
+
+
+python3 run_wriva_reconstruction.py --input_images_folder "/home/sirsh/cv_dataset/dataset_30sites/data/street/train/ID0003/p12/images" --workspace_folder "/home/sirsh/cv_dataset/dataset_30sites/colmap/results//street/train/ID0003/p12/workspace/" --output_folder "/home/sirsh/cv_dataset/dataset_30sites/colmap/results//street/train/ID0003/p12/output" --enable_doppelganger_threshold 200 --max_images 500 --num_threads 6 --input_metadata_folder "/home/sirsh/cv_dataset/dataset_30sites/colmap/metadata//street/train/ID0003/p12/images" --ground_truth_mode
+
