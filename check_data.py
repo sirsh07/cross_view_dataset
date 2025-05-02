@@ -54,7 +54,7 @@ def check_colmap(base_dir):
     return empty_sparse_dirs, missing_sparse_dirs
 
 if __name__ == "__main__":
-    base_dir = "/home/sirsh/cv_dataset/dataset_50sites/data/"
+    base_dir = "/home/sirsh/cv_dataset/dataset_30sites/data/"
     unopenable_images = find_unopenable_images(base_dir)
     
     
