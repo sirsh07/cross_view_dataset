@@ -3,17 +3,17 @@
 #SBATCH --gpus=1 -C 'volta|turing|ampere'
 #SBATCH --cpus-per-gpu=10
 #SBATCH -C 'gmem32|gmem80|gmem48|gmem24'
-#SBATCH --job-name=dataset_50sites_mast3r_%A_%a  # Job name includes job array ID and task ID
-#SBATCH --output=slurm_outputs/dataset_50sites_mast3r/dataset_50sites_cmap_%A_%a.out  # Output file for each job in the array
+#SBATCH --job-name=dataset_30sites_mast3r_%A_%a  # Job name includes job array ID and task ID
+#SBATCH --output=slurm_outputs/dataset_30sites_mast3r/dataset_30sites_cmap_%A_%a.out  # Output file for each job in the array
 #SBATCH --gres-flags=enforce-binding
 #SBATCH --qos day
-##SBATCH --array=0-$(($(find /home/sirsh/cv_dataset/dataset_50sites/data/ -type d -name "images" | wc -l) - 1))%2  # Dynamically set array size
-#SBATCH --array=0-120  # Dynamically set array size
+##SBATCH --array=0-$(($(find /home/sirsh/cv_dataset/dataset_30sites/data/ -type d -name "images" | wc -l) - 1))%2  # Dynamically set array size
+#SBATCH --array=0-360  # Dynamically set array size
 
 # Define base directories
-base_input_dir="/home/sirsh/cv_dataset/dataset_50sites/data/"
-# base_metadata_dir="/home/sirsh/cv_dataset/dataset_50sites/colmap/metadata/"
-base_results_dir="/home/sirsh/cv_dataset/dataset_50sites/mast3r/results/"
+base_input_dir="/home/sirsh/cv_dataset/dataset_30sites/data/"
+# base_metadata_dir="/home/sirsh/cv_dataset/dataset_30sites/colmap/metadata/"
+base_results_dir="/home/sirsh/cv_dataset/dataset_30sites/mast3r_sfm/results/"
 
 # Generate a list of all input image folders
 input_folders=($(find "$base_input_dir" -type d -name "images"))
@@ -36,10 +36,13 @@ output_folder="${results_folder}/output"
 mkdir -p "$output_folder"
 
 # Activate the environment and run the job
+echo "Running on node: $(hostname)"
+echo "Running on node: $SLURMD_NODENAME"
 echo CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES
 # module load use.own
 # module load colmap
 # source ~/smenv_colmap/bin/activate
+module load cuda/12.1
 source ~/smenv_master/bin/activate
 nvidia-smi
 squeue --me
@@ -72,7 +75,7 @@ python kapture_mast3r_mapping.py \
 
 # python make_pairs.py --dir "$input_folder" --output "$pairs_file" --scene_graph complete --weights /home/sirsh/aerial_gen/aerial_scene_gen/master_sfm/mast3r/checkpoints/MASt3R_ViTLarge_BaseDecoder_512_catmlpdpt_metric.pth
 
-# python kapture_mast3r_mapping.py --weights /home/sirsh/aerial_gen/aerial_scene_gen/master_sfm/mast3r/checkpoints/MASt3R_ViTLarge_BaseDecoder_512_catmlpdpt_metric.pth --dir_same_camera /home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0003/p12/images --output /home/sirsh/cv_dataset/mastrf_temp/instant_splat/ID0003/output/ --pairsfile_path /home/sirsh/cv_dataset/mastrf_temp/instant_splat/ID0003/pairs.txt
+# python kapture_mast3r_mapping.py --weights /home/sirsh/aerial_gen/aerial_scene_gen/master_sfm/mast3r/checkpoints/MASt3R_ViTLarge_BaseDecoder_512_catmlpdpt_metric.pth --dir_same_camera /home/sirsh/cv_dataset/dataset_30sites/data/aerial/train/ID0003/p12/images --output /home/sirsh/cv_dataset/mastrf_temp/instant_splat/ID0003/output/ --pairsfile_path /home/sirsh/cv_dataset/mastrf_temp/instant_splat/ID0003/pairs.txt
 
 
 # Run the Python script with the corresponding parameters
