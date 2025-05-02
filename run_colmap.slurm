@@ -36,6 +36,8 @@ mkdir -p "$workspace_folder"
 mkdir -p "$output_folder"
 
 # Activate the environment and run the job
+echo "Running on node: $(hostname)"
+echo "Running on node: $SLURMD_NODENAME"
 echo CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES
 module load use.own
 module load colmap
