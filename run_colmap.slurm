@@ -39,6 +39,7 @@ mkdir -p "$output_folder"
 echo CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES
 module load use.own
 module load colmap
+module load cuda/12.6
 source ~/smenv_colmap/bin/activate
 nvidia-smi
 squeue --me
