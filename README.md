@@ -26,6 +26,11 @@ python dataset_stats.py --dir /home/zhyw86/WorkSpace/google-earth --output_csv c
 
 
 1. python dataset_gen.py
+2. python gen_colmap_metadata.py --base_input_dir /home/sirsh/cv_dataset/dataset_30sites/data/ --base_output_dir /home/sirsh/cv_dataset/dataset_30sites/colmap/metadata/
+3. 
+
+
+
 
 
 python gen_colmap_metadata.py --base_input_dir /home/sirsh/cv_dataset/dataset_50sites/data/ --base_output_dir /home/sirsh/cv_dataset/dataset_50sites/colmap/metadata/
