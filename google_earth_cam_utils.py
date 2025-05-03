@@ -58,7 +58,7 @@ def load_json_files(paths: List[str]) -> List[Tuple[str, Dict[str, Any]]]:
 
     return records
 
-def load_dataset_files(root_dir: str = "/home/sirsh/cv_dataset/dataset_50sites/data") -> List[Tuple[str, Dict[str, Any]]]:
+def load_dataset_files(root_dir: str = "/home/sirsh/cv_dataset/dataset_30sites/data") -> List[Tuple[str, Dict[str, Any]]]:
     """
     Recursively walk `root_dir` and return every absolute path that ends in '.csv'.
     Adjust the `if` block inside the loop if you need stricter pattern filtering.
@@ -124,15 +124,15 @@ if __name__ == "__main__":
     # all_json_paths = collect_site_json_paths()
     # print(f"Found {len(all_json_paths)} JSON files.")
     
-    if os.path.exists("./cache_files/all_csv_paths.txt"):
-        with open("./cache_files/all_csv_paths.txt", "r") as f:
+    if os.path.exists("./cache_files2/all_csv_paths.txt"):
+        with open("./cache_files2/all_csv_paths.txt", "r") as f:
             all_csv_paths = f.readlines()
             all_csv_paths = [path.strip() for path in all_csv_paths]
     
     else:
         all_csv_paths = load_dataset_files()
-        os.makedirs("./cache_files", exist_ok=True)
-        with open("./cache_files/all_csv_paths.txt", "w") as f:
+        os.makedirs("./cache_files2", exist_ok=True)
+        with open("./cache_files2/all_csv_paths.txt", "w") as f:
             for path in all_csv_paths:
                 f.write(path + "\n")
     
