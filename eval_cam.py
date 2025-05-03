@@ -172,20 +172,20 @@ def summarize_errors(errors):
 def main():
     
     
-    if os.path.exists("./cache_files/colmap_folders.txt"):
-        with open("./cache_files/colmap_folders.txt", "r") as f:
+    if os.path.exists("./cache_files2/colmap_folders.txt"):
+        with open("./cache_files2/colmap_folders.txt", "r") as f:
             colmap_folders = f.read().splitlines()
     else:
-        colmap_folders = get_all_colmap_folders("/home/sirsh/cv_dataset/dataset_50sites/colmap")
-        with open("./cache_files/colmap_folders.txt", "w") as f:
+        colmap_folders = get_all_colmap_folders("/home/sirsh/cv_dataset/dataset_30sites/colmap")
+        with open("./cache_files2/colmap_folders.txt", "w") as f:
             f.write("\n".join(colmap_folders))
         
-    if os.path.exists("./cache_files/master_folders.txt"):
-        with open("./cache_files/master_folders.txt", "r") as f:
+    if os.path.exists("./cache_files2/master_folders.txt"):
+        with open("./cache_files2/master_folders.txt", "r") as f:
             master_folders = f.read().splitlines()
     else:
-        master_folders = get_all_mast3r_folders("/home/sirsh/cv_dataset/dataset_50sites/mast3r")
-        with open("./cache_files/master_folders.txt", "w") as f:
+        master_folders = get_all_mast3r_folders("/home/sirsh/cv_dataset/dataset_30sites/mast3r")
+        with open("./cache_files2/master_folders.txt", "w") as f:
             f.write("\n".join(master_folders))
         
     
@@ -217,10 +217,10 @@ def main():
         
         _, setup, _, site_id, annot, _, _ = colmap_folder.rsplit("/",6)
         
-        metadata_folder = os.path.join("/home/sirsh/cv_dataset/dataset_50sites/data", setup, "train", site_id, "ge_metadata")
+        metadata_folder = os.path.join("/home/sirsh/cv_dataset/dataset_30sites/data", setup, "train", site_id, "ge_metadata")
         meta_folders = os.listdir(metadata_folder)
         
-        data_folder = os.path.join("/home/sirsh/cv_dataset/dataset_50sites/data", setup, "train", site_id, annot, "images")
+        data_folder = os.path.join("/home/sirsh/cv_dataset/dataset_30sites/data", setup, "train", site_id, annot, "images")
         num_images = len(os.listdir(data_folder))
         num_registered_images = len(list(pred_poses[0].keys()))
         
@@ -261,10 +261,10 @@ def main():
         
         _, setup, _, site_id, annot, _, _, _ = master_folder.rsplit("/",7)
         
-        metadata_folder = os.path.join("/home/sirsh/cv_dataset/dataset_50sites/data", setup, "train", site_id, "ge_metadata")
+        metadata_folder = os.path.join("/home/sirsh/cv_dataset/dataset_30sites/data", setup, "train", site_id, "ge_metadata")
         meta_folders = os.listdir(metadata_folder)
         
-        data_folder = os.path.join("/home/sirsh/cv_dataset/dataset_50sites/data", setup, "train", site_id, annot, "images")
+        data_folder = os.path.join("/home/sirsh/cv_dataset/dataset_30sites/data", setup, "train", site_id, annot, "images")
         num_images = len(os.listdir(data_folder))
         num_registered_images = len(list(mast3r_poses[0].keys()))
         
@@ -315,9 +315,9 @@ def main():
     }
     
     # Save the results to a CSV file
-    # pd.DataFrame(results_dict).to_csv("./cache_files/colmap_results.csv", index=False)
-    # pd.DataFrame(results_dict).to_csv("./cache_files/master_results.csv", index=False)
-    pd.DataFrame(results_dict).to_csv("./cache_files/eval_results.csv", index=False)
+    # pd.DataFrame(results_dict).to_csv("./cache_files2/colmap_results.csv", index=False)
+    # pd.DataFrame(results_dict).to_csv("./cache_files2/master_results.csv", index=False)
+    pd.DataFrame(results_dict).to_csv("./cache_files2/eval_results.csv", index=False)
     
         
     # for master_folder in master_folders:
