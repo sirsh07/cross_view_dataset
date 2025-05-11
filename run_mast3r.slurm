@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH -p gpu
 #SBATCH --gpus=1 -C 'volta|turing|ampere'
-#SBATCH --cpus-per-gpu=12
+#SBATCH --cpus-per-gpu=10
 #SBATCH -C 'gmem32|gmem80|gmem48'
 #SBATCH --job-name=dataset_30sites_mast3r_orig_%A_%a  # Job name includes job array ID and task ID
 #SBATCH --output=slurm_outputs/dataset_30sites_mast3r_orig/dataset_30sites_cmap_%A_%a.out  # Output file for each job in the array

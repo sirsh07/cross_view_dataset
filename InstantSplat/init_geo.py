@@ -124,11 +124,11 @@ def main(source_path, model_path, ckpt_path, device, batch_size, image_size, sch
     save_time(model_path, '[1] init_geo', end_time - start_time)
     save_extrinsic(sparse_0_path, extrinsics_w2c, image_files, image_suffix)
     save_intrinsics(sparse_0_path, focals, org_imgs_shape, imgs.shape, save_focals=True)
-    pts_num = save_points3D(sparse_0_path, imgs, pts3d, confs.reshape(pts3d.shape[0], -1), overlapping_masks, use_masks=co_vis_dsp, save_all_pts=True, save_txt_path=model_path, depth_threshold=depth_thre)
-    save_images_and_masks(sparse_0_path, n_views, imgs, overlapping_masks, image_files, image_suffix)
+    # pts_num = save_points3D(sparse_0_path, imgs, pts3d, confs.reshape(pts3d.shape[0], -1), overlapping_masks, use_masks=co_vis_dsp, save_all_pts=True, save_txt_path=model_path, depth_threshold=depth_thre)
+    # save_images_and_masks(sparse_0_path, n_views, imgs, overlapping_masks, image_files, image_suffix)
     print(f'[INFO] MASt3R Reconstruction is successfully converted to COLMAP files in: {str(sparse_0_path)}')
     print(f'[INFO] Number of points: {pts3d.reshape(-1, 3).shape[0]}')    
-    print(f'[INFO] Number of points after downsampling: {pts_num}')
+    # print(f'[INFO] Number of points after downsampling: {pts_num}')
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Process images and save results.')
