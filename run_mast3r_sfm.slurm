@@ -1,10 +1,10 @@
 #!/bin/bash
 #SBATCH -p gpu
 #SBATCH --gpus=1 -C 'volta|turing|ampere'
-#SBATCH --cpus-per-gpu=12
-#SBATCH -C 'gmem32|gmem80|gmem48'
-#SBATCH --job-name=dataset_30sites_mast3r_orig_%A_%a  # Job name includes job array ID and task ID
-#SBATCH --output=slurm_outputs/dataset_30sites_mast3r_orig/dataset_30sites_cmap_%A_%a.out  # Output file for each job in the array
+#SBATCH --cpus-per-gpu=10
+#SBATCH -C 'gmem32|gmem80|gmem48|gmem24'
+#SBATCH --job-name=dataset_30sites_mast3r_%A_%a  # Job name includes job array ID and task ID
+#SBATCH --output=slurm_outputs/dataset_30sites_mast3r/dataset_30sites_cmap_%A_%a.out  # Output file for each job in the array
 #SBATCH --gres-flags=enforce-binding
 #SBATCH --qos day
 ##SBATCH --array=0-$(($(find /home/sirsh/cv_dataset/dataset_30sites/data/ -type d -name "images" | wc -l) - 1))%2  # Dynamically set array size
@@ -13,7 +13,7 @@
 # Define base directories
 base_input_dir="/home/sirsh/cv_dataset/dataset_30sites/data/"
 # base_metadata_dir="/home/sirsh/cv_dataset/dataset_30sites/colmap/metadata/"
-base_results_dir="/home/sirsh/cv_dataset/dataset_30sites/mast3r/results/"
+base_results_dir="/home/sirsh/cv_dataset/dataset_30sites/mast3r_sfm/results/"
 
 # Generate a list of all input image folders
 input_folders=($(find "$base_input_dir" -type d -name "images"))
@@ -29,7 +29,7 @@ results_folder="$base_results_dir/${relative_path%/images}"
 
 # Define workspace and output folders
 # workspace_folder="${results_folder}/workspace"
-# pairs_file="${results_folder}/pairs.txt"
+pairs_file="${results_folder}/pairs.txt"
 output_folder="${results_folder}/output"
 
 # mkdir -p "$workspace_folder"
@@ -56,31 +56,21 @@ echo "Input folder: $input_folder"
 echo "Pairs file: $pairs_file"
 echo "Output folder: $output_folder"
 
-# cd /home/sirsh/cv_dataset/cross_view_dataset/mast3r_sfm/mast3r
-cd /home/sirsh/cv_dataset/cross_view_dataset/InstantSplat
-
-# python make_pairs.py \
-#     --dir "$input_folder" \
-#     --output "$pairs_file" \
-#     --scene_graph complete \
-#     --weights /home/sirsh/aerial_gen/aerial_scene_gen/master_sfm/mast3r/checkpoints/MASt3R_ViTLarge_BaseDecoder_512_catmlpdpt_metric.pth
-
-# python kapture_mast3r_mapping.py \
-#     --weights /home/sirsh/aerial_gen/aerial_scene_gen/master_sfm/mast3r/checkpoints/MASt3R_ViTLarge_BaseDecoder_512_catmlpdpt_metric.pth \
-#     --dir_same_camera "$input_folder" \
-#     --output "$output_folder" \
-#     --pairsfile_path "$pairs_file"
+cd /home/sirsh/cv_dataset/cross_view_dataset/mast3r_sfm/mast3r
 
 
-CUDA_VISIBLE_DEVICES=0 python init_geo.py \
-    -s "$input_folder" \
-    -m "$output_folder" \
-    --n_views 0 \
-    --focal_avg \
-    --co_vis_dsp \
-    --conf_aware_ranking \
-    --ckpt_path /home/sirsh/aerial_gen/aerial_scene_gen/InstantSplat/mast3r/checkpoints/MASt3R_ViTLarge_BaseDecoder_512_catmlpdpt_metric.pth \
-    --infer_video
+python make_pairs.py \
+    --dir "$input_folder" \
+    --output "$pairs_file" \
+    --scene_graph complete \
+    --weights /home/sirsh/aerial_gen/aerial_scene_gen/master_sfm/mast3r/checkpoints/MASt3R_ViTLarge_BaseDecoder_512_catmlpdpt_metric.pth
+
+python kapture_mast3r_mapping.py \
+    --weights /home/sirsh/aerial_gen/aerial_scene_gen/master_sfm/mast3r/checkpoints/MASt3R_ViTLarge_BaseDecoder_512_catmlpdpt_metric.pth \
+    --dir_same_camera "$input_folder" \
+    --output "$output_folder" \
+    --pairsfile_path "$pairs_file"
+
 
 
 # python make_pairs.py --dir "$input_folder" --output "$pairs_file" --scene_graph complete --weights /home/sirsh/aerial_gen/aerial_scene_gen/master_sfm/mast3r/checkpoints/MASt3R_ViTLarge_BaseDecoder_512_catmlpdpt_metric.pth
