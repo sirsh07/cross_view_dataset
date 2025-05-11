@@ -19,7 +19,7 @@ base_results_dir="/home/sirsh/cv_dataset/dataset_30sites/mast3r/results/"
 input_folders=($(find "$base_input_dir" -type d -name "images"))
 
 # Select the corresponding input folder based on SLURM_ARRAY_TASK_ID
-input_folder=${input_folders[$SLURM_ARRAY_TASK_ID]}
+input_folder=${input_folders[$SLURM_ARRAY_TASK_ID]%/images}
 
 # Generate the corresponding metadata folder
 relative_path=${input_folder#"$base_input_dir"}  # Get the relative path of the input folder
