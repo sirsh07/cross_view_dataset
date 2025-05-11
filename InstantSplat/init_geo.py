@@ -25,7 +25,8 @@ def main(source_path, model_path, ckpt_path, device, batch_size, image_size, sch
          min_conf_thr, llffhold, n_views, co_vis_dsp, depth_thre, conf_aware_ranking=False, focal_avg=False, infer_video=False):
 
     # ---------------- (1) Load model and images ----------------  
-    save_path, sparse_0_path, sparse_1_path = init_filestructure(Path(source_path), n_views)
+    # save_path, sparse_0_path, sparse_1_path = init_filestructure(Path(source_path), n_views)
+    save_path, sparse_0_path, sparse_1_path = init_filestructure(Path(model_path), n_views)
     model = AsymmetricMASt3R.from_pretrained(ckpt_path).to(device)
     image_dir = Path(source_path) / 'images'
     image_files, image_suffix = get_sorted_image_files(image_dir)

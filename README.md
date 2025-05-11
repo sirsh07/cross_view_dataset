@@ -51,7 +51,7 @@ CUDA_VISIBLE_DEVICES=0 python -W ignore ./init_geo.py -s ${SOURCE_PATH} -m ${MOD
 
 CUDA_VISIBLE_DEVICES=0 python init_geo.py -s /home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0001/p100 -m /home/sirsh/cv_dataset/duster_temp/instant_splat/ID0001 --n_views 4 --focal_avg --co_vis_dsp --conf_aware_ranking --ckpt_path /home/sirsh/aerial_gen/aerial_scene_gen/InstantSplat/mast3r/checkpoints/MASt3R_ViTLarge_BaseDecoder_512_catmlpdpt_metric.pth
 
-CUDA_VISIBLE_DEVICES=0 python init_geo.py -s /home/sirsh/cv_dataset/dataset_50sites/data/aerial/train/ID0001/p100 -m /home/sirsh/cv_dataset/duster_temp/instant_splat/ID0001 --n_views 0 --focal_avg --co_vis_dsp --conf_aware_ranking --ckpt_path /home/sirsh/aerial_gen/aerial_scene_gen/InstantSplat/mast3r/checkpoints/MASt3R_ViTLarge_BaseDecoder_512_catmlpdpt_metric.pth --infer_video
+CUDA_VISIBLE_DEVICES=0 python init_geo.py -s /home/sirsh/cv_dataset/dataset_50sites/data/aerial_street/train/ID0001/p100 -m /home/sirsh/cv_dataset/duster_temp/instant_splat/ID0001 --n_views 0 --focal_avg --co_vis_dsp --conf_aware_ranking --ckpt_path /home/sirsh/aerial_gen/aerial_scene_gen/InstantSplat/mast3r/checkpoints/MASt3R_ViTLarge_BaseDecoder_512_catmlpdpt_metric.pth --infer_video
 
 
 \
@@ -135,3 +135,5 @@ python3 run_wriva_reconstruction.py --input_images_folder "/home/sirsh/cv_datase
 
 python3 run_wriva_reconstruction.py --input_images_folder "/home/sirsh/cv_dataset/dataset_30sites/data/street/train/ID0003/p12/images" --workspace_folder "/home/sirsh/cv_dataset/dataset_30sites/colmap/results//street/train/ID0003/p12/workspace/" --output_folder "/home/sirsh/cv_dataset/dataset_30sites/colmap/results//street/train/ID0003/p12/output" --enable_doppelganger_threshold 200 --max_images 500 --num_threads 6 --input_metadata_folder "/home/sirsh/cv_dataset/dataset_30sites/colmap/metadata//street/train/ID0003/p12/images" --ground_truth_mode
 
+
+rsync -avzh --copy-links sirsh@crcv2.eecs.ucf.edu:/home/sirsh/cv_dataset/dataset_30sites/data .
