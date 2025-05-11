@@ -260,7 +260,7 @@ def save_points3D(sparse_path, imgs, pts3d, confs, masks=None, use_masks=True, s
     if confs is not None:
         np.save(sparse_path / 'confidence.npy', confs)
         
-    import pdb; pdb.set_trace()
+    # import pdb; pdb.set_trace()
 
     # Process points and colors
     if use_masks:
