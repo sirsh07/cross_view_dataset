@@ -240,7 +240,7 @@ def save_intrinsics(sparse_path, focals, org_imgs_shape, imgs_shape, save_focals
             height=org_height,
             params=[focal*scale_factor_x, focal*scale_factor_y, org_width/2, org_height/2]
         )    
-    print(f' - scaling focal: ({focal}, {focal}) --> ({focal*scale_factor_x}, {focal*scale_factor_y})' )
+        print(f' - scaling focal: ({focal}, {focal}) --> ({focal*scale_factor_x}, {focal*scale_factor_y})' )
     write_cameras_binary(cameras, cameras_bin_file)
     write_cameras_text(cameras, cameras_txt_file)
     if save_focals:
