@@ -40,7 +40,8 @@ def main(source_path, model_path, ckpt_path, device, batch_size, image_size, sch
 
     start_time = time()
     print(f'>> Making pairs...')
-    pairs = make_pairs(images, scene_graph='complete', prefilter=None, symmetrize=True)
+    # pairs = make_pairs(images, scene_graph='complete', prefilter=None, symmetrize=True)
+    pairs = make_pairs(images, scene_graph='swin', prefilter=None, symmetrize=True)
     print(f'>> Inference...')
     output = inference(pairs, model, device, batch_size=1, verbose=True)
     print(f'>> Global alignment...')
