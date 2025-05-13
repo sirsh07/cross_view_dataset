@@ -4,7 +4,7 @@ import os
 
 
 
-def get_test_splits(root_dir: str = "/home/zhyw86/WorkSpace/google-earth/sampling") -> List[str]:
+def get_test_splits(root_dir: str = "/home/zhyw86/WorkSpace/google-earth/sampling"):
     
     street_split = "/home/zhyw86/WorkSpace/google-earth/sampling/street/random/ID0001_street/ID0001_street_test.txt"
     right_split = "/home/zhyw86/WorkSpace/google-earth/sampling/aerial/right/ID0001/ID0001_right_test.txt"
