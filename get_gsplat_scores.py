@@ -57,8 +57,12 @@ def get_scores(dir, output_file="gsplat_scores.csv"):
      
     
 if __name__ == "__main__":
-    # Example usage
-    dir = "/home/sirsh/cv_dataset/dataset_50sites/gsplat/"
-    scores = get_scores(dir,"./recon_scores/colmap_gsplat_scores.csv")
+    # Example usagse
+    # dir = "/home/sirsh/cv_dataset/dataset_50sites/gsplat/"
+    # scores = get_scores(dir,"./recon_scores/colmap_gsplat_scores.csv")
+    
+    dir = "/home/sirsh/cv_dataset/dataset_50sites/gsplat_mast3r"
+    scores = get_scores(dir,"./recon_scores/mast3r_gsplat_scores.csv")
+    
     print(scores) 
     
