@@ -24,7 +24,10 @@ def get_scores(dir, output_file="gsplat_scores.csv"):
             if file.endswith("val_step29999.json"):
                 gsplat_file = os.path.join(root, file)
                 
+                import pdb; pdb.set_trace()
+                
                 _, model, cond, _, idx, split, _, _, _ = gsplat_file.rsplit("/",8)
+                
                 
                 # Extract the score from the filename
                 with open(gsplat_file, "rb") as f:
