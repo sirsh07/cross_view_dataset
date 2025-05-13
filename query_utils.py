@@ -165,22 +165,23 @@ def get_query_metadata(json_file, ref_sfm_empty=None, max_num_images=200):
     # geometries = []
     # poses = []
     
-    import pdb; pdb.set_trace()
-
     # # create colmap images
     # images = {}
     # cameras = {}
     # cam_id = 1
 
-    # for i, frame in enumerate(raw_tracking_data["cameraFrames"]):
-    #     if max_num_images is not None and i > max_num_images:
-    #         break
-    #     x, y, z = geodetic2enu(
-    #         frame['coordinate']['latitude'],
-    #         frame['coordinate']['longitude'],
-    #         frame['coordinate']['altitude'], 
-    #         lat0, lon0, alt0
-    #     )
+    for i, frame in enumerate(raw_tracking_data["cameraFrames"]):
+        if max_num_images is not None and i > max_num_images:
+            break
+        x, y, z = geodetic2enu(
+            frame['coordinate']['latitude'],
+            frame['coordinate']['longitude'],
+            frame['coordinate']['altitude'], 
+            lat0, lon0, alt0
+        )
+        
+        import pdb; pdb.set_trace()
+        
     #     dist_scale = 1
     #     x, y, z = x / dist_scale, y / dist_scale, z / dist_scale
     #     rx, ry, rz = frame['rotation']['x'], frame['rotation']['y'], frame['rotation']['z']
