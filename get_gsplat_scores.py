@@ -9,6 +9,10 @@ def get_scores(dir):
         for file in files:
             if file.endswith("val_step29999.json"):
                 gsplat_file = os.path.join(root, file)
+                
+                _, model, cond, _, idx, split, _, _, _ = gsplat_file.rsplit("/",8)
+                 
+                
                 import pdb; pdb.set_trace()
     
     
