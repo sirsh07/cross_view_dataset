@@ -154,16 +154,18 @@ def get_query_metadata(json_file, ref_sfm_empty=None, max_num_images=200):
     h     = raw_tracking_data["height"]
 
     # # Take the latitude, longitude, and altitude from the first frame
-    # lat0, lon0, alt0 = raw_tracking_data['cameraFrames'][0]['coordinate']['latitude'], raw_tracking_data['cameraFrames'][0]['coordinate']['longitude'], raw_tracking_data['cameraFrames'][0]['coordinate']['altitude']
+    lat0, lon0, alt0 = raw_tracking_data['cameraFrames'][0]['coordinate']['latitude'], raw_tracking_data['cameraFrames'][0]['coordinate']['longitude'], raw_tracking_data['cameraFrames'][0]['coordinate']['altitude']
 
     # print('Latitude:', lat0)
     # print('Longitude:', lon0)
     # print('Altitude:', alt0)
 
-    # rot = rot_ecef2enu(lat0, lon0)
+    rot = rot_ecef2enu(lat0, lon0)
 
     # geometries = []
     # poses = []
+    
+    import pdb; pdb.set_trace()
 
     # # create colmap images
     # images = {}
