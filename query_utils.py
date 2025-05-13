@@ -141,6 +141,8 @@ def get_test_splits(root_dir: str = "/home/zhyw86/WorkSpace/google-earth/samplin
     right_split = "/home/zhyw86/WorkSpace/google-earth/sampling/aerial/right/ID0001/ID0001_right_test.txt"
     middle_split = "/home/zhyw86/WorkSpace/google-earth/sampling/aerial/middle/random/ID0001/ID0001_test.txt"
     left_split = "/home/zhyw86/WorkSpace/google-earth/sampling/aerial/left/ID0001/ID0001_left_test.txt"
+    
+    street_folder = "/home/zhyw86/WorkSpace/google-earth/data/street/ID0001_street/footage"
 
     
     for ids in os.listdir("/home/sirsh/cv_dataset/dataset_50sites/colmap/metadata/aerial_street/train"):
@@ -151,10 +153,9 @@ def get_test_splits(root_dir: str = "/home/zhyw86/WorkSpace/google-earth/samplin
             street_split_file = street_split.replace("ID0001", ids)
             with open(street_split_file, "r") as f:
                 street_files = [line.strip() for line in f.readlines()]
+                test_street_files = random.sample(street_files, 15)
+                test_street_files_path = [os.path.join(street_folder.replace("ID0001", ids), file) for file in test_street_files]
                 import pdb; pdb.set_trace()
-                # sampled_middle_files = [middle_files[i] for i in range(0, len(middle_files), 3)]
-                # sampled_middle_files = random.sample(middle_files, int(len(middle_files) * 1/3))
-                # sampled_middle_file_path = [os.path.join(base_dir,"footage", file) for file in sampled_middle_files]
         # if not os.path.exists(street_split.replace("ID0001", ids)):    
             
         if not os.path.exists(right_split.replace("ID0001", ids)):
