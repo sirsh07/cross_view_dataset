@@ -7,6 +7,15 @@ import logging
 import shutil  # for copying files
 import pandas as pd
 
+from pymap3d.enu import geodetic2enu
+from scipy.spatial.transform import Rotation
+import numpy as np
+import math
+import os
+import json
+import open3d as o3d
+from hloc.utils.read_write_model import Camera, Image, Point3D, read_model, write_model, rotmat2qvec, qvec2rotmat
+from utils.ges_utils import rot_ecef2enu, compute_w2c_ecef, draw_camera
 
 
 
@@ -135,6 +144,102 @@ def sample_and_combine_folders(base_dir,
 
 
 
+def get_query_metadata(json_file, ref_sfm_empty=None, max_num_images=200):
+    with open(json_file, "rb") as f:
+        raw_tracking_data = json.load(f)
+    # if "ID0001" in json_file:
+    #     import pdb; pdb.set_trace()
+    scene_name = raw_tracking_data["name"]
+    w     = raw_tracking_data["width"]
+    h     = raw_tracking_data["height"]
+
+    # # Take the latitude, longitude, and altitude from the first frame
+    # lat0, lon0, alt0 = raw_tracking_data['cameraFrames'][0]['coordinate']['latitude'], raw_tracking_data['cameraFrames'][0]['coordinate']['longitude'], raw_tracking_data['cameraFrames'][0]['coordinate']['altitude']
+
+    # print('Latitude:', lat0)
+    # print('Longitude:', lon0)
+    # print('Altitude:', alt0)
+
+    # rot = rot_ecef2enu(lat0, lon0)
+
+    # geometries = []
+    # poses = []
+
+    # # create colmap images
+    # images = {}
+    # cameras = {}
+    # cam_id = 1
+
+    # for i, frame in enumerate(raw_tracking_data["cameraFrames"]):
+    #     if max_num_images is not None and i > max_num_images:
+    #         break
+    #     x, y, z = geodetic2enu(
+    #         frame['coordinate']['latitude'],
+    #         frame['coordinate']['longitude'],
+    #         frame['coordinate']['altitude'], 
+    #         lat0, lon0, alt0
+    #     )
+    #     dist_scale = 1
+    #     x, y, z = x / dist_scale, y / dist_scale, z / dist_scale
+    #     rx, ry, rz = frame['rotation']['x'], frame['rotation']['y'], frame['rotation']['z']
+    #     R = compute_w2c_ecef(rx, ry, rz)
+    #     c2w = np.block([
+    #         [rot @ R, np.array([x, y, z]).reshape(-1, 1)],
+    #         [np.zeros((1, 3)), 1]
+    #     ])
+        
+    #     # Every frame is a camera
+    #     fov_v = frame["fovVertical"]
+    #     theta_v_rad = math.radians(fov_v)
+    #     fl = h / (2 * math.tan(theta_v_rad / 2))
+    #     cx, cy = w / 2, h / 2
+
+    #     curr_cam = Camera(
+    #         id=cam_id,
+    #         model="SIMPLE_PINHOLE",
+    #         width=w,
+    #         height=h,
+    #         params=np.array([fl, cx, cy])
+    #     )
+    #     cameras[cam_id] = curr_cam
+        
+    #     w2c = np.linalg.inv(c2w)
+    #     images[i + 1] = Image(
+    #         id=i + 1,
+    #         qvec=rotmat2qvec(w2c[0:3, 0:3]),
+    #         tvec=w2c[0:3, 3],
+    #         camera_id=cam_id,
+    #         name='{}_{:03d}.jpeg'.format(scene_name, i),
+    #         xys=np.empty([0, 2]),
+    #         point3D_ids=np.empty(0),
+    #     )
+    #     cam_id += 1
+    #     # import pdb; pdb.set_trace()
+    #     K = np.array([
+    #         [fl, 0, cx],
+    #         [0, fl, cy],
+    #         [0, 0, 1]
+    #     ])
+
+    #     poses.append(c2w)
+
+    #     # camera_geom = draw_camera(K=K, R=c2w[0:3, 0:3], t=c2w[0:3, 3], w=w, h=h, scale=10)
+    #     # geometries.extend(camera_geom)
+
+    # # camera_geom = draw_camera(K=K, R=np.eye(3), t=c2w[0:3, 3], w=w, h=h, scale=30, axis_only=True)
+    # # geometries.extend(camera_geom)
+
+    # # create COLMAP points3D
+    # points3D = {}
+    # print(">>> CAMERAS: ", len(cameras))
+    # print(">>> IMAGES: ", len(images))
+    # print(">>> POINTS3D: ", len(points3D))
+    
+    # # os.makedirs(ref_sfm_empty, exist_ok=True)
+    # # write_model(cameras, images, points3D, ref_sfm_empty, ".txt")
+    # write_model(cameras, images, points3D, ref_sfm_empty, ".bin")
+
+
 def get_test_splits(root_dir: str = "/home/zhyw86/WorkSpace/google-earth/sampling"):
     
     street_split = "/home/zhyw86/WorkSpace/google-earth/sampling/street/random/ID0001_street/ID0001_street_test.txt"
@@ -142,7 +247,8 @@ def get_test_splits(root_dir: str = "/home/zhyw86/WorkSpace/google-earth/samplin
     middle_split = "/home/zhyw86/WorkSpace/google-earth/sampling/aerial/middle/random/ID0001/ID0001_test.txt"
     left_split = "/home/zhyw86/WorkSpace/google-earth/sampling/aerial/left/ID0001/ID0001_left_test.txt"
     
-    street_folder = "/home/zhyw86/WorkSpace/google-earth/data/street/ID0001_street/footage"
+    street_folder = "/home/zhyw86/WorkSpace/google-earth/data/street/ID0001_street/"
+    street_metadata = "/home/zhyw86/WorkSpace/google-earth/data/street/ID0001_street/ID0001_street.json"
 
     
     for ids in os.listdir("/home/sirsh/cv_dataset/dataset_50sites/colmap/metadata/aerial_street/train"):
@@ -154,7 +260,10 @@ def get_test_splits(root_dir: str = "/home/zhyw86/WorkSpace/google-earth/samplin
             with open(street_split_file, "r") as f:
                 street_files = [line.strip() for line in f.readlines()]
                 test_street_files = random.sample(street_files, 15)
-                test_street_files_path = [os.path.join(street_folder.replace("ID0001", ids), file) for file in test_street_files]
+                test_street_files_path = [os.path.join(street_folder.replace("ID0001", ids),"footage", file) for file in test_street_files]
+                
+                get_query_metadata(street_metadata.replace("ID0001", ids))
+                
                 import pdb; pdb.set_trace()
         # if not os.path.exists(street_split.replace("ID0001", ids)):    
             
