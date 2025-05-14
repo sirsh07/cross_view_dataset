@@ -24,7 +24,7 @@ def get_scores(dir, output_file="gsplat_scores.csv"):
             if file.endswith("val_step29999.json"):
                 gsplat_file = os.path.join(root, file)
                 
-                # import pdb; pdb.set_trace()
+                import pdb; pdb.set_trace()
                 
                 # _, model, cond, _, idx, split, _, _, _ = gsplat_file.rsplit("/",8)
                 
@@ -65,8 +65,9 @@ if __name__ == "__main__":
     # dir = "/home/sirsh/cv_dataset/dataset_50sites/gsplat/"
     # scores = get_scores(dir,"./recon_scores/colmap_gsplat_scores.csv")
     
-    dir = "/home/sirsh/cv_dataset/dataset_50sites/gsplat_mast3r"
-    scores = get_scores(dir,"./recon_scores/mast3r_gsplat_scores.csv")
+    # dir = "/home/sirsh/cv_dataset/dataset_50sites/gsplat_mast3r"
+    dir = "/home/smitra/cv_dataset/dataset_50sites/gsplat"
+    scores = get_scores(dir,"./recon_scores/mast3r_gsplatmcmc_scores.csv")
     
     print(scores) 
     

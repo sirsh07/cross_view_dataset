@@ -56,9 +56,9 @@ CUDA_VISIBLE_DEVICES=0 python init_geo.py -s /home/sirsh/cv_dataset/dataset_50si
 
 
 
-CUDA_VISIBLE_DEVICES=0 python init_geo.py -s /home/sirsh/cv_dataset/dataset_50sites/data/aerial_street/train/ID0001/p100 -m /home/sirsh/cv_dataset/duster_temp/instant_splat/ID0001 --n_views 0 --focal_avg --co_vis_dsp --conf_aware_ranking --ckpt_path /home/sirsh/aerial_gen/aerial_scene_gen/InstantSplat/mast3r/checkpoints/DUSt3R_ViTLarge_BaseDecoder_512_dpt.pth --infer_video
+CUDA_VISIBLE_DEVICES=0 python init_geo.py -s /home/sirsh/cv_dataset/dataset_50sites/data/aerial_street/train/ID0001/p100 -m /home/sirsh/cv_dataset/duster_temp/instant_splat_2/ID0001 --n_views 0 --focal_avg --co_vis_dsp --conf_aware_ranking --ckpt_path /home/sirsh/aerial_gen/aerial_scene_gen/InstantSplat/mast3r/checkpoints/DUSt3R_ViTLarge_BaseDecoder_512_dpt.pth --infer_video
 
-
+/home/sirsh/cv_dataset/dataset_30sites/data/aerial_street/train/ID0001/p100
 
 \
     > ${MODEL_PATH}/01_init_geo.log 2>&1
@@ -143,3 +143,7 @@ python3 run_wriva_reconstruction.py --input_images_folder "/home/sirsh/cv_datase
 
 
 rsync -avzh --copy-links sirsh@crcv2.eecs.ucf.edu:/home/sirsh/cv_dataset/dataset_30sites/data .
+
+
+
+<!-- ssh sirsh@crcv2.eecs.ucf.edu:/home/sirsh/cv_dataset/dataset_30sites/data 'cd /home/sirsh/cv_dataset/dataset_50sites/mast3r && find results -type d -path "*/output/reconstruction/0"' | rsync -avR --files-from=- sirsh@remote:/home/sirsh/cv_dataset/dataset_50sites/mast3r/ /your/local/target/ -->
