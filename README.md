@@ -152,3 +152,6 @@ rsync -avzh --copy-links sirsh@crcv2.eecs.ucf.edu:/home/sirsh/cv_dataset/dataset
 rsync -avzh --include="**/output/**" --exclude="**/workspace/**"  sirsh@crcv2.eecs.ucf.edu:/home/sirsh/cv_dataset/dataset_50sites/colmap .
 
 rsync -avzh --include="*/" --include="*/reconstruction/**" --exclude="*/reconstruction/images/**" --exclude="*"  sirsh@crcv2.eecs.ucf.edu:/home/sirsh/cv_dataset/dataset_50sites/mast3r .
+
+
+rsync -avzh --include="*/" --include="*/reconstruction/**" --exclude="*"  sirsh@crcv2.eecs.ucf.edu:/home/sirsh/cv_dataset/dataset_50sites/mast3r .
