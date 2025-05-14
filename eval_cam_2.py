@@ -44,6 +44,8 @@ def load_colmap_data(colmap_data_folder):
 def load_duster_data(colmap_data_folder):
     # print('Loading COLMAP data...')
     input_format = '.bin'
+    
+    import pdb; pdb.set_trace()
     # cameras, images, _ = read_model(colmap_data_folder, ext=input_format)
     # print(f'num_cameras: {len(cameras)}')
     # print(f'num_images: {len(images)}')
