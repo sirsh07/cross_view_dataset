@@ -244,12 +244,20 @@ def main():
     #     with open("./cache_files2/master_folders.txt", "w") as f:
     #         f.write("\n".join(master_folders))
         
-    if os.path.exists("./cache_files2/duster_folders2.txt"):
-        with open("./cache_files2/duster_folders2.txt", "r") as f:
+    # if os.path.exists("./cache_files2/duster_folders2.txt"):
+    #     with open("./cache_files2/duster_folders2.txt", "r") as f:
+    #         duster_folders = f.read().splitlines()
+    # else:
+    #     duster_folders = get_all_dust3r_folders("/home/sirsh/cv_dataset/dataset_30sites/dust3r_v2")
+    #     with open("./cache_files2/duster_folders2.txt", "w") as f:
+    #         f.write("\n".join(duster_folders))
+    
+    if os.path.exists("./cache_files2/master_folders2.txt"):
+        with open("./cache_files2/master_folders2.txt", "r") as f:
             duster_folders = f.read().splitlines()
     else:
-        duster_folders = get_all_dust3r_folders("/home/sirsh/cv_dataset/dataset_30sites/dust3r_v2")
-        with open("./cache_files2/duster_folders2.txt", "w") as f:
+        duster_folders = get_all_dust3r_folders("/home/sirsh/cv_dataset/dataset_30sites/mast3r_v2")
+        with open("./cache_files2/master_folders2.txt", "w") as f:
             f.write("\n".join(duster_folders))
         
         
@@ -382,7 +390,8 @@ def main():
     # Save the results to a CSV file
     # pd.DataFrame(results_dict).to_csv("./cache_files2/colmap_results.csv", index=False)
     # pd.DataFrame(results_dict).to_csv("./cache_files2/master_results.csv", index=False)
-    pd.DataFrame(results_dict).to_csv("./cache_files2/duster2_eval_results.csv", index=False)
+    # pd.DataFrame(results_dict).to_csv("./cache_files2/duster2_eval_results.csv", index=False)
+    pd.DataFrame(results_dict).to_csv("./cache_files2/master2_eval_results.csv", index=False)
     
         
     # for master_folder in master_folders:
