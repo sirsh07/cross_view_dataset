@@ -147,3 +147,8 @@ rsync -avzh --copy-links sirsh@crcv2.eecs.ucf.edu:/home/sirsh/cv_dataset/dataset
 
 
 <!-- ssh sirsh@crcv2.eecs.ucf.edu:/home/sirsh/cv_dataset/dataset_30sites/data 'cd /home/sirsh/cv_dataset/dataset_50sites/mast3r && find results -type d -path "*/output/reconstruction/0"' | rsync -avR --files-from=- sirsh@remote:/home/sirsh/cv_dataset/dataset_50sites/mast3r/ /your/local/target/ -->
+
+<!-- rsync -avzh --include="**/reconstruction/**" --exclude="**/images/**"  sirsh@crcv2.eecs.ucf.edu:/home/sirsh/cv_dataset/dataset_50sites/colmap . -->
+rsync -avzh --include="**/output/**" --exclude="**/workspace/**"  sirsh@crcv2.eecs.ucf.edu:/home/sirsh/cv_dataset/dataset_50sites/colmap .
+
+rsync -avzh --include="*/" --include="*/reconstruction/**" --exclude="*/reconstruction/images/**" --exclude="*"  sirsh@crcv2.eecs.ucf.edu:/home/sirsh/cv_dataset/dataset_50sites/mast3r .
