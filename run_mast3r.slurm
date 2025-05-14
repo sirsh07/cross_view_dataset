@@ -8,7 +8,7 @@
 #SBATCH --gres-flags=enforce-binding
 #SBATCH --qos day
 ##SBATCH --array=0-$(($(find /home/sirsh/cv_dataset/dataset_30sites/data/ -type d -name "images" | wc -l) - 1))%2  # Dynamically set array size
-#SBATCH --array=0-120%10  # Dynamically set array size
+#SBATCH --array=0-120%15  # Dynamically set array size
 
 # Define base directories
 base_input_dir="/home/sirsh/cv_dataset/dataset_30sites/data/"
