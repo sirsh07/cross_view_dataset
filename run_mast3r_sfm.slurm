@@ -77,7 +77,7 @@ python make_pairs.py \
     --dir "$input_folder" \
     --output "$pairs_file" \
     --weights /home/sirsh/aerial_gen/aerial_scene_gen/master_sfm/mast3r/checkpoints/MASt3R_ViTLarge_BaseDecoder_512_catmlpdpt_metric.pth \
-    --scene_graph swin \
+    --scene_graph swin 
     # --scene_graph complete \
 
 python kapture_mast3r_mapping.py \
