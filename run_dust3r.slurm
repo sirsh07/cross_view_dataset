@@ -8,15 +8,28 @@
 #SBATCH --gres-flags=enforce-binding
 #SBATCH --qos day
 ##SBATCH --array=0-$(($(find /home/sirsh/cv_dataset/dataset_30sites/data/ -type d -name "images" | wc -l) - 1))%2  # Dynamically set array size
-#SBATCH --array=0-360%10  # Dynamically set array size
+#SBATCH --array=0-120%10  # Dynamically set array size
 
 # Define base directories
 base_input_dir="/home/sirsh/cv_dataset/dataset_30sites/data/"
 # base_metadata_dir="/home/sirsh/cv_dataset/dataset_30sites/colmap/metadata/"
 base_results_dir="/home/sirsh/cv_dataset/dataset_30sites/dust3r_v2/results/"
 
-# Generate a list of all input image folders
-input_folders=($(find "$base_input_dir" -type d -name "images"))
+# # Generate a list of all input image folders
+# input_folders=($(find "$base_input_dir" -type d -name "images"))
+
+# List of allowed folder names
+allowed_folders=("ID0001" "ID0004" "ID0007" "ID0012" "ID0015" "ID0003" "ID0005" "ID0008" "ID0013" "ID0016")
+
+# Generate a list of input folders that match the allowed folder names and contain "images"
+input_folders=()
+for folder in "${allowed_folders[@]}"; do
+    # Search for the folder recursively under the base_input_dir and ensure it contains "images"
+    found_folders=$(find "$base_input_dir" -type d -name "$folder" -exec find {} -type d -name "images" \;)
+    for found_folder in $found_folders; do
+        input_folders+=("$found_folder")
+    done
+done
 
 # Select the corresponding input folder based on SLURM_ARRAY_TASK_ID
 input_folder=${input_folders[$SLURM_ARRAY_TASK_ID]%/images}
