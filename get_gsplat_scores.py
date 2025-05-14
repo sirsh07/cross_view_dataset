@@ -70,7 +70,7 @@ if __name__ == "__main__":
     # scores = get_scores(dir,"./recon_scores/mast3r_gsplatmcmc_scores.csv")
     
     dir = "/home/smitra/cv_dataset/dataset_50sites/gsplat_mcmc_mast3r_sfm"
-    scores = get_scores(dir,"./recon_scores/mast3r_gsplatmcmc_scores.csv")
+    scores = get_scores(dir,"./recon_scores/mast3r_sfm_gsplatmcmc_scores.csv")
     
     print(scores) 
     
