@@ -60,6 +60,8 @@ def main(source_path, model_path, ckpt_path, device, batch_size, image_size, sch
     values = [param.detach().cpu().numpy() for param in scene.im_conf]
     confs = np.array(values)
     
+
+    
     if conf_aware_ranking:
         print(f'>> Confiden-aware Ranking...')
         avg_conf_scores = confs.mean(axis=(1, 2))
@@ -123,6 +125,9 @@ def main(source_path, model_path, ckpt_path, device, batch_size, image_size, sch
     end_time = time()
     save_time(model_path, '[1] init_geo', end_time - start_time)
     save_extrinsic(sparse_0_path, extrinsics_w2c, image_files, image_suffix)
+    
+    import pdb; pdb.set_trace()
+    
     save_intrinsics(sparse_0_path, focals, org_imgs_shape, imgs.shape, save_focals=True)
     # pts_num = save_points3D(sparse_0_path, imgs, pts3d, confs.reshape(pts3d.shape[0], -1), overlapping_masks, use_masks=co_vis_dsp, save_all_pts=True, save_txt_path=model_path, depth_threshold=depth_thre)
     # save_images_and_masks(sparse_0_path, n_views, imgs, overlapping_masks, image_files, image_suffix)
