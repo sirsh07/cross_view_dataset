@@ -120,13 +120,12 @@ def main(source_path, model_path, ckpt_path, device, batch_size, image_size, sch
     # -----------------------------------------------------------------------------------------
 
     # Save results
-    focals = np.repeat(focals[0], n_views)
+    # focals = np.repeat(focals[0], n_views)
+    focals = np.repeat(focals[0], len(imgs))
     print(f'>> Saving results...')
     end_time = time()
     save_time(model_path, '[1] init_geo', end_time - start_time)
     save_extrinsic(sparse_0_path, extrinsics_w2c, image_files, image_suffix)
-    
-    import pdb; pdb.set_trace()
     
     save_intrinsics(sparse_0_path, focals, org_imgs_shape, imgs.shape, save_focals=True)
     # pts_num = save_points3D(sparse_0_path, imgs, pts3d, confs.reshape(pts3d.shape[0], -1), overlapping_masks, use_masks=co_vis_dsp, save_all_pts=True, save_txt_path=model_path, depth_threshold=depth_thre)

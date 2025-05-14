@@ -4,7 +4,7 @@
 #SBATCH --cpus-per-gpu=10
 #SBATCH -C 'gmem32|gmem80|gmem48'
 #SBATCH --job-name=dataset_30sites_dust3r_orig_%A_%a  # Job name includes job array ID and task ID
-#SBATCH --output=slurm_outputs/dataset_30sites_dust3r_orig/dataset_30sites_cmap_%A_%a.out  # Output file for each job in the array
+#SBATCH --output=slurm_outputs/dataset_30sites_dust3r_orig_v2/dataset_30sites_cmap_%A_%a.out  # Output file for each job in the array
 #SBATCH --gres-flags=enforce-binding
 #SBATCH --qos day
 ##SBATCH --array=0-$(($(find /home/sirsh/cv_dataset/dataset_30sites/data/ -type d -name "images" | wc -l) - 1))%2  # Dynamically set array size
@@ -13,7 +13,7 @@
 # Define base directories
 base_input_dir="/home/sirsh/cv_dataset/dataset_30sites/data/"
 # base_metadata_dir="/home/sirsh/cv_dataset/dataset_30sites/colmap/metadata/"
-base_results_dir="/home/sirsh/cv_dataset/dataset_30sites/dust3r/results/"
+base_results_dir="/home/sirsh/cv_dataset/dataset_30sites/dust3r_v2/results/"
 
 # Generate a list of all input image folders
 input_folders=($(find "$base_input_dir" -type d -name "images"))
@@ -75,13 +75,13 @@ cd /home/sirsh/cv_dataset/cross_view_dataset/InstantSplat
 CUDA_VISIBLE_DEVICES=0 python init_geo.py \
     -s "$input_folder" \
     -m "$output_folder" \
-    --n_views 0 \
     --focal_avg \
     --co_vis_dsp \
     --conf_aware_ranking \
     --ckpt_path /home/sirsh/aerial_gen/aerial_scene_gen/InstantSplat/mast3r/checkpoints/DUSt3R_ViTLarge_BaseDecoder_512_dpt.pth \
     --infer_video
-
+    # --n_views 0 \
+    
 
 # python make_pairs.py --dir "$input_folder" --output "$pairs_file" --scene_graph complete --weights /home/sirsh/aerial_gen/aerial_scene_gen/master_sfm/mast3r/checkpoints/MASt3R_ViTLarge_BaseDecoder_512_catmlpdpt_metric.pth
 
