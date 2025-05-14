@@ -211,7 +211,7 @@ def get_all_dust3r_folders(base_path):
         List[str]: Sorted list of full paths to 'sparse' folders
     """
     
-    pattern = os.path.join(base_path, "results/*/train/ID*/p*/output/sparse_0/0")
+    pattern = os.path.join(base_path, "results/*/train/ID*/p*/output/sparse_3/0")
     sparse_dirs = glob.glob(pattern)
     return sorted(sparse_dirs)
 
