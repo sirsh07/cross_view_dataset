@@ -4,19 +4,33 @@
 #SBATCH --cpus-per-gpu=10
 #SBATCH -C 'gmem32|gmem80|gmem48'
 #SBATCH --job-name=dataset_30sites_mast3r_orig_%A_%a  # Job name includes job array ID and task ID
-#SBATCH --output=slurm_outputs/dataset_30sites_mast3r_orig/dataset_30sites_cmap_%A_%a.out  # Output file for each job in the array
+#SBATCH --output=slurm_outputs/dataset_30sites_mast3r_orig_v2/dataset_30sites_cmap_%A_%a.out  # Output file for each job in the array
 #SBATCH --gres-flags=enforce-binding
 #SBATCH --qos day
 ##SBATCH --array=0-$(($(find /home/sirsh/cv_dataset/dataset_30sites/data/ -type d -name "images" | wc -l) - 1))%2  # Dynamically set array size
-#SBATCH --array=0-360%10  # Dynamically set array size
+#SBATCH --array=0-120%10  # Dynamically set array size
 
 # Define base directories
 base_input_dir="/home/sirsh/cv_dataset/dataset_30sites/data/"
 # base_metadata_dir="/home/sirsh/cv_dataset/dataset_30sites/colmap/metadata/"
-base_results_dir="/home/sirsh/cv_dataset/dataset_30sites/mast3r/results/"
+base_results_dir="/home/sirsh/cv_dataset/dataset_30sites/mast3r_v2/results/"
 
-# Generate a list of all input image folders
-input_folders=($(find "$base_input_dir" -type d -name "images"))
+# # Generate a list of all input image folders
+# input_folders=($(find "$base_input_dir" -type d -name "images"))
+
+# List of allowed folder names
+allowed_folders=("ID0001" "ID0004" "ID0007" "ID0012" "ID0015" "ID0003" "ID0005" "ID0008" "ID0013" "ID0016")
+
+# Generate a list of input folders that match the allowed folder names and contain "images"
+input_folders=()
+for folder in "${allowed_folders[@]}"; do
+    # Search for the folder recursively under the base_input_dir and ensure it contains "images"
+    found_folders=$(find "$base_input_dir" -type d -name "$folder" -exec find {} -type d -name "images" \;)
+    for found_folder in $found_folders; do
+        input_folders+=("$found_folder")
+    done
+done
+
 
 # Select the corresponding input folder based on SLURM_ARRAY_TASK_ID
 input_folder=${input_folders[$SLURM_ARRAY_TASK_ID]%/images}
@@ -75,12 +89,12 @@ cd /home/sirsh/cv_dataset/cross_view_dataset/InstantSplat
 CUDA_VISIBLE_DEVICES=0 python init_geo.py \
     -s "$input_folder" \
     -m "$output_folder" \
-    --n_views 0 \
     --focal_avg \
     --co_vis_dsp \
     --conf_aware_ranking \
     --ckpt_path /home/sirsh/aerial_gen/aerial_scene_gen/InstantSplat/mast3r/checkpoints/MASt3R_ViTLarge_BaseDecoder_512_catmlpdpt_metric.pth \
     --infer_video
+    # --n_views 0 \
 
 
 # python make_pairs.py --dir "$input_folder" --output "$pairs_file" --scene_graph complete --weights /home/sirsh/aerial_gen/aerial_scene_gen/master_sfm/mast3r/checkpoints/MASt3R_ViTLarge_BaseDecoder_512_catmlpdpt_metric.pth

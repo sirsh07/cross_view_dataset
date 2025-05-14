@@ -213,7 +213,7 @@ def get_all_dust3r_folders(base_path):
     
     pattern = os.path.join(base_path, "results/*/train/ID*/p*/output/sparse_3/0")
     sparse_dirs = glob.glob(pattern)
-    import pdb; pdb.set_trace()
+    # import pdb; pdb.set_trace()
     return sorted(sparse_dirs)
 
 
