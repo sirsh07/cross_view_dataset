@@ -4,9 +4,9 @@
 #SBATCH --mem-per-cpu=8G
 #SBATCH --constraint='gpu80'
 #SBATCH --gres=gpu:1
-#SBATCH --time=24:00:00
-#SBATCH --error=pslurm_outputs/dataset_50sites_gsplat/dataset_50sites_gsplat_%A_%a_%J.err
-#SBATCH --output=slurm_outputs/dataset_50sites_gsplat/dataset_50sites_gsplat_%A_%a_%J.out
+#SBATCH --time=10:00:00
+#SBATCH --error=pslurm_outputs/dataset_50sites_gsplatmcmc_mast3r/dataset_50sites_gsplat_%A_%a_%J.err
+#SBATCH --output=slurm_outputs/dataset_50sites_gsplatmcmc_mast3r/dataset_50sites_gsplat_%A_%a_%J.out
 #SBATCH --job-name=dataset_50sites_gsplat_%A_%a
 #SBATCH --array=0-120  # Dynamically set array size
 ##SBATCH --exclude=evc43
@@ -15,18 +15,19 @@
 
 # Define base directories
 base_input_dir="/home/smitra/cv_dataset/dataset_50sites/mast3r_sfm/mast3r/results/"
-base_results_dir="/home/smitra/cv_dataset/dataset_50sites/gsplat/"
+base_results_dir="/home/smitra/cv_dataset/dataset_50sites/gsplat_mcmc_mast3r_sfm/"
 
 
 # Generate a list of all input image folders
-input_folders=($(find "$base_input_dir" -type d -name "output"))
+# input_folders=($(find "$base_input_dir" -type d -name "output"))
+input_folders=($(find "$base_input_dir" -type d -name "reconstruction"))
 
 # Select the corresponding input folder based on SLURM_ARRAY_TASK_ID
 input_folder=${input_folders[$SLURM_ARRAY_TASK_ID]}
 
 # Generate the corresponding metadata folder
 relative_path=${input_folder#"$base_input_dir"}  # Get the relative path of the input folder
-results_folder="$base_results_dir/${relative_path%/output}"
+results_folder="$base_results_dir/${relative_path%/reconstruction}"
 
 
 # Define workspace and output folders
