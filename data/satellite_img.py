@@ -21,7 +21,7 @@ def get_hybrid_image(lat, lon, zoom, api_key, save_path="satellite_image.jpg"):
         print(f"Error saving image: {e}")
 
 # Example Usage
-api_key = "AIzaSyBVlp4mrSme3iwvyLpR0_76jc0pQnV-o6o"
+api_key = "your key here"
 latitude = 51.5080838
 longitude = -0.1280996  # Trafalgar Square
 zoom_level = 19
