@@ -1,5 +1,8 @@
 # cross_view_dataset
+This repository accompanies our paper:
 
+> **Varying Altitude Dataset**  
+> (*Under Review at NeurIPS 2025 data track)
 ## 📦 Dataset Access
 
 You can access the dataset from the following sources:
