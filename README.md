@@ -24,9 +24,7 @@ Both versions contain the same content: satellite, aerial, and ground-level imag
 └── README.md              # This file
 
 
-#### dataset directory
-```
-/home/zhyw86/WorkSpace/google-earth
+##Dataset Structure
 
 # sample .txt split file 
 /home/zhyw86/WorkSpace/google-earth/sampling/street/random/ID0001_street/ID0001_street_train.txt
