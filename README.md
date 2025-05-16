@@ -155,3 +155,33 @@ rsync -avzh --include="*/" --include="*/reconstruction/**" --exclude="*/reconstr
 
 
 rsync -avzh --include="*/" --include="*/reconstruction/**" --exclude="*"  sirsh@crcv2.eecs.ucf.edu:/home/sirsh/cv_dataset/dataset_50sites/mast3r .
+
+
+
+python make_pairs.py --dir "/home/sirsh/cv_dataset/satellite/aerial_street_ID0001_p50" --output "/home/sirsh/cv_dataset/satellite/master_sfm2/pairs.txt" --weights /home/sirsh/aerial_gen/aerial_scene_gen/master_sfm/mast3r/checkpoints/MASt3R_ViTLarge_BaseDecoder_512_catmlpdpt_metric.pth --scene_graph complete
+
+python kapture_mast3r_mapping.py --weights /home/sirsh/aerial_gen/aerial_scene_gen/master_sfm/mast3r/checkpoints/MASt3R_ViTLarge_BaseDecoder_512_catmlpdpt_metric.pth --dir_same_camera "/home/sirsh/cv_dataset/satellite/aerial_street_ID0001_p50/" --output "/home/sirsh/cv_dataset/satellite/master_sfm2/" --pairsfile_path "/home/sirsh/cv_dataset/satellite/master_sfm2/pairs.txt"
+
+
+
+python3 run_wriva_reconstruction.py --input_images_folder "$input_folder" --workspace_folder "$workspace_folder" --output_folder "$output_folder" --enable_doppelganger_threshold 200 --max_images 500 --num_threads 6 --input_metadata_folder "$metadata_folder" --ground_truth_mode
+
+
+
+python3 run_wriva_reconstruction.py --input_images_folder "/home/sirsh/cv_dataset/satellite/aerial_street_ID0001_p50" --workspace_folder "/home/sirsh/cv_dataset/satellite/colmap/workspace" --output_folder "/home/sirsh/cv_dataset/satellite/colmap/output" --enable_doppelganger_threshold 200 --max_images 500 --num_threads 6 --input_metadata_folder "/home/sirsh/cv_dataset/satellite/aerial_street_ID0001_p50_metadata" --ground_truth_mode
+
+
+
+
+
+/home/sirsh/cv_dataset/satellite_v2
+
+python make_pairs.py --dir "/home/sirsh/cv_dataset/satellite_v2/street_ID0001_p50" --output "/home/sirsh/cv_dataset/satellite_v2/master_sfm2/pairs.txt" --weights /home/sirsh/aerial_gen/aerial_scene_gen/master_sfm/mast3r/checkpoints/MASt3R_ViTLarge_BaseDecoder_512_catmlpdpt_metric.pth --scene_graph complete
+
+python kapture_mast3r_mapping.py --weights /home/sirsh/aerial_gen/aerial_scene_gen/master_sfm/mast3r/checkpoints/MASt3R_ViTLarge_BaseDecoder_512_catmlpdpt_metric.pth --dir_same_camera "/home/sirsh/cv_dataset/satellite_v2/street_ID0001_p50/" --output "/home/sirsh/cv_dataset/satellite_v2/master_sfm2/" --pairsfile_path "/home/sirsh/cv_dataset/satellite_v2/master_sfm2/pairs.txt"
+
+
+
+
+python3 run_wriva_reconstruction.py --input_images_folder "/home/sirsh/cv_dataset/satellite_v2/street_ID0001_p50" --workspace_folder "/home/sirsh/cv_dataset/satellite_v2/colmap/workspace" --output_folder "/home/sirsh/cv_dataset/satellite_v2/colmap/output" --enable_doppelganger_threshold 200 --max_images 500 --num_threads 6 --input_metadata_folder "/home/sirsh/cv_dataset/satellite_v2/street_ID0001_p50_metadata" --ground_truth_mode
+
