@@ -3,18 +3,18 @@
 #SBATCH --gpus=1 -C 'volta|turing|ampere'
 #SBATCH --cpus-per-gpu=10
 #SBATCH -C 'gmem32|gmem48|gmem24'
-#SBATCH --job-name=dataset_30sites_cmap_%A_%a  # Job name includes job array ID and task ID
-#SBATCH --output=slurm_outputs/dataset_30sites_cmap/dataset_30sites_cmap_%A_%a.out  # Output file for each job in the array
+#SBATCH --job-name=dataset_10sites_cmap_%A_%a  # Job name includes job array ID and task ID
+#SBATCH --output=slurm_outputs/dataset_10sites_cmap/dataset_10sites_cmap_%A_%a.out  # Output file for each job in the array
 #SBATCH --gres-flags=enforce-binding
 #SBATCH --qos day
-##SBATCH --array=0-$(($(find /home/sirsh/cv_dataset/dataset_30sites/data/ -type d -name "images" | wc -l) - 1))%2  # Dynamically set array size
+##SBATCH --array=0-$(($(find /home/sirsh/cv_dataset/dataset_10sites/data/ -type d -name "images" | wc -l) - 1))%2  # Dynamically set array size
 #SBATCH --array=0-360  # Dynamically set array size
 #SBATCH --exclude=c4-3,c5-1,c4-7,c4-2
 
 # Define base directories
-base_input_dir="/home/sirsh/cv_dataset/dataset_30sites/data/"
-base_metadata_dir="/home/sirsh/cv_dataset/dataset_30sites/colmap/metadata/"
-base_results_dir="/home/sirsh/cv_dataset/dataset_30sites/colmap/results/"
+base_input_dir="/home/sirsh/cv_dataset/dataset_10sites/data/"
+base_metadata_dir="/home/sirsh/cv_dataset/dataset_10sites/colmap/metadata/"
+base_results_dir="/home/sirsh/cv_dataset/dataset_10sites/colmap/results/"
 
 # Generate a list of all input image folders
 input_folders=($(find "$base_input_dir" -type d -name "images"))

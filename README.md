@@ -55,7 +55,12 @@ python dataset_stats.py --dir /home/zhyw86/WorkSpace/google-earth --output_csv c
 
 
 
+python gen_colmap_metadata.py --base_input_dir /home/sirsh/cv_dataset/dataset_10sites/data/ --base_output_dir /home/sirsh/cv_dataset/dataset_10sites/colmap/metadata/
+
 python gen_colmap_metadata.py --base_input_dir /home/sirsh/cv_dataset/dataset_50sites/data/ --base_output_dir /home/sirsh/cv_dataset/dataset_50sites/colmap/metadata/
+
+
+
 
 [X] Create symlink of data
 
