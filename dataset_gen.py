@@ -522,7 +522,7 @@ def handle_ags_data():
     
     os.makedirs(target_dir, exist_ok=True)
     
-    for site_id in list((set(os.listdir(satellite_dir)) & os.listdir(aerial_dir)) & set(os.listdir(street_dir)))-set(os.listdir(target_dir))):
+    for site_id in list((set(os.listdir(satellite_dir)) & set(os.listdir(aerial_dir)) & set(os.listdir(street_dir)))-set(os.listdir(target_dir))):
         
         site_aerial_dir = os.path.join(aerial_dir, site_id)
         site_street_dir = os.path.join(street_dir, site_id)
