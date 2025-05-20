@@ -321,10 +321,9 @@ def sample_and_combine_folders_satellite(base_dir,
         
         sampled_middle_file_path = [os.path.join(base_dir,"footage", file) for file in middle_files]
     
-    import pdb; pdb.set_trace()
-    
+    all_sampled_file_path = random.sample(sampled_middle_file_path, 32)
     # Combine all files
-    all_sampled_file_path = sampled_middle_file_path
+    # all_sampled_file_path = sampled_middle_file_path
     random.shuffle(all_sampled_file_path)
     split_50p = [all_sampled_file_path[i] for i in range(0, len(all_sampled_file_path), 2)]
     split_25p = [all_sampled_file_path[i] for i in range(0, len(all_sampled_file_path), 4)]
