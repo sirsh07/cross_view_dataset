@@ -508,6 +508,71 @@ def handle_combined_data():
         combined_files.to_csv(combined_csv_path, index=False)
         
 
+
+def handle_ags_data():
+    """
+    Handle aerial data by copying files from base_dir to target_dir.
+    """
+    
+    target_dir = "/home/sirsh/cv_dataset/dataset_10sites/data/aerial_street_satellite/train/"
+    
+    aerial_dir = "/home/sirsh/cv_dataset/dataset_30sites/data/aerial/train/"
+    street_dir = "/home/sirsh/cv_dataset/dataset_30sites/data/street/train/"
+    satellite_dir = "/home/sirsh/cv_dataset/dataset_10sites/data/satellite/train/"
+    
+    os.makedirs(target_dir, exist_ok=True)
+    
+    for site_id in list((set(os.listdir(satellite_dir)) & os.listdir(aerial_dir)) & set(os.listdir(street_dir)))-set(os.listdir(target_dir))):
+        
+        site_aerial_dir = os.path.join(aerial_dir, site_id)
+        site_street_dir = os.path.join(street_dir, site_id)
+        site_satellite_dir = os.path.join(satellite_dir, site_id)
+        
+        site_target_dir = os.path.join(target_dir, site_id)
+        
+        aerial_sampled_files = pd.read_csv(os.path.join(site_aerial_dir, f"sampled_files_{site_id}.csv"))
+        street_sampled_files = pd.read_csv(os.path.join(site_street_dir, f"sampled_files_{site_id}.csv"))
+        satellite_sampled_files = pd.read_csv(os.path.join(site_satellite_dir, f"sampled_files_{site_id}.csv"))
+        
+        aerial_sampled_files["NewFilePath"] = aerial_sampled_files["NewFilePath"].str.replace(
+            "/aerial/", "/aerial_street_satellite/"
+        )
+        
+        # Replace "street" with "aerial_street" in the "NewFilePath" column for street files
+        street_sampled_files["NewFilePath"] = street_sampled_files["NewFilePath"].str.replace(
+            "/street/", "/aerial_street_satellite/"
+        )
+        
+        # Replace "satellite" with "aerial_street" in the "NewFilePath" column for satellite files
+        satellite_sampled_files["NewFilePath"] = satellite_sampled_files["NewFilePath"].str.replace(
+            "/satellite/", "/aerial_street_satellite/"
+        )
+
+        # Modify filenames in street_sampled_files to include "_street"
+        street_sampled_files["NewFilePath"] = street_sampled_files["NewFilePath"].apply(
+            lambda x: os.path.join(
+                os.path.dirname(x),
+                "_".join([os.path.basename(x).split("_")[0], "street"] + os.path.basename(x).split("_")[1:])
+            )
+        )
+        
+        # Combine aerial and street sampled files
+        combined_files = pd.concat([aerial_sampled_files, street_sampled_files])
+        
+        # Create symlinks for all files
+        for original, new in zip(combined_files["OriginalFilePath"], combined_files["NewFilePath"]):
+            os.makedirs(os.path.dirname(new), exist_ok=True)  # Ensure the target directory exists
+            if not os.path.exists(new):  # Avoid overwriting existing symlinks
+                os.symlink(original, new)
+                print(f"Symlink created: {new} -> {original}")
+            else:
+                print(f"Symlink already exists: {new}")
+        
+        # Save the combined DataFrame to a new CSV file
+        combined_csv_path = os.path.join(site_target_dir, f"sampled_files_{site_id}.csv")
+        combined_files.to_csv(combined_csv_path, index=False)
+
+
     
 
 # Example usage:
@@ -516,4 +581,5 @@ if __name__ == "__main__":
     # handle_aerial_data()
     # handle_street_data()
     # handle_combined_data()
-    handle_satellite_data()
+    # handle_satellite_data()
+    handle_ags_data()
