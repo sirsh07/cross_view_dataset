@@ -303,7 +303,7 @@ def sample_and_combine_folders_satellite(base_dir,
     # split_folder="/home/zhyw86/WorkSpace/google-earth/sampling/aerial/middle/random/ID0001/",
     folder_name = os.path.basename(split_folder.rstrip('/'))
     parent_dir = os.path.dirname(split_folder.rstrip('/'))
-    import pdb; pdb.set_trace()
+    # import pdb; pdb.set_trace()
     parent_dir = parent_dir.replace("random","")
     
     split_file = os.path.join(split_folder, f'{folder_name}_train.txt')
@@ -320,7 +320,9 @@ def sample_and_combine_folders_satellite(base_dir,
             ]
         
         sampled_middle_file_path = [os.path.join(base_dir,"footage", file) for file in middle_files]
-        
+    
+    import pdb; pdb.set_trace()
+    
     # Combine all files
     all_sampled_file_path = sampled_middle_file_path
     random.shuffle(all_sampled_file_path)
