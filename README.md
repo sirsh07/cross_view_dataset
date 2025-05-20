@@ -185,3 +185,17 @@ python kapture_mast3r_mapping.py --weights /home/sirsh/aerial_gen/aerial_scene_g
 
 python3 run_wriva_reconstruction.py --input_images_folder "/home/sirsh/cv_dataset/satellite_v2/street_ID0001_p50" --workspace_folder "/home/sirsh/cv_dataset/satellite_v2/colmap/workspace" --output_folder "/home/sirsh/cv_dataset/satellite_v2/colmap/output" --enable_doppelganger_threshold 200 --max_images 500 --num_threads 6 --input_metadata_folder "/home/sirsh/cv_dataset/satellite_v2/street_ID0001_p50_metadata" --ground_truth_mode
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
