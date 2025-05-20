@@ -536,11 +536,15 @@ def handle_ags_data():
         
         aerial_sampled_files["NewFilePath"] = aerial_sampled_files["NewFilePath"].str.replace(
             "/aerial/", "/aerial_street_satellite/"
+        ).replace(
+            "dataset_30sites", "dataset_10sites"
         )
         
         # Replace "street" with "aerial_street" in the "NewFilePath" column for street files
         street_sampled_files["NewFilePath"] = street_sampled_files["NewFilePath"].str.replace(
             "/street/", "/aerial_street_satellite/"
+        ).replace(
+            "dataset_30sites", "dataset_10sites"
         )
         
         # Replace "satellite" with "aerial_street" in the "NewFilePath" column for satellite files
