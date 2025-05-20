@@ -561,7 +561,9 @@ def handle_ags_data():
         )
         
         # Combine aerial and street sampled files
-        combined_files = pd.concat([aerial_sampled_files, street_sampled_files])
+        combined_files = pd.concat([aerial_sampled_files, street_sampled_files, satellite_sampled_files])
+        
+        import pdb; pdb.set_trace()
         
         # Create symlinks for all files
         for original, new in zip(combined_files["OriginalFilePath"], combined_files["NewFilePath"]):
