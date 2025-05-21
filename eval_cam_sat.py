@@ -326,9 +326,9 @@ def main():
     }
     
     # Save the results to a CSV file
-    pd.DataFrame(results_dict).to_csv("./cache_files2/colmap_results.csv", index=False)
-    pd.DataFrame(results_dict).to_csv("./cache_files2/master_sfm_2_results.csv", index=False)
-    # pd.DataFrame(results_dict).to_csv("./cache_files2/eval_results.csv", index=False)
+    # pd.DataFrame(results_dict).to_csv("./cache_files2/colmap_results.csv", index=False)
+    # pd.DataFrame(results_dict).to_csv("./cache_files2/master_sfm_2_results.csv", index=False)
+    pd.DataFrame(results_dict).to_csv("./cache_files2/eval_results.csv", index=False)
     
         
     # for master_folder in master_folders:
