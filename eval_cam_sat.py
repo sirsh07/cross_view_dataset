@@ -275,7 +275,7 @@ def main():
         metadata_folder = os.path.join("/home/sirsh/cv_dataset/dataset_30sites/data", "aerial_street", "train", site_id, "ge_metadata")
         meta_folders = os.listdir(metadata_folder)
         
-        data_folder = os.path.join("/home/sirsh/cv_dataset/dataset_30sites/data", "aerial_street", "train", site_id, annot, "images")
+        data_folder = os.path.join("/home/sirsh/cv_dataset/dataset_10sites/data", "aerial_street_satellite", "train", site_id, annot, "images")
         num_images = len(os.listdir(data_folder))
         num_registered_images = len(list(mast3r_poses[0].keys()))
         
@@ -328,7 +328,7 @@ def main():
     # Save the results to a CSV file
     # pd.DataFrame(results_dict).to_csv("./cache_files2/colmap_results.csv", index=False)
     # pd.DataFrame(results_dict).to_csv("./cache_files2/master_sfm_2_results.csv", index=False)
-    pd.DataFrame(results_dict).to_csv("./cache_files2/eval_results.csv", index=False)
+    pd.DataFrame(results_dict).to_csv("./cache_files2/eval_sat_results.csv", index=False)
     
         
     # for master_folder in master_folders:
