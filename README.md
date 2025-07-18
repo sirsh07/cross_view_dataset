@@ -213,7 +213,7 @@ python3 run_wriva_reconstruction.py --input_images_folder "/home/sirsh/cv_datase
 
 
 
-
+python demo_colmap.py --scene_dir=/home/sirsh/cv_gen_eccv25/surgery_room/imgs
 
 
 

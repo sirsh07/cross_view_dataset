@@ -10,7 +10,7 @@ from .distortion import apply_distortion
 
 
 def img_from_cam_np(
-    intrinsics: np.ndarray, points_cam: np.ndarray, extra_params: np.ndarray | None = None, default: float = 0.0
+    intrinsics: np.ndarray, points_cam: np.ndarray, extra_params: np.ndarray  = None, default: float = 0.0
 ) -> np.ndarray:
     """
     Apply intrinsics (and optional radial distortion) to camera-space points.
@@ -50,8 +50,8 @@ def img_from_cam_np(
 def project_3D_points_np(
     points3D: np.ndarray,
     extrinsics: np.ndarray,
-    intrinsics: np.ndarray | None = None,
-    extra_params: np.ndarray | None = None,
+    intrinsics: np.ndarray  = None,
+    extra_params: np.ndarray  = None,
     *,
     default: float = 0.0,
     only_points_cam: bool = False,
